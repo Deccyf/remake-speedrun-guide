@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources & Tools - REmake Speedrun Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --re-black: #0D0D0D;
+    --re-dark: #1A1A1A;
+    --re-blood: #8B0000;
+    --re-crimson: #DC143C;
+    --re-green: #7CFC00;
+    --re-gold: #D4AF37;
+    --re-white: #F5F5F5;
+    --re-gray: #808080;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--re-black);
+    color: var(--re-white);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  .fog-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .fog {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: 
+      radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
+      radial-gradient(ellipse at 70% 60%, rgba(124, 252, 0, 0.08) 0%, transparent 40%);
+    animation: fogMove 30s ease-in-out infinite;
+  }
+
+  @keyframes fogMove {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-5%, 5%); }
+    50% { transform: translate(5%, -5%); }
+    75% { transform: translate(-3%, 3%); }
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+    transition: all 0.3s;
+  }
+
+  .header.scrolled {
+    background: rgba(13, 13, 13, 0.98);
+    box-shadow: 0 4px 30px rgba(139, 0, 0, 0.3);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--re-white);
+    text-decoration: none;
+    letter-spacing: 3px;
+    position: relative;
+    transition: all 0.4s;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo-img {
+    height: 50px;
+    width: auto;
+    filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.6));
+    transition: all 0.3s ease;
+  }
+
+  .logo-img:hover {
+    transform: rotate(360deg);
+    filter: drop-shadow(0 0 12px rgba(139, 0, 0, 0.8));
+  }
+
+  .logo::before, .logo::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    background: var(--re-blood);
+    transform: translateY(-50%);
+  }
+
+  .logo::before { left: -30px; }
+  .logo::after { right: -30px; }
+  .logo span { color: var(--re-blood); }
+
+  .nav {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .nav a {
+    color: var(--re-gray);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--re-blood);
+    transition: width 0.3s;
+  }
+
+  .nav a:hover {
+    color: var(--re-white);
+  }
+
+  .nav a:hover::after {
+    width: 100%;
+  }
+
+  main {
+    padding-top: 100px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .section-hero {
+    text-align: center;
+    padding: 4rem 0;
+    position: relative;
+  }
+
+  .section-badge {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background: rgba(139, 0, 0, 0.2);
+    border: 1px solid var(--re-blood);
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--re-green);
+    margin-bottom: 1.5rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(124, 252, 0, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(124, 252, 0, 0.6); }
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3);
+    animation: titleGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3); }
+    50% { text-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.5); }
+  }
+
+  .section-meta {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    color: var(--re-gray);
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+  }
+
+  .content-section {
+    margin-bottom: 3rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .content-section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: var(--re-blood);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(139, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .content-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: var(--re-blood);
+  }
+
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .resource-card {
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .resource-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.1), transparent);
+    transform: scale(0);
+    transition: transform 0.6s;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .resource-card:hover::before {
+    transform: scale(1);
+  }
+
+  .resource-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--re-blood);
+    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
+  }
+
+  .resource-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .resource-logo {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.3));
+    transition: all 0.3s ease;
+  }
+
+  .resource-logo:hover {
+    filter: drop-shadow(0 0 12px rgba(139, 0, 0, 0.6));
+    transform: scale(1.1);
+  }
+
+  .resource-card h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--re-blood);
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+  }
+
+  .resource-card p {
+    color: var(--re-gray);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--re-gold);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+  }
+
+  .resource-link:hover {
+    color: var(--re-blood);
+    gap: 0.75rem;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .video-card {
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.4s;
+    position: relative;
+  }
+
+  .video-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--re-blood);
+    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
+  }
+
+  .video-thumbnail {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, var(--re-dark), var(--re-black));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--re-blood);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .video-embed {
+    width: 100%;
+    height: 200px;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .video-embed iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .video-info {
+    padding: 1.5rem;
+  }
+
+  .video-info h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--re-white);
+  }
+
+  .video-meta {
+    display: flex;
+    justify-content: space-between;
+    color: var(--re-gray);
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .video-info p {
+    color: var(--re-gray);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .watch-btn {
+    display: inline-block;
+    background: rgba(139, 0, 0, 0.2);
+    color: var(--re-blood);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 1px solid var(--re-blood);
+  }
+
+  .watch-btn:hover {
+    background: var(--re-blood);
+    color: var(--re-white);
+  }
+
+  .leaderboard {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+
+  .leaderboard h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--re-blood);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+  }
+
+  .leaderboard-table th {
+    background: rgba(139, 0, 0, 0.3);
+    color: var(--re-blood);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    border-bottom: 2px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .leaderboard-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+    color: var(--re-gray);
+  }
+
+  .leaderboard-table tr:hover {
+    background: rgba(139, 0, 0, 0.1);
+  }
+
+  .rank {
+    font-weight: 700;
+    color: var(--re-gold);
+  }
+
+  .rank.first {
+    color: #fbbf24;
+  }
+
+  .rank.second {
+    color: #9ca3af;
+  }
+
+  .rank.third {
+    color: #cd7f32;
+  }
+
+  .community-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .community-card {
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .community-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.1), transparent);
+    transform: scale(0);
+    transition: transform 0.6s;
+  }
+
+  .community-card:hover::before {
+    transform: scale(1);
+  }
+
+  .community-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--re-blood);
+    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
+  }
+
+  .community-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .community-logo {
+    height: 32px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  /* Specific styling for Twitch logo to maintain proper aspect ratio */
+  .community-icon img[alt="Twitch"] {
+    height: 32px;
+    width: auto;
+    min-width: 32px;
+  }
+
+  .community-card h4 {
+    font-family: 'Cinzel', serif;
+    margin-bottom: 0.5rem;
+    color: var(--re-white);
+    font-size: 1.1rem;
+  }
+
+  .community-card p {
+    color: var(--re-gray);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .community-link {
+    color: var(--re-gold);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  .community-link:hover {
+    color: var(--re-blood);
+  }
+
+  .blood-drips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .blood-drip {
+    position: absolute;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--re-blood));
+    animation: drip 3s ease-in infinite;
+  }
+
+  @keyframes drip {
+    0% { height: 0; opacity: 0; }
+    10% { opacity: 1; }
+    100% { height: 100vh; opacity: 0; }
+  }
+
+  @media (max-width: 968px) {
+    .resource-grid, .video-grid, .community-links {
+      grid-template-columns: 1fr;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+    }
+
+    .nav {
+      gap: 1.5rem;
+    }
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .footer-info {
+      text-align: center;
+    }
+    .footer-buttons {
+      justify-content: center;
+    }
+  }
+
+  .footer {
+    background: rgba(13, 13, 13, 0.95);
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 8rem;
+  }
+
+  .footer p {
+    color: var(--re-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer-info {
+    text-align: left;
+  }
+
+  .footer-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .discord-btn {
+    background: rgba(88, 101, 242, 0.2);
+    color: #5865f2;
+    border: 1px solid rgba(88, 101, 242, 0.3);
+  }
+
+  .discord-btn:hover {
+    background: #5865f2;
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+  }
+
+  .website-btn {
+    background: rgba(139, 0, 0, 0.2);
+    color: var(--re-blood);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .website-btn:hover {
+    background: var(--re-blood);
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+  }
+
+  .footer-icon {
+    font-size: 1.1rem;
+  }
+
+  .discord-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .website-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    filter: brightness(1.2);
+  }
+</style>
+</head>
+<body>
+  <div class="fog-container">
+    <div class="fog"></div>
+  </div>
+  
+  <div class="blood-drips" id="bloodDrips"></div>
+
+  <header class="header" id="header">
+    <div class="header-content">
+      <a href="remake_index_page.html" class="logo">RESIDENT <span>EVIL</span></a>
+      <nav class="nav">
+        <a href="remake_index_page.html">Home</a>
+        <a href="remake_guide_page_1.html">Guide Setup</a>
+        <a href="remake_guide_page_2.html">Walkthrough</a>
+        <a href="resources-page.html">Resources</a>
+        <a href="quick-reference-guide.html">Quick Reference</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-hero">
+      <div class="section-badge">RESOURCES & TOOLS</div>
+      <h1 class="section-title">Speedrun Resources</h1>
+      <div class="section-meta">
+        <span>ESSENTIAL TOOLS</span>
+        <span>•</span>
+        <span>VIDEO TUTORIALS</span>
+        <span>•</span>
+        <span>COMMUNITY</span>
+      </div>
+    </div>
+    <div class="content-section">
+      <h2>Essential Tools</h2>
+
+      <div class="resource-grid">
+        <div class="resource-card">
+          <div class="resource-icon">
+            <img src="Logos/icon_1.png" alt="LiveSplit" class="resource-logo">
+          </div>
+          <h3>LiveSplit</h3>
+          <p>The most popular speedrun timer with auto-splitting support, customizable layouts, and comprehensive comparison features.</p>
+          <a href="https://livesplit.org/" class="resource-link" target="_blank">
+            Download LiveSplit
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-icon">📖</div>
+          <h3>Speedrun Guides</h3>
+          <p>Comprehensive guides and walkthroughs for Resident Evil HD Remaster. Access detailed strategies, route explanations, and technique breakdowns from the community.</p>
+          <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam/guides" class="resource-link" target="_blank">
+            View Guides
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-icon">
+            <img src="Logos/Steam_(service)-Logo.wine.png" alt="Steam" class="resource-logo">
+          </div>
+          <h3>Game on Steam</h3>
+          <p>Official HD Remaster of Resident Evil on Steam. Best platform for speedrunning with optimal load times and performance.</p>
+          <a href="https://store.steampowered.com/app/304240/Resident_Evil/" class="resource-link" target="_blank">
+            Steam Store Page
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-icon">📝</div>
+          <h3>Split Templates</h3>
+          <p>Pre-made LiveSplit templates for all major categories including Jill Any%, Chris Any%, and 100% runs.</p>
+          <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam/resources" class="resource-link" target="_blank">
+            Download Splits
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-icon">
+            <img src="Logos/Open_Broadcaster_Software-Logo.wine.png" alt="OBS Studio" class="resource-logo">
+          </div>
+          <h3>OBS Studio</h3>
+          <p>Free and open-source streaming and recording software. Essential for recording your runs and streaming on Twitch.</p>
+          <a href="https://obsproject.com/" class="resource-link" target="_blank">
+            Get OBS Studio
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-icon">🔧</div>
+          <h3>Practice Tools</h3>
+          <p>Save states and practice tools for learning specific sections without full run attempts. Available through community mods and guides.</p>
+          <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam/resources" class="resource-link" target="_blank">
+            View Tools
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <h2>Video Tutorials</h2>
+
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/Ow-pK8JMW6M" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h4>World Record Run by UndeadAvenged</h4>
+            <div class="video-meta">
+              <span>00:48:30</span>
+              <span>World Record</span>
+            </div>
+            <p>Watch the current world record holder execute the optimal route with near-perfect execution.</p>
+            <a href="https://youtu.be/Ow-pK8JMW6M" class="watch-btn" target="_blank">Watch Full Video</a>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/dISh-Rg0894" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h4>Beginner Tutorial by Pessimism</h4>
+            <div class="video-meta">
+              <span>1:11:55</span>
+              <span>Full Tutorial</span>
+            </div>
+            <p>Comprehensive beginner-friendly tutorial covering all techniques and strategies from start to finish.</p>
+            <a href="https://www.youtube.com/watch?v=dISh-Rg0894" class="watch-btn" target="_blank">Watch Full Video</a>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/uXu835c2zFY" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h4>Deccyf's Speedrun</h4>
+            <div class="video-meta">
+              <span>1:41:35</span>
+              <span>Jill Any%</span>
+            </div>
+            <p>Watch Deccyf's average speedrun.</p>
+            <a href="https://www.youtube.com/watch?v=uXs835c2zFY&list=PLnoQUwSmAEUb_gK5RlYkN4cz6k6eg6H7n" class="watch-btn" target="_blank">Watch Full Video</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <h2>Leaderboards</h2>
+
+      <div class="leaderboard">
+        <h3>Jill Any% - Normal Difficulty (Top 10)</h3>
+        <p style="color: var(--re-gray); margin-top: 0.5rem;">Current as of October 2025. Visit speedrun.com for live rankings.</p>
+        
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>LRT</th>
+              <th>IGT</th>
+              <th>Date</th>
+              <th>Platform</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="rank first">🏆 1</span></td>
+              <td>UndeadAvenged</td>
+              <td>48m 30s</td>
+              <td>51m 06s</td>
+              <td>2 months ago</td>
+              <td>PC</td>
+            </tr>
+            <tr>
+              <td><span class="rank second">🥈 2</span></td>
+              <td>Pessimism</td>
+              <td>48m 39s</td>
+              <td>51m 14s</td>
+              <td>1 year ago</td>
+              <td>PC</td>
+            </tr>
+            <tr>
+              <td><span class="rank third">🥉 3</span></td>
+              <td>MikeWave</td>
+              <td>48m 48s</td>
+              <td>51m 21s</td>
+              <td>1 year ago</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><span class="rank">4</span></td>
+              <td>Harima</td>
+              <td>48m 58s</td>
+              <td>1h 16m 29s</td>
+              <td>1 year ago</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><span class="rank">5</span></td>
+              <td>Jr_86</td>
+              <td>49m 13s</td>
+              <td>51m 55s</td>
+              <td>1 year ago</td>
+              <td>PC</td>
+            </tr>
+            <tr>
+              <td><span class="rank">6</span></td>
+              <td>Elixir95</td>
+              <td>49m 22s</td>
+              <td>51m 58s</td>
+              <td>1 year ago</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><span class="rank">7</span></td>
+              <td>MikeShwicks</td>
+              <td>49m 44s</td>
+              <td>1h 17m 15s</td>
+              <td>2 years ago</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><span class="rank">8</span></td>
+              <td>exper1ment</td>
+              <td>50m 02s</td>
+              <td>52m 41s</td>
+              <td>4 months ago</td>
+              <td>PC</td>
+            </tr>
+            <tr>
+              <td><span class="rank">9</span></td>
+              <td>Suika_1</td>
+              <td>50m 15s</td>
+              <td>52m 39s</td>
+              <td>1 year ago</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><span class="rank">9</span></td>
+              <td>Bawkbasoup</td>
+              <td>50m 15s</td>
+              <td>55m 08s</td>
+              <td>5 years ago</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top: 2rem; text-align: center;">
+          <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam" class="resource-link" target="_blank">
+            View Full Leaderboards on Speedrun.com
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <h2>Community & Support</h2>
+
+      <div class="community-links">
+        <div class="community-card">
+          <div class="community-icon">
+            <img src="Logos/twitch-logo-png-1858.png" alt="Twitch" class="community-logo">
+          </div>
+          <h4>Twitch Directory</h4>
+          <p>Watch live speedruns and learn from the best runners in real-time.</p>
+          <a href="https://www.twitch.tv/directory/category/resident-evil-2014" class="community-link" target="_blank">Watch Live</a>
+        </div>
+
+        <div class="community-card">
+          <div class="community-icon">
+            <img src="Logos/11006616.png" alt="Speedrun Trophy" class="community-logo">
+          </div>
+          <h4>Speedrun.com</h4>
+          <p>Official leaderboards, resources, guides, and forums for all categories.</p>
+          <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam" class="community-link" target="_blank">Visit Site</a>
+        </div>
+
+        <div class="community-card">
+          <div class="community-icon">📋</div>
+          <h4>Quick Reference</h4>
+          <p>Essential techniques, puzzle solutions, boss strategies, and critical information at a glance.</p>
+          <a href="quick-reference-guide.html" class="community-link">View Reference</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Blood drip animation
+    const bloodDripsContainer = document.getElementById('bloodDrips');
+    for (let i = 0; i < 5; i++) {
+      const drip = document.createElement('div');
+      drip.className = 'blood-drip';
+      drip.style.left = Math.random() * 100 + '%';
+      drip.style.animationDelay = Math.random() * 3 + 's';
+      drip.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      bloodDripsContainer.appendChild(drip);
+    }
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Background music functionality
+    let backgroundMusic = null;
+    const musicFiles = [
+      '01 R.E. 1 Save Room- Safe Haven.mp3',
+      // Add your preferred Resident Evil themed music files here
+    ];
+
+    function initBackgroundMusic() {
+      // Check if user has previously allowed autoplay
+      const musicAllowed = localStorage.getItem('musicAllowed') === 'true';
+      
+      if (musicAllowed) {
+        startBackgroundMusic();
+      } else {
+        // Show music control button after user interaction
+        document.addEventListener('click', () => {
+          document.getElementById('musicControlButton')?.remove();
+          showMusicControllButton();
+        }, { once: true });
+      }
+    }
+
+    function showMusicControllButton() {
+      const musicButton = document.createElement('div');
+      musicButton.id = 'musicControlButton';
+      musicButton.innerHTML = '🎵 Enable Background Music';
+      musicButton.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(139, 0, 0, 0.8);
+        color: var(--re-white);
+        padding: 10px 15px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+      `;
+      
+      musicButton.addEventListener('mouseenter', () => {
+        musicButton.style.background = 'var(--re-blood)';
+        musicButton.style.transform = 'scale(1.05)';
+      });
+      
+      musicButton.addEventListener('mouseleave', () => {
+        musicButton.style.background = 'rgba(139, 0, 0, 0.8)';
+        musicButton.style.transform = 'scale(1)';
+      });
+
+      musicButton.addEventListener('click', () => {
+        localStorage.setItem('musicAllowed', 'true');
+        musicButton.remove();
+        startBackgroundMusic();
+      });
+
+      document.body.appendChild(musicButton);
+    }
+
+    function startBackgroundMusic() {
+      if (backgroundMusic) return;
+      
+      backgroundMusic = new Audio();
+      backgroundMusic.src = musicFiles[0];
+      backgroundMusic.loop = true;
+      backgroundMusic.volume = 0.3; // Lower volume for background music
+      
+      // Handle autoplay restrictions
+      backgroundMusic.play().then(() => {
+        console.log('Background music started');
+      }).catch(() => {
+        console.log('Autoplay blocked, user will need to interact first');
+      });
+    }
+
+    // Initialize music on page load
+    initBackgroundMusic();
+  </script>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p>Original Guide by Deccyf</p>
+        <p>© 2025 Wheel of Struggle Community Speedrun Guide • All Rights Reserved</p>
+      </div>
+      <div class="footer-buttons">
+        <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
+          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="footer-icon discord-logo">
+          Discord
+        </a>
+        <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank">
+          <img src="Logos/WoS_Discord_Colour_V2.png" alt="Wheel of Struggle" class="footer-icon website-logo">
+          Website
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

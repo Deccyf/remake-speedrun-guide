@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resident Evil REmake - Professional Speedrun Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --re-black: #0D0D0D;
+    --re-dark: #1A1A1A;
+    --re-blood: #8B0000;
+    --re-crimson: #DC143C;
+    --re-green: #7CFC00;
+    --re-gold: #D4AF37;
+    --re-white: #F5F5F5;
+    --re-gray: #808080;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--re-black);
+    color: var(--re-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .fog-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .fog {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: 
+      radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
+      radial-gradient(ellipse at 70% 60%, rgba(124, 252, 0, 0.08) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+    animation: fogMove 30s ease-in-out infinite;
+  }
+
+  @keyframes fogMove {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-5%, 5%); }
+    50% { transform: translate(5%, -5%); }
+    75% { transform: translate(-3%, 3%); }
+  }
+
+  .blood-drips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .blood-drip {
+    position: absolute;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--re-blood));
+    animation: drip 3s ease-in infinite;
+  }
+
+  @keyframes drip {
+    0% { height: 0; opacity: 0; }
+    10% { opacity: 1; }
+    100% { height: 100vh; opacity: 0; }
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+    transition: all 0.3s;
+  }
+
+  .header.scrolled {
+    background: rgba(13, 13, 13, 0.98);
+    box-shadow: 0 4px 30px rgba(139, 0, 0, 0.3);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--re-white);
+    text-decoration: none;
+    letter-spacing: 3px;
+    position: relative;
+    transition: all 0.4s;
+  }
+
+  .logo::before, .logo::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    background: var(--re-blood);
+    transform: translateY(-50%);
+  }
+
+  .logo::before { left: -30px; }
+  .logo::after { right: -30px; }
+  .logo span { color: var(--re-blood); }
+
+  .nav {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .nav a {
+    color: var(--re-gray);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--re-blood);
+    transition: width 0.3s;
+  }
+
+  .nav a:hover { color: var(--re-white); }
+  .nav a:hover::after { width: 100%; }
+
+  main { padding-top: 80px; }
+
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(ellipse at center, rgba(139, 0, 0, 0.2) 0%, transparent 70%),
+      linear-gradient(180deg, var(--re-black) 0%, var(--re-dark) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 1200px;
+    padding: 2rem;
+    animation: fadeInUp 1s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background: rgba(139, 0, 0, 0.2);
+    border: 1px solid var(--re-blood);
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--re-green);
+    margin-bottom: 2rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(124, 252, 0, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(124, 252, 0, 0.6); }
+  }
+
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: 6rem;
+    font-weight: 900;
+    color: var(--re-white);
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    letter-spacing: 5px;
+    text-shadow: 
+      0 0 20px rgba(139, 0, 0, 0.5),
+      0 0 40px rgba(139, 0, 0, 0.3);
+    animation: titleGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3); }
+    50% { text-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.5); }
+  }
+
+  .hero-subtitle {
+    font-size: 1.4rem;
+    color: var(--re-gray);
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 900px;
+    margin: 4rem auto 0;
+  }
+
+  .stat-box {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(139, 0, 0, 0.3), transparent);
+    transition: left 0.6s;
+  }
+
+  .stat-box:hover::before { left: 100%; }
+
+  .stat-box:hover {
+    transform: translateY(-5px);
+    border-color: var(--re-blood);
+    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
+  }
+
+  .stat-value {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--re-blood);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.95rem;
+    color: var(--re-gray);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .section {
+    max-width: 1400px;
+    margin: 6rem auto;
+    padding: 0 2rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--re-white);
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--re-blood), transparent);
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--re-gray);
+    margin-top: 2rem;
+  }
+
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Special positioning for Tyrant finale card */
+  .guide-card:nth-child(16) {
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  .guide-card {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    text-decoration: none;
+    color: var(--re-white);
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .guide-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .guide-card:hover::before { opacity: 1; }
+
+  .guide-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--re-blood);
+    box-shadow: 0 20px 60px rgba(139, 0, 0, 0.4);
+  }
+
+  .guide-number {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    background: var(--re-blood);
+    color: var(--re-white);
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .guide-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--re-white);
+  }
+
+  .guide-card p {
+    font-size: 1rem;
+    color: var(--re-gray);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .guide-meta {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(139, 0, 0, 0.2);
+    font-size: 0.85rem;
+    color: var(--re-green);
+    font-weight: 600;
+  }
+
+  .cta-section {
+    max-width: 1000px;
+    margin: 8rem auto;
+    padding: 5rem 3rem;
+    background: rgba(26, 26, 26, 0.8);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--re-blood);
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.2), transparent);
+    animation: rotate 20s linear infinite;
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--re-white);
+  }
+
+  .cta-text {
+    font-size: 1.2rem;
+    color: var(--re-gray);
+    margin-bottom: 3rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 1.3rem 3.5rem;
+    background: var(--re-blood);
+    color: var(--re-white);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: all 0.4s;
+    border: 2px solid var(--re-blood);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  .btn:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.6);
+  }
+
+  .footer {
+    background: rgba(13, 13, 13, 0.95);
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 8rem;
+  }
+
+  .footer p {
+    color: var(--re-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer-info {
+    text-align: left;
+  }
+
+  .footer-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .discord-btn {
+    background: rgba(88, 101, 242, 0.2);
+    color: #5865f2;
+    border: 1px solid rgba(88, 101, 242, 0.3);
+  }
+
+  .discord-btn:hover {
+    background: #5865f2;
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+  }
+
+  .website-btn {
+    background: rgba(139, 0, 0, 0.2);
+    color: var(--re-blood);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .website-btn:hover {
+    background: var(--re-blood);
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+  }
+
+  .footer-icon {
+    font-size: 1.1rem;
+  }
+
+  .discord-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .website-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    filter: brightness(1.2);
+  }
+
+  @media (max-width: 768px) {
+    .hero-title { font-size: 3rem; }
+    .stats-container { grid-template-columns: 1fr; }
+    .guide-grid { grid-template-columns: 1fr; }
+    .nav { gap: 1.5rem; }
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .footer-info {
+      text-align: center;
+    }
+    .footer-buttons {
+      justify-content: center;
+    }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+  <div class="fog-container">
+    <div class="fog"></div>
+  </div>
+  
+  <div class="blood-drips" id="bloodDrips"></div>
+  
+  <header class="header" id="header">
+    <div class="header-content">
+      <a href="remake_index_page.html" class="logo">RESIDENT <span>EVIL</span></a>
+      <nav class="nav">
+        <a href="remake_index_page.html">Home</a>
+        <a href="remake_guide_page_1.html">Guide Setup</a>
+        <a href="remake_guide_page_2.html">Walkthrough</a>
+        <a href="resources-page.html">Resources</a>
+        <a href="quick-reference-guide.html">Quick Reference</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Speedrun Guide</div>
+        <h1 class="hero-title">REMAKE</h1>
+        <p class="hero-subtitle">Jill Valentine • Any% • Normal</p>
+        
+        <div class="stats-container">
+          <div class="stat-box">
+            <span class="stat-value">16</span>
+            <span class="stat-label">Sections</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value">~90</span>
+            <span class="stat-label">Minutes</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value">PC</span>
+            <span class="stat-label">Platform</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header reveal">
+        <h2 class="section-title">Complete Walkthrough</h2>
+        <p class="section-subtitle">From mansion entrance to helipad escape</p>
+      </div>
+      
+      <div class="guide-grid">
+        <a href="remake_guide_page_1.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 01</span>
+          <h3>Setup & Core Techniques</h3>
+          <p>Essential requirements, platform setup, core techniques, and movement optimisation.</p>
+          <div class="guide-meta">
+            <span>5 MIN READ</span>
+            <span>ESSENTIAL</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_2.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 02</span>
+          <h3>Mansion 1 - Opening</h3>
+          <p>Initial setup, Murder Hallway navigation, graveyard access, and Dog Whistle encounter.</p>
+          <div class="guide-meta">
+            <span>8 MIN READ</span>
+            <span>EARLY GAME</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_3.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 03</span>
+          <h3>Armour Key & Grenade Launcher</h3>
+          <p>Armour Key sequence, Murder Hall navigation, Grenade Launcher access, and Richard timer.</p>
+          <div class="guide-meta">
+            <span>10 MIN READ</span>
+            <span>KEY ITEMS</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_4.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 04</span>
+          <h3>Death Masks 2-4 & Yawn 1</h3>
+          <p>Music Room puzzle, Piano puzzle, Clock puzzle, and first Yawn boss encounter.</p>
+          <div class="guide-meta">
+            <span>12 MIN READ</span>
+            <span>PUZZLES</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_5.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 05</span>
+          <h3>Gallery & Death Masks 3-4</h3>
+          <p>Armour Gallery statue puzzle, painting puzzle, and final Death Mask collection.</p>
+          <div class="guide-meta">
+            <span>8 MIN READ</span>
+            <span>GALLERY</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_6.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 06</span>
+          <h3>Elder Crimson Boss Fight</h3>
+          <p>Death Mask placement, Elder Crimson combat strategy, RNG outcomes, and item collection.</p>
+          <div class="guide-meta">
+            <span>6 MIN READ</span>
+            <span>BOSS FIGHT</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_7.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 07</span>
+          <h3>Courtyard & Lisa's Hut</h3>
+          <p>Weather vane puzzle, Lisa Trevor encounter, and residence access route.</p>
+          <div class="guide-meta">
+            <span>10 MIN READ</span>
+            <span>OUTDOOR</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_8.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 08</span>
+          <h3>Residence - Early</h3>
+          <p>Room navigation, bookshelf puzzle, and Aqua Ring access strategies.</p>
+          <div class="guide-meta">
+            <span>9 MIN READ</span>
+            <span>RESIDENCE</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_9.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 09</span>
+          <h3>Neptune Fight</h3>
+          <p>Control room puzzle, Neptune fight, and Gallery Key retrieval tactics.</p>
+          <div class="guide-meta">
+            <span>7 MIN READ</span>
+            <span>UNDERWATER</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_10.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 10</span>
+          <h3>Plant 42 Boss</h3>
+          <p>Book puzzle solution, optimal Plant 42 strategy, and Helmet Key acquisition.</p>
+          <div class="guide-meta">
+            <span>8 MIN READ</span>
+            <span>BOSS FIGHT</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_11.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 11</span>
+          <h3>Hunter Mansion</h3>
+          <p>Hunter navigation, crusher puzzle, and underground elevator access.</p>
+          <div class="guide-meta">
+            <span>10 MIN READ</span>
+            <span>ADVANCED</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_12.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 12</span>
+          <h3>Underground Access</h3>
+          <p>Elevator mechanics, underground navigation, and key item collection.</p>
+          <div class="guide-meta">
+            <span>9 MIN READ</span>
+            <span>UNDERGROUND</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_13.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 13</span>
+          <h3>Underground</h3>
+          <p>Boulder puzzles, Black Tiger encounter, and cylinder mechanism solutions.</p>
+          <div class="guide-meta">
+            <span>11 MIN READ</span>
+            <span>CAVES</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_14.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 14</span>
+          <h3>Lisa Underground</h3>
+          <p>Box puzzles, compactor section, and Lisa encounters with optimal routing.</p>
+          <div class="guide-meta">
+            <span>8 MIN READ</span>
+            <span>LISA ROUTE</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_15.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 15</span>
+          <h3>Laboratory</h3>
+          <p>Computer access, fuel management, power activation, and lab navigation.</p>
+          <div class="guide-meta">
+            <span>10 MIN READ</span>
+            <span>LABORATORY</span>
+          </div>
+        </a>
+
+        <a href="remake_guide_page_16.html" class="guide-card reveal">
+          <span class="guide-number">SECTION 16</span>
+          <h3>Tyrant & Helipad</h3>
+          <p>Final boss strategies, helipad escape, and speedrun completion.</p>
+          <div class="guide-meta">
+            <span>6 MIN READ</span>
+            <span>FINALE</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="cta-section reveal">
+      <div class="cta-content">
+        <h2 class="cta-title">Begin Your Speedrun</h2>
+        <p class="cta-text">Master every section from start to finish</p>
+        <a href="remake_guide_page_1.html" class="btn">Start Guide</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p>Original Guide by Deccyf</p>
+        <p>© 2025 Wheel of Struggle Community Speedrun Guide • All Rights Reserved</p>
+      </div>
+      <div class="footer-buttons">
+        <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
+          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="footer-icon discord-logo">
+          Discord
+        </a>
+        <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank">
+          <img src="Logos/WoS_Discord_Colour_V2.png" alt="Wheel of Struggle" class="footer-icon website-logo">
+          Website
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Blood drip animation
+    const bloodDripsContainer = document.getElementById('bloodDrips');
+    for (let i = 0; i < 5; i++) {
+      const drip = document.createElement('div');
+      drip.className = 'blood-drip';
+      drip.style.left = Math.random() * 100 + '%';
+      drip.style.animationDelay = Math.random() * 3 + 's';
+      drip.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      bloodDripsContainer.appendChild(drip);
+    }
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll reveal animation
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(reveal => {
+      revealObserver.observe(reveal);
+    });
+
+    // Background music functionality
+    let backgroundMusic = null;
+    const musicFiles = [
+      '01 R.E. 1 Save Room- Safe Haven.mp3',
+      // Add your preferred Resident Evil themed music files here
+    ];
+
+    function initBackgroundMusic() {
+      // Check if user has previously allowed autoplay
+      const musicAllowed = localStorage.getItem('musicAllowed') === 'true';
+      
+      if (musicAllowed) {
+        startBackgroundMusic();
+      } else {
+        // Show music control button after user interaction
+        document.addEventListener('click', () => {
+          document.getElementById('musicControlButton')?.remove();
+          showMusicControllButton();
+        }, { once: true });
+      }
+    }
+
+    function showMusicControllButton() {
+      const musicButton = document.createElement('div');
+      musicButton.id = 'musicControlButton';
+      musicButton.innerHTML = '🎵 Enable Background Music';
+      musicButton.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(139, 0, 0, 0.8);
+        color: var(--re-white);
+        padding: 10px 15px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+      `;
+      
+      musicButton.addEventListener('mouseenter', () => {
+        musicButton.style.background = 'var(--re-blood)';
+        musicButton.style.transform = 'scale(1.05)';
+      });
+      
+      musicButton.addEventListener('mouseleave', () => {
+        musicButton.style.background = 'rgba(139, 0, 0, 0.8)';
+        musicButton.style.transform = 'scale(1)';
+      });
+
+      musicButton.addEventListener('click', () => {
+        localStorage.setItem('musicAllowed', 'true');
+        musicButton.remove();
+        startBackgroundMusic();
+      });
+
+      document.body.appendChild(musicButton);
+    }
+
+    function startBackgroundMusic() {
+      if (backgroundMusic) return;
+      
+      backgroundMusic = new Audio();
+      // Use your preferred music file URL here
+      backgroundMusic.src = musicFiles[0];
+      backgroundMusic.loop = true;
+      backgroundMusic.volume = 0.3; // Lower volume for background music
+      
+      // Handle autoplay restrictions
+      backgroundMusic.play().then(() => {
+        console.log('Background music started');
+      }).catch(() => {
+        console.log('Autoplay blocked, user will need to interact first');
+      });
+    }
+
+    // Initialize music on page load
+    initBackgroundMusic();
+  </script>
+</body>
+</html>

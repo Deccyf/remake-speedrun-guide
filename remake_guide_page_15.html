@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 15: Laboratory - REmake Speedrun Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --re-black: #0D0D0D; --re-dark: #1A1A1A; --re-blood: #8B0000;
+    --re-crimson: #DC143C; --re-green: #7CFC00; --re-gold: #D4AF37;
+    --re-white: #F5F5F5; --re-gray: #808080; --re-orange: #FF6B35;
+    --re-cyan: #00CED1;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif; background: var(--re-black);
+    color: var(--re-white); line-height: 1.7; overflow-x: hidden;
+  }
+
+  .fog-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; }
+  
+  .fog {
+    position: absolute; width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 30% 40%, rgba(0, 206, 209, 0.12) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 60%, rgba(139, 0, 0, 0.12) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 80%, rgba(124, 252, 0, 0.06) 0%, transparent 40%);
+    animation: fogMove 38s ease-in-out infinite;
+  }
+
+  @keyframes fogMove {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(3%, -3%); }
+  }
+
+  .header {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    background: rgba(13, 13, 13, 0.95); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3); transition: all 0.3s;
+  }
+
+  .header.scrolled { background: rgba(13, 13, 13, 0.98); box-shadow: 0 4px 30px rgba(139, 0, 0, 0.3); }
+
+  .header-content {
+    max-width: 1400px; margin: 0 auto; padding: 1.2rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;
+    color: var(--re-white); text-decoration: none; letter-spacing: 3px; position: relative;
+  }
+
+  .logo::before, .logo::after {
+    content: ''; position: absolute; top: 50%; width: 20px; height: 2px;
+    background: var(--re-blood); transform: translateY(-50%);
+  }
+
+  .logo::before { left: -30px; }
+  .logo::after { right: -30px; }
+  .logo span { color: var(--re-blood); }
+
+  .nav { display: flex; gap: 3rem; align-items: center; }
+
+  .nav a {
+    color: var(--re-gray); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s; position: relative;
+  }
+
+  .nav a::after {
+    content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+    background: var(--re-blood); transition: width 0.3s;
+  }
+
+  .nav a:hover { color: var(--re-white); }
+  .nav a:hover::after { width: 100%; }
+
+  .progress-bar {
+    position: fixed; top: 73px; left: 0; width: 100%; height: 3px;
+    background: rgba(139, 0, 0, 0.2); z-index: 999;
+  }
+
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--re-blood), var(--re-crimson));
+    width: 0%; transition: width 0.3s; box-shadow: 0 0 10px var(--re-blood);
+  }
+
+  main { padding-top: 100px; max-width: 1400px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+
+  .section-hero { text-align: center; padding: 4rem 0; position: relative; }
+
+  .section-badge {
+    display: inline-block; padding: 0.6rem 1.5rem; background: rgba(139, 0, 0, 0.2);
+    border: 1px solid var(--re-blood); border-radius: 30px; font-size: 0.85rem;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 3px;
+    color: var(--re-green); margin-bottom: 1.5rem; animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(124, 252, 0, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(124, 252, 0, 0.6); }
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif; font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem;
+    line-height: 1.1; letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(0, 206, 209, 0.6), 0 0 40px rgba(0, 206, 209, 0.3);
+    animation: titleGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(0, 206, 209, 0.6), 0 0 40px rgba(0, 206, 209, 0.3); }
+    50% { text-shadow: 0 0 30px rgba(0, 206, 209, 0.9), 0 0 60px rgba(0, 206, 209, 0.5); }
+  }
+
+  .section-meta {
+    display: flex; gap: 3rem; justify-content: center;
+    color: var(--re-gray); font-size: 0.95rem; margin-top: 1.5rem;
+  }
+
+  .content-grid { display: grid; grid-template-columns: 250px 1fr; gap: 3rem; margin-top: 4rem; }
+  .sidebar { position: sticky; top: 120px; height: fit-content; }
+
+  .toc {
+    background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.3); border-radius: 15px; padding: 2rem;
+  }
+
+  .toc h3 {
+    font-family: 'Cinzel', serif; font-size: 1.2rem; margin-bottom: 1.5rem;
+    color: var(--re-blood); letter-spacing: 2px;
+  }
+
+  .toc ul { list-style: none; }
+  .toc li { margin-bottom: 0.8rem; }
+
+  .toc a {
+    color: var(--re-gray); text-decoration: none; font-size: 0.95rem;
+    transition: all 0.3s; display: block; padding: 0.5rem; border-radius: 5px;
+    position: relative; padding-left: 1.5rem;
+  }
+
+  .toc a::before { content: '?'; position: absolute; left: 0.5rem; opacity: 0; transition: all 0.3s; }
+  .toc a:hover { color: var(--re-white); background: rgba(139, 0, 0, 0.2); padding-left: 2rem; }
+  .toc a:hover::before { opacity: 1; }
+  .toc a.active { color: var(--re-blood); background: rgba(139, 0, 0, 0.2); }
+
+  .section-nav { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(139, 0, 0, 0.3); }
+
+  .section-nav h4 {
+    font-size: 0.85rem; color: var(--re-gray); text-transform: uppercase;
+    letter-spacing: 2px; margin-bottom: 1rem;
+  }
+
+  .nav-link {
+    display: block; color: var(--re-gray); text-decoration: none; padding: 0.5rem;
+    border-radius: 5px; margin-bottom: 0.5rem; transition: all 0.3s;
+  }
+
+  .nav-link:hover { color: var(--re-gold); background: rgba(212, 175, 55, 0.1); }
+
+  .main-content {
+    background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.2); border-radius: 15px; padding: 3rem;
+  }
+
+  .objectives-box {
+    background: rgba(212, 175, 55, 0.1); border: 2px solid var(--re-gold);
+    border-radius: 15px; padding: 2rem; margin-bottom: 3rem; position: relative; overflow: hidden;
+  }
+
+  .objectives-box::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent);
+    animation: rotate 20s linear infinite;
+  }
+
+  @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .objectives-box h3 {
+    font-family: 'Cinzel', serif; color: var(--re-gold); margin-bottom: 1.5rem;
+    font-size: 1.5rem; position: relative; z-index: 2;
+  }
+
+  .objectives-box ul { list-style: none; position: relative; z-index: 2; }
+
+  .objectives-box li {
+    padding: 0.8rem 0; padding-left: 2rem; position: relative;
+    color: var(--re-gray); transition: all 0.3s;
+  }
+
+  .objectives-box li::before {
+    content: '?'; position: absolute; left: 0; color: var(--re-gold);
+    font-weight: 700; font-size: 1.2rem;
+  }
+
+  .objectives-box li:hover { color: var(--re-white); padding-left: 2.5rem; }
+
+  .content-section { margin-bottom: 3rem; animation: fadeIn 0.8s ease-out; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .content-section h2 {
+    font-family: 'Cinzel', serif; font-size: 2.2rem; color: var(--re-blood);
+    margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid rgba(139, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .content-section h2::after {
+    content: ''; position: absolute; bottom: -2px; left: 0;
+    width: 100px; height: 2px; background: var(--re-blood);
+  }
+
+  .content-section h3 {
+    font-family: 'Cinzel', serif; font-size: 1.5rem;
+    color: var(--re-white); margin: 2rem 0 1rem 0;
+  }
+
+  .content-section p { color: var(--re-gray); line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem; }
+  .content-section ol { margin-left: 2rem; margin-bottom: 1.5rem; }
+  .content-section li { color: var(--re-gray); margin-bottom: 1rem; line-height: 1.8; }
+  .content-section strong { color: var(--re-gold); }
+
+  .code-box {
+    background: rgba(13, 13, 13, 0.95); border: 2px solid var(--re-cyan);
+    border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center;
+    position: relative; transition: all 0.4s;
+  }
+
+  .code-box:hover {
+    border-color: var(--re-green); box-shadow: 0 10px 40px rgba(0, 206, 209, 0.3);
+  }
+
+  .code-display {
+    font-family: 'Courier New', monospace; font-size: 2.5rem; color: var(--re-cyan);
+    font-weight: bold; letter-spacing: 6px; text-shadow: 0 0 15px rgba(0, 206, 209, 0.5);
+    animation: code-glow 2s ease-in-out infinite; margin: 1rem 0;
+  }
+
+  @keyframes code-glow {
+    0%, 100% { text-shadow: 0 0 15px rgba(0, 206, 209, 0.5); }
+    50% { text-shadow: 0 0 25px rgba(0, 206, 209, 0.8); }
+  }
+
+  .code-label {
+    font-family: 'Cinzel', serif; color: var(--re-cyan); font-size: 1.2rem;
+    margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+  }
+
+  .danger-box {
+    background: rgba(139, 0, 0, 0.15); border: 2px solid var(--re-blood);
+    border-radius: 10px; padding: 2rem; margin: 2rem 0; position: relative;
+    transition: all 0.3s;
+  }
+
+  .danger-box:hover {
+    background: rgba(139, 0, 0, 0.25); box-shadow: 0 8px 30px rgba(139, 0, 0, 0.5);
+  }
+
+  .danger-box h4 {
+    color: var(--re-blood); font-weight: 700; margin-bottom: 0.8rem;
+    font-size: 1.2rem; letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  .info-box {
+    background: rgba(139, 0, 0, 0.1); border-left: 4px solid var(--re-blood);
+    padding: 1.5rem; border-radius: 10px; margin: 2rem 0;
+    position: relative; overflow: hidden;
+  }
+
+  .info-box::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, rgba(139, 0, 0, 0.1), transparent);
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+  }
+
+  .info-box-title {
+    font-weight: 700; color: var(--re-blood); margin-bottom: 0.8rem;
+    font-size: 1.1rem; letter-spacing: 1px; position: relative; z-index: 2;
+  }
+
+  .info-box p, .info-box ul { position: relative; z-index: 2; }
+
+  .info-box.warning { border-left-color: var(--re-gold); background: rgba(212, 175, 55, 0.1); }
+  .info-box.warning .info-box-title { color: var(--re-gold); }
+
+  .page-nav {
+    display: flex; justify-content: space-between; margin-top: 4rem;
+    padding-top: 3rem; border-top: 2px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .page-nav-btn {
+    display: inline-flex; align-items: center; gap: 1rem; padding: 1.2rem 2.5rem;
+    background: rgba(139, 0, 0, 0.2); border: 2px solid var(--re-blood); border-radius: 50px;
+    color: var(--re-white); text-decoration: none; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s;
+    position: relative; overflow: hidden;
+  }
+
+  .page-nav-btn::before {
+    content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+    border-radius: 50%; background: rgba(139, 0, 0, 0.3);
+    transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s;
+  }
+
+  .page-nav-btn:hover::before { width: 300px; height: 300px; }
+  .page-nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(139, 0, 0, 0.5); }
+
+  @media (max-width: 968px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .section-title { font-size: 2.5rem; }
+    .nav { gap: 1.5rem; }
+  }
+
+  .blood-drips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .blood-drip {
+    position: absolute;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--re-blood));
+    animation: drip 3s ease-in infinite;
+  }
+
+  @keyframes drip {
+    0% { height: 0; opacity: 0; }
+    10% { opacity: 1; }
+    100% { height: 100vh; opacity: 0; }
+  }
+
+  .footer {
+    background: rgba(13, 13, 13, 0.95);
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 8rem;
+  }
+
+  .footer p {
+    color: var(--re-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer-info {
+    text-align: left;
+  }
+
+  .footer-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .discord-btn {
+    background: rgba(88, 101, 242, 0.2);
+    color: #5865f2;
+    border: 1px solid rgba(88, 101, 242, 0.3);
+  }
+
+  .discord-btn:hover {
+    background: #5865f2;
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+  }
+
+  .website-btn {
+    background: rgba(139, 0, 0, 0.2);
+    color: var(--re-blood);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .website-btn:hover {
+    background: var(--re-blood);
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+  }
+
+  .footer-icon {
+    font-size: 1.1rem;
+  }
+
+  .discord-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .website-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    filter: brightness(1.2);
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .footer-info {
+      text-align: center;
+    }
+    .footer-buttons {
+      justify-content: center;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="fog-container"><div class="fog"></div></div>
+  <div class="blood-drips" id="bloodDrips"></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <header class="header" id="header">
+    <div class="header-content">
+      <a href="remake_index_page.html" class="logo">RESIDENT <span>EVIL</span></a>
+      <nav class="nav">
+        <a href="remake_index_page.html">Home</a>
+        <a href="remake_guide_page_1.html">Guide Setup</a>
+        <a href="remake_guide_page_2.html">Walkthrough</a>
+        <a href="resources-page.html">Resources</a>
+        <a href="quick-reference-guide.html">Quick Reference</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-hero">
+      <div class="section-badge">SECTION 15 OF 16</div>
+      <h1 class="section-title">Laboratory Section</h1>
+      <div class="section-meta">
+        <span>10 MIN READ</span>
+        <span>�</span>
+        <span>LABORATORY</span>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <aside class="sidebar">
+        <div class="toc">
+          <h3>Contents</h3>
+          <ul>
+            <li><a href="#objectives" class="active">Objectives</a></li>
+            <li><a href="#safety-save">Safety Save</a></li>
+            <li><a href="#computer-access">Computer Access</a></li>
+            <li><a href="#laboratory-key">Laboratory Key</a></li>
+            <li><a href="#fuel-management">Fuel Management</a></li>
+          </ul>
+
+          <div class="section-nav">
+            <h4>Navigate</h4>
+            <a href="remake_guide_page_14.html" class="nav-link">? Section 14: Lisa Underground</a>
+            <a href="remake_guide_page_16.html" class="nav-link">Section 16: Tyrant Finale ?</a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="main-content">
+        <div class="objectives-box" id="objectives">
+          <h3>Section Objectives</h3>
+          <ul>
+            <li>Access computer terminal (JOHN/ADA/CELL)</li>
+            <li>Obtain Lab Key (code 8462)</li>
+            <li>Manage fuel canister safely</li>
+            <li>Activate power to elevator</li>
+          </ul>
+        </div>
+
+        <div class="content-section" id="safety-save">
+          <div class="danger-box">
+            <h4>Final Safety Save</h4>
+            <p>This section has an insta-kill risk with the fuel canister. Consider saving before continuing.</p>
+          </div>
+        </div>
+
+        <div class="content-section" id="computer-access">
+          <h2>Computer Access</h2>
+          
+          <ol>
+            <li>Go down stairs through tunnel to computer room</li>
+            <li>Enter username: <strong>JOHN</strong></li>
+            <li>Enter password: <strong>ADA</strong></li>
+            <li>Open both doors using password: <strong>CELL</strong></li>
+          </ol>
+        </div>
+
+        <div class="content-section" id="laboratory-key">
+          <h2>Laboratory Key</h2>
+          
+          <ol>
+            <li>Go upstairs to room at top</li>
+            <li>Enter code into wall console:</li>
+          </ol>
+
+          <div class="code-box">
+            <div class="code-label">Lab Key Code</div>
+            <div class="code-display">8462</div>
+          </div>
+
+          <ol start="3">
+            <li>Grab <strong>Lab Key</strong></li>
+          </ol>
+        </div>
+
+        <div class="content-section" id="fuel-management">
+          <h2>Fuel Management</h2>
+          
+          <ol>
+            <li>Head to refueling room</li>
+            <li>Grab Fuel Canister</li>
+            <li>Fill it</li>
+            <li>Head back to input slot</li>
+            <li>Pattern: 4 steps running, 2 steps walking (or just walk entire way)</li>
+            <li>Place canister</li>
+            <li>Activate power to elevator</li>
+          </ol>
+
+          <div class="info-box">
+            <div class="info-box-title">What's Next</div>
+            <p>Section 16 covers the Tyrant final boss, helipad escape, and speedrun completion. One magnum shot, grab key, signal rockets, GG!</p>
+          </div>
+        </div>
+
+        <div class="page-nav">
+          <a href="remake_guide_page_14.html" class="page-nav-btn">
+            <span>?</span>
+            <span>Section 14: Lisa Underground</span>
+          </a>
+          <a href="remake_guide_page_16.html" class="page-nav-btn">
+            <span>Section 16: Tyrant Finale</span>
+            <span>?</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Blood drip animation
+    const bloodDripsContainer = document.getElementById('bloodDrips');
+    for (let i = 0; i < 5; i++) {
+      const drip = document.createElement('div');
+      drip.className = 'blood-drip';
+      drip.style.left = Math.random() * 100 + '%';
+      drip.style.animationDelay = Math.random() * 3 + 's';
+      drip.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      bloodDripsContainer.appendChild(drip);
+    }
+
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
+    });
+
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      header.classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.querySelectorAll('.toc a').forEach(link => link.classList.remove('active'));
+          this.classList.add('active');
+        }
+      });
+    });
+
+    const sections = document.querySelectorAll('.content-section');
+    const tocLinks = document.querySelectorAll('.toc a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        if (scrollY >= section.offsetTop - 150) current = section.getAttribute('id');
+      });
+
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      });
+    });
+  </script>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p>Original Guide by Deccyf</p>
+        <p>� 2025 Wheel of Struggle Community Speedrun Guide � All Rights Reserved</p>
+      </div>
+      <div class="footer-buttons">
+        <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
+          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="footer-icon discord-logo">
+          Discord
+        </a>
+        <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank">
+          <img src="Logos/WoS_Discord_Colour_V2.png" alt="Wheel of Struggle" class="footer-icon website-logo">
+          Website
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 1: Setup & Core Techniques - REmake Speedrun Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&family=Cinzel:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --re-black: #0D0D0D;
+    --re-dark: #1A1A1A;
+    --re-blood: #8B0000;
+    --re-crimson: #DC143C;
+    --re-green: #7CFC00;
+    --re-gold: #D4AF37;
+    --re-white: #F5F5F5;
+    --re-gray: #808080;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--re-black);
+    color: var(--re-white);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  .fog-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .fog {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: 
+      radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
+      radial-gradient(ellipse at 70% 60%, rgba(124, 252, 0, 0.08) 0%, transparent 40%);
+    animation: fogMove 30s ease-in-out infinite;
+  }
+
+  @keyframes fogMove {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(5%, -5%); }
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+    transition: all 0.3s;
+  }
+
+  .header.scrolled {
+    background: rgba(13, 13, 13, 0.98);
+    box-shadow: 0 4px 30px rgba(139, 0, 0, 0.3);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--re-white);
+    text-decoration: none;
+    letter-spacing: 3px;
+    position: relative;
+    transition: all 0.4s;
+  }
+
+  .logo::before, .logo::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    background: var(--re-blood);
+    transform: translateY(-50%);
+  }
+
+  .logo::before { left: -30px; }
+  .logo::after { right: -30px; }
+  .logo span { color: var(--re-blood); }
+
+  .nav {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .nav a {
+    color: var(--re-gray);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--re-blood);
+    transition: width 0.3s;
+  }
+
+  .nav a:hover {
+    color: var(--re-white);
+  }
+
+  .nav a:hover::after {
+    width: 100%;
+  }
+
+  main {
+    padding-top: 100px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .section-hero {
+    text-align: center;
+    padding: 4rem 0;
+    position: relative;
+  }
+
+  .section-badge {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background: rgba(139, 0, 0, 0.2);
+    border: 1px solid var(--re-blood);
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--re-green);
+    margin-bottom: 1.5rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(124, 252, 0, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(124, 252, 0, 0.6); }
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3);
+    animation: titleGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3); }
+    50% { text-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.5); }
+  }
+
+  .section-meta {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    color: var(--re-gray);
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 3rem;
+    margin-top: 4rem;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 120px;
+    height: fit-content;
+  }
+
+  .toc {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 2rem;
+  }
+
+  .toc h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--re-blood);
+    letter-spacing: 2px;
+  }
+
+  .toc ul {
+    list-style: none;
+  }
+
+  .toc li {
+    margin-bottom: 0.8rem;
+  }
+
+  .toc a {
+    color: var(--re-gray);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 5px;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .toc a::before {
+    content: '▸';
+    position: absolute;
+    left: 0.5rem;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  .toc a:hover {
+    color: var(--re-white);
+    background: rgba(139, 0, 0, 0.2);
+    padding-left: 2rem;
+  }
+
+  .toc a:hover::before {
+    opacity: 1;
+  }
+
+  .toc a.active {
+    color: var(--re-blood);
+    background: rgba(139, 0, 0, 0.2);
+  }
+
+  .section-nav {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .section-nav h4 {
+    font-size: 0.85rem;
+    color: var(--re-gray);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+
+  .nav-link {
+    display: block;
+    color: var(--re-gray);
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s;
+  }
+
+  .nav-link:hover {
+    color: var(--re-gold);
+    background: rgba(212, 175, 55, 0.1);
+  }
+
+  .main-content {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 3rem;
+  }
+
+  .content-section {
+    margin-bottom: 3rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .content-section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: var(--re-blood);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(139, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .content-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: var(--re-blood);
+  }
+
+  .content-section h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--re-white);
+    margin: 2rem 0 1rem 0;
+  }
+
+  .content-section p {
+    color: var(--re-gray);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+  }
+
+  .content-box {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 2.5rem;
+    margin: 2rem 0;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .content-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.1), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .content-box:hover::before {
+    opacity: 1;
+  }
+
+  .content-box:hover {
+    border-color: var(--re-blood);
+    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.3);
+    transform: translateY(-5px);
+  }
+
+  .content-box h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: var(--re-blood);
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .content-box h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--re-gold);
+    margin: 2rem 0 1rem;
+    letter-spacing: 1px;
+  }
+
+  .content-box p {
+    color: var(--re-gray);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .content-box ul, .content-box ol {
+    margin-left: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .content-box li {
+    color: var(--re-gray);
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .content-box li::marker {
+    color: var(--re-blood);
+  }
+
+  .warning-box {
+    background: rgba(139, 0, 0, 0.15);
+    border-left: 4px solid var(--re-blood);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  .warning-box::before {
+    content: '⚠';
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    color: var(--re-blood);
+    opacity: 0.3;
+  }
+
+  .warning-box h4 {
+    color: var(--re-blood);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+  }
+
+  .info-box {
+    background: rgba(139, 0, 0, 0.1);
+    border-left: 4px solid var(--re-blood);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .info-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(139, 0, 0, 0.1), transparent);
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+  }
+
+  .info-box-title {
+    font-weight: 700;
+    color: var(--re-blood);
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .info-box p, .info-box ul, .info-box ol {
+    position: relative;
+    z-index: 2;
+  }
+
+  .info-box.warning {
+    border-left-color: var(--re-gold);
+    background: rgba(212, 175, 55, 0.1);
+  }
+
+  .info-box.warning .info-box-title {
+    color: var(--re-gold);
+  }
+
+  .info-box.success {
+    border-left-color: var(--re-green);
+    background: rgba(124, 252, 0, 0.1);
+  }
+
+  .info-box.success .info-box-title {
+    color: var(--re-green);
+  }
+
+  .settings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: rgba(26, 26, 26, 0.6);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .settings-table th,
+  .settings-table td {
+    padding: 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+  }
+
+  .settings-table th {
+    background: rgba(139, 0, 0, 0.3);
+    color: var(--re-blood);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+  }
+
+  .settings-table tr {
+    transition: all 0.3s;
+  }
+
+  .settings-table tr:hover {
+    background: rgba(139, 0, 0, 0.1);
+  }
+
+  .settings-table td:first-child {
+    color: var(--re-gold);
+    font-weight: 600;
+  }
+
+  .technique-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .technique-card {
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .technique-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.1), transparent);
+    transform: scale(0);
+    transition: transform 0.6s;
+  }
+
+  .technique-card:hover::before {
+    transform: scale(1);
+  }
+
+  .technique-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--re-blood);
+    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
+  }
+
+  .technique-card h4 {
+    font-family: 'Cinzel', serif;
+    color: var(--re-blood);
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+  }
+
+  .technique-card p {
+    color: var(--re-gray);
+    font-size: 0.95rem;
+    margin-bottom: 0;
+  }
+
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 2px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .page-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 2.5rem;
+    background: rgba(139, 0, 0, 0.2);
+    border: 2px solid var(--re-blood);
+    border-radius: 50px;
+    color: var(--re-white);
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(139, 0, 0, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  .page-nav-btn:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  .page-nav-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.5);
+  }
+
+  @media (max-width: 968px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .section-title { font-size: 2.5rem; }
+    .nav { gap: 1.5rem; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .blood-drips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .blood-drip {
+    position: absolute;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--re-blood));
+    animation: drip 3s ease-in infinite;
+  }
+
+  @keyframes drip {
+    0% { height: 0; opacity: 0; }
+    10% { opacity: 1; }
+    100% { height: 100vh; opacity: 0; }
+  }
+
+  .footer {
+    background: rgba(13, 13, 13, 0.95);
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 8rem;
+  }
+
+  .footer p {
+    color: var(--re-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer-info {
+    text-align: left;
+  }
+
+  .footer-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .discord-btn {
+    background: rgba(88, 101, 242, 0.2);
+    color: #5865f2;
+    border: 1px solid rgba(88, 101, 242, 0.3);
+  }
+
+  .discord-btn:hover {
+    background: #5865f2;
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+  }
+
+  .website-btn {
+    background: rgba(139, 0, 0, 0.2);
+    color: var(--re-blood);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .website-btn:hover {
+    background: var(--re-blood);
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+  }
+
+  .footer-icon {
+    font-size: 1.1rem;
+  }
+
+  .discord-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .website-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    filter: brightness(1.2);
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .footer-info {
+      text-align: center;
+    }
+    .footer-buttons {
+      justify-content: center;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="fog-container">
+    <div class="fog"></div>
+  </div>
+  
+  <div class="blood-drips" id="bloodDrips"></div>
+
+  <header class="header" id="header">
+    <div class="header-content">
+      <a href="remake_index_page.html" class="logo">RESIDENT <span>EVIL</span></a>
+      <nav class="nav">
+        <a href="remake_index_page.html">Home</a>
+        <a href="remake_guide_page_1.html">Guide Setup</a>
+        <a href="remake_guide_page_2.html">Walkthrough</a>
+        <a href="resources-page.html">Resources</a>
+        <a href="quick-reference-guide.html">Quick Reference</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-hero">
+      <div class="section-badge">SECTION 1 OF 16</div>
+      <h1 class="section-title">Introduction & Setup</h1>
+      <div class="section-meta">
+        <span>5 MIN READ</span>
+        <span>•</span>
+        <span>GETTING STARTED</span>
+        <span>•</span>
+        <span>DIFFICULTY: NORMAL</span>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <aside class="sidebar">
+        <div class="toc">
+          <h3>Contents</h3>
+          <ul>
+            <li><a href="#intro" class="active">Introduction</a></li>
+            <li><a href="#what-is-any">What is Any%</a></li>
+            <li><a href="#setup">Essential Setup</a></li>
+            <li><a href="#techniques">Core Techniques</a></li>
+            <li><a href="#splits">Splits & Timing</a></li>
+          </ul>
+
+          <div class="section-nav">
+            <h4>Navigate</h4>
+            <a href="remake_index_page.html" class="nav-link">← Back to Home</a>
+            <a href="remake_guide_page_2.html" class="nav-link">Section 2: Mansion 1 →</a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="main-content">
+        <div class="content-section" id="intro">
+          <h2>Introduction</h2>
+          <p>This comprehensive guide covers speedrunning Resident Evil Remake (HD Remaster) as Jill Valentine in the Any% category on Normal difficulty.</p>
+          <p>The game that defined the survival-horror genre is back! Check out the remastered HD version of Resident Evil. In 1998, a special forces team is dispatched to investigate bizarre murders near Raccoon City. Attacked by a pack of vicious dogs, they take refuge in a haunted mansion—and quickly discover that survival is anything but guaranteed.</p>
+        </div>
+
+        <div class="content-section" id="what-is-any">
+          <h2>What is Any%</h2>
+          <div class="info-box">
+            <div class="info-box-title">CATEGORY DEFINITION</div>
+            <p>Complete the game as quickly as possible using any legitimate means to reach the credits. This means you can use any glitches, skips, or strategies that don't involve external modifications to the game.</p>
+          </div>
+        </div>
+
+        <div class="content-section" id="setup">
+          <h2>Essential Setup Requirements</h2>
+          <h3>Platform & Settings</h3>
+
+          <table class="settings-table">
+            <thead>
+              <tr>
+                <th>Setting</th>
+                <th>Recommended</th>
+                <th>Benefit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Platform</td>
+                <td>PC (Steam HD Remaster)</td>
+                <td>Best performance and load times</td>
+              </tr>
+              <tr>
+                <td>Frame Rate</td>
+                <td>Variable FPS (V-Sync off)</td>
+                <td>120fps makes actions perform faster</td>
+              </tr>
+              <tr>
+                <td>Text Language</td>
+                <td>Traditional Chinese or Japanese</td>
+                <td>Faster dialogue than English</td>
+              </tr>
+              <tr>
+                <td>Controls</td>
+                <td>Arranged/Alternative</td>
+                <td>Advanced movement capabilities</td>
+              </tr>
+              <tr>
+                <td>Storage</td>
+                <td>Install to SSD</td>
+                <td>Faster loading times</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="info-box warning">
+            <div class="info-box-title">TIMING NOTICE</div>
+            <p>Times are tracked by the in-game timer (displayed on ending screen) rather than real time. For the purposes of racing, you may ignore IGT and use real-time instead.</p>
+          </div>
+        </div>
+
+        <div class="content-section" id="techniques">
+          <h2>Core Techniques Mastery</h2>
+          <p>Before attempting the route, you must understand these fundamental techniques. These will save significant time throughout your run:</p>
+
+          <div class="technique-grid">
+            <div class="technique-card">
+              <h4>Enemy Baiting</h4>
+              <p>Enemies (especially zombies) will "lunge" at the player when close enough. During this lunge there's a brief window to move away so the enemy misses, leaving them in recovery for roughly two seconds.</p>
+            </div>
+
+            <div class="technique-card">
+              <h4>Stair Skating</h4>
+              <p>Accomplished by mashing the run button whilst walking (d-pad forward) on stairs. Roughly 10Hz (10 button presses per second) is sufficient. This technique significantly speeds up stair traversal.</p>
+            </div>
+
+            <div class="technique-card">
+              <h4>Pump Cancelling</h4>
+              <p>After firing shouldered weapons like the shotgun and the grenade launcher, release aim/fire buttons whilst quickly pressing forward on d-pad immediately after firing.</p>
+            </div>
+
+            <div class="technique-card">
+              <h4>Quick Shooting</h4>
+              <p>When firing the handgun, there's a one-frame window where the gun can be fired again early up to three times. This requires precise timing but dramatically increases handgun DPS.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-section" id="splits">
+          <h2>Splits and Timing Tools</h2>
+          <p>Proper timing and split management is crucial for tracking your progress and identifying areas for improvement.</p>
+
+          <div class="info-box success">
+            <div class="info-box-title">SETUP INSTRUCTIONS</div>
+            <ol style="margin-left: 2rem; color: var(--re-gray);">
+              <li>Install <strong>LiveSplit</strong> from livesplit.org</li>
+              <li>Download the Jill Any% splits file from the Resources page</li>
+              <li>Download the autosplitter script from the same location</li>
+              <li>Open the splits file in LiveSplit</li>
+              <li>Edit layout, add "Scriptable Auto Splitter" component</li>
+              <li>Point it to the downloaded script file</li>
+            </ol>
+          </div>
+
+          <div class="info-box warning">
+            <div class="info-box-title">BEFORE YOU BEGIN</div>
+            <p>This guide assumes you have completed Resident Evil Remake at least once and are familiar with the mansion layout, puzzle solutions, and basic enemy behaviors. If you're new to the game, consider doing a casual playthrough first.</p>
+          </div>
+
+          <h3>What's Next?</h3>
+          <p>Now that you understand the essential setup and core techniques, you're ready to begin the detailed route walkthrough. Section 2 covers the opening sequence, initial mansion navigation, and obtaining the Sword Key.</p>
+        </div>
+
+        <div class="page-nav">
+          <a href="remake_index_page.html" class="page-nav-btn">
+            <span>←</span>
+            <span>Back to Home</span>
+          </a>
+          <a href="remake_guide_page_2.html" class="page-nav-btn">
+            <span>Section 2: Mansion 1</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Blood drip animation
+    const bloodDripsContainer = document.getElementById('bloodDrips');
+    for (let i = 0; i < 5; i++) {
+      const drip = document.createElement('div');
+      drip.className = 'blood-drip';
+      drip.style.left = Math.random() * 100 + '%';
+      drip.style.animationDelay = Math.random() * 3 + 's';
+      drip.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      bloodDripsContainer.appendChild(drip);
+    }
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          document.querySelectorAll('.toc a').forEach(link => link.classList.remove('active'));
+          this.classList.add('active');
+        }
+      });
+    });
+
+    // Active section highlighting
+    const sections = document.querySelectorAll('.content-section');
+    const tocLinks = document.querySelectorAll('.toc a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Technique card click animation
+    document.querySelectorAll('.technique-card').forEach(card => {
+      card.addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 200);
+      });
+    });
+
+    // Background music functionality
+    let backgroundMusic = null;
+    const musicFiles = [
+      '01 R.E. 1 Save Room- Safe Haven.mp3',
+      // Add your preferred Resident Evil themed music files here
+    ];
+
+    function initBackgroundMusic() {
+      // Check if user has previously allowed autoplay
+      const musicAllowed = localStorage.getItem('musicAllowed') === 'true';
+      
+      if (musicAllowed) {
+        startBackgroundMusic();
+      } else {
+        // Show music control button after user interaction
+        document.addEventListener('click', () => {
+          document.getElementById('musicControlButton')?.remove();
+          showMusicControllButton();
+        }, { once: true });
+      }
+    }
+
+    function showMusicControllButton() {
+      const musicButton = document.createElement('div');
+      musicButton.id = 'musicControlButton';
+      musicButton.innerHTML = '🎵 Enable Background Music';
+      musicButton.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(139, 0, 0, 0.8);
+        color: var(--re-white);
+        padding: 10px 15px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+      `;
+      
+      musicButton.addEventListener('mouseenter', () => {
+        musicButton.style.background = 'var(--re-blood)';
+        musicButton.style.transform = 'scale(1.05)';
+      });
+      
+      musicButton.addEventListener('mouseleave', () => {
+        musicButton.style.background = 'rgba(139, 0, 0, 0.8)';
+        musicButton.style.transform = 'scale(1)';
+      });
+
+      musicButton.addEventListener('click', () => {
+        localStorage.setItem('musicAllowed', 'true');
+        musicButton.remove();
+        startBackgroundMusic();
+      });
+
+      document.body.appendChild(musicButton);
+    }
+
+    function startBackgroundMusic() {
+      if (backgroundMusic) return;
+      
+      backgroundMusic = new Audio();
+      backgroundMusic.src = musicFiles[0];
+      backgroundMusic.loop = true;
+      backgroundMusic.volume = 0.3; // Lower volume for background music
+      
+      // Handle autoplay restrictions
+      backgroundMusic.play().then(() => {
+        console.log('Background music started');
+      }).catch(() => {
+        console.log('Autoplay blocked, user will need to interact first');
+      });
+    }
+
+    // Initialize music on page load
+    initBackgroundMusic();
+  </script>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p>Original Guide by Deccyf</p>
+        <p>© 2025 Wheel of Struggle Community Speedrun Guide • All Rights Reserved</p>
+      </div>
+      <div class="footer-buttons">
+        <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
+          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="footer-icon discord-logo">
+          Discord
+        </a>
+        <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank">
+          <img src="Logos/WoS_Discord_Colour_V2.png" alt="Wheel of Struggle" class="footer-icon website-logo">
+          Website
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

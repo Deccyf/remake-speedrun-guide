@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Reference - REmake Speedrun Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --re-black: #0D0D0D;
+    --re-dark: #1A1A1A;
+    --re-blood: #8B0000;
+    --re-crimson: #DC143C;
+    --re-green: #7CFC00;
+    --re-gold: #D4AF37;
+    --re-white: #F5F5F5;
+    --re-gray: #808080;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--re-black);
+    color: var(--re-white);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  .fog-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .fog {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: 
+      radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
+      radial-gradient(ellipse at 70% 60%, rgba(124, 252, 0, 0.08) 0%, transparent 40%);
+    animation: fogMove 30s ease-in-out infinite;
+  }
+
+  @keyframes fogMove {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-5%, 5%); }
+    50% { transform: translate(5%, -5%); }
+    75% { transform: translate(-3%, 3%); }
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+    transition: all 0.3s;
+  }
+
+  .header.scrolled {
+    background: rgba(13, 13, 13, 0.98);
+    box-shadow: 0 4px 30px rgba(139, 0, 0, 0.3);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--re-white);
+    text-decoration: none;
+    letter-spacing: 3px;
+    position: relative;
+    transition: all 0.4s;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo-img {
+    height: 50px;
+    width: auto;
+    filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.6));
+    transition: all 0.3s ease;
+  }
+
+  .logo-img:hover {
+    transform: rotate(360deg);
+    filter: drop-shadow(0 0 12px rgba(139, 0, 0, 0.8));
+  }
+
+  .logo::before, .logo::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    background: var(--re-blood);
+    transform: translateY(-50%);
+  }
+
+  .logo::before { left: -30px; }
+  .logo::after { right: -30px; }
+  .logo span { color: var(--re-blood); }
+
+  .nav {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .nav a {
+    color: var(--re-gray);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--re-blood);
+    transition: width 0.3s;
+  }
+
+  .nav a:hover {
+    color: var(--re-white);
+  }
+
+  .nav a:hover::after {
+    width: 100%;
+  }
+
+  main {
+    padding-top: 100px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .section-hero {
+    text-align: center;
+    padding: 4rem 0;
+    position: relative;
+  }
+
+  .section-badge {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background: rgba(139, 0, 0, 0.2);
+    border: 1px solid var(--re-blood);
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--re-green);
+    margin-bottom: 1.5rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(124, 252, 0, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(124, 252, 0, 0.6); }
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3);
+    animation: titleGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3); }
+    50% { text-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.5); }
+  }
+
+  .section-meta {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    color: var(--re-gray);
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .ref-card {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ref-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .ref-card:hover::before {
+    opacity: 1;
+  }
+
+  .ref-card:hover {
+    border-color: var(--re-blood);
+    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.3);
+    transform: translateY(-5px);
+  }
+
+  .ref-card h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--re-gold);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ref-card h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--re-white);
+    margin: 1.5rem 0 0.75rem 0;
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ref-card ul {
+    list-style: none;
+    margin-left: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ref-card li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    color: var(--re-gray);
+  }
+
+  .ref-card li:last-child {
+    border-bottom: none;
+  }
+
+  .item-name {
+    color: var(--re-gold);
+    font-weight: 600;
+  }
+
+  .code-block {
+    background: rgba(13, 13, 13, 0.8);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    margin: 0.75rem 0;
+    color: var(--re-gold);
+    position: relative;
+    z-index: 2;
+  }
+
+  .technique-item {
+    background: rgba(13, 13, 13, 0.8);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    border-left: 3px solid var(--re-gold);
+    position: relative;
+    z-index: 2;
+  }
+
+  .technique-item strong {
+    color: var(--re-gold);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .boss-grid {
+    display: grid;
+    gap: 1rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .boss-item {
+    background: rgba(13, 13, 13, 0.8);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--re-blood);
+  }
+
+  .boss-name {
+    color: var(--re-blood);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+
+  .timeline h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--re-gold);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+  }
+
+  .timeline-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .timeline-number {
+    background: var(--re-blood);
+    color: var(--re-white);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+    font-family: 'Cinzel', serif;
+  }
+
+  .timeline-content h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--re-white);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-content p {
+    color: var(--re-gray);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .blood-drips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .blood-drip {
+    position: absolute;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--re-blood));
+    animation: drip 3s ease-in infinite;
+  }
+
+  @keyframes drip {
+    0% { height: 0; opacity: 0; }
+    10% { opacity: 1; }
+    100% { height: 100vh; opacity: 0; }
+  }
+
+  @media (max-width: 968px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+    }
+
+    .nav {
+      gap: 1.5rem;
+    }
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .footer-info {
+      text-align: center;
+    }
+    .footer-buttons {
+      justify-content: center;
+    }
+  }
+
+  .footer {
+    background: rgba(13, 13, 13, 0.95);
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 8rem;
+  }
+
+  .footer p {
+    color: var(--re-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer-info {
+    text-align: left;
+  }
+
+  .footer-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .discord-btn {
+    background: rgba(88, 101, 242, 0.2);
+    color: #5865f2;
+    border: 1px solid rgba(88, 101, 242, 0.3);
+  }
+
+  .discord-btn:hover {
+    background: #5865f2;
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+  }
+
+  .website-btn {
+    background: rgba(139, 0, 0, 0.2);
+    color: var(--re-blood);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .website-btn:hover {
+    background: var(--re-blood);
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+  }
+
+  .footer-icon {
+    font-size: 1.1rem;
+  }
+
+  .discord-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .website-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    filter: brightness(1.2);
+  }
+</style>
+</head>
+<body>
+  <div class="fog-container">
+    <div class="fog"></div>
+  </div>
+  
+  <div class="blood-drips" id="bloodDrips"></div>
+
+  <header class="header" id="header">
+    <div class="header-content">
+      <a href="remake_index_page.html" class="logo">
+        <img src="WoS_Logo_Optimised.gif" alt="Wheel of Struggle" class="logo-img">
+        RESIDENT <span>EVIL</span>
+      </a>
+      <nav class="nav">
+        <a href="remake_index_page.html">Home</a>
+        <a href="remake_guide_page_1.html">Guide Setup</a>
+        <a href="remake_guide_page_2.html">Walkthrough</a>
+        <a href="resources-page.html">Resources</a>
+        <a href="quick-reference-guide.html">Quick Reference</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-hero">
+      <div class="section-badge">QUICK REFERENCE</div>
+      <h1 class="section-title">Speedrun Reference</h1>
+      <div class="section-meta">
+        <span>TECHNIQUES</span>
+        <span>•</span>
+        <span>PUZZLES</span>
+        <span>•</span>
+        <span>BOSSES</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="ref-card">
+        <h2>Core Techniques</h2>
+        
+        <div class="technique-item">
+          <strong>Enemy Baiting</strong>
+          Get close to zombie, wait for lunge, move away during 2-second recovery window
+        </div>
+
+        <div class="technique-item">
+          <strong>Stair Skating</strong>
+          Mash run button (10Hz) while walking forward on stairs
+        </div>
+
+        <div class="technique-item">
+          <strong>Pump Cancelling</strong>
+          Fire → Release aim → Press forward immediately
+        </div>
+
+        <div class="technique-item">
+          <strong>Quick Shooting</strong>
+          One-frame window to fire handgun early (up to 3 times)
+        </div>
+      </div>
+
+      <div class="ref-card">
+        <h2>Essential Settings</h2>
+        <ul>
+          <li><span class="item-name">Platform</span> <span>PC (Steam)</span></li>
+          <li><span class="item-name">Frame Rate</span> <span>Variable (V-Sync off)</span></li>
+          <li><span class="item-name">Text Language</span> <span>Chinese/Japanese</span></li>
+          <li><span class="item-name">Controls</span> <span>Arranged/Alternative</span></li>
+          <li><span class="item-name">Storage</span> <span>SSD Required</span></li>
+          <li><span class="item-name">Target Time</span> <span>~90 minutes</span></li>
+        </ul>
+      </div>
+
+      <div class="ref-card">
+        <h2>Puzzle Solutions</h2>
+
+        <h3>Clock Puzzle</h3>
+        <div class="code-block">
+          Confirm, → Confirm, Confirm<br>
+          Confirm, → Confirm, Confirm<br>
+          Cancel, Confirm
+        </div>
+
+        <h3>Book Puzzle (Room 003)</h3>
+        <div class="code-block">
+          1↔4 - 2↔6 - 3↔7 - 1
+        </div>
+
+        <h3>Death Mask Order</h3>
+        <div class="code-block">
+          1. Without Mouth<br>
+          2. Without Eyes<br>
+          3. Without Nose<br>
+          4. Complete Mask
+        </div>
+
+        <h3>Cylinder Code</h3>
+        <div class="code-block">
+          4231
+        </div>
+      </div>
+
+      <div class="ref-card">
+        <h2>Boss Strategies</h2>
+        
+        <div class="boss-grid">
+          <div class="boss-item">
+            <div class="boss-name">Elder Crimson</div>
+            3 incendiary shells, close gap halfway, pump cancel
+          </div>
+
+          <div class="boss-item">
+            <div class="boss-name">Black Tiger</div>
+            Move right, shoot webs, 2-3 grenade rounds
+          </div>
+
+          <div class="boss-item">
+            <div class="boss-name">Plant 42</div>
+            4 steps in, turn left, 5 steps up stairs, aim up, 3 incendiary shells
+          </div>
+
+          <div class="boss-item">
+            <div class="boss-name">Yawn 1</div>
+            Grab Death Mask 2, exit immediately (don't fight)
+          </div>
+
+          <div class="boss-item">
+            <div class="boss-name">Yawn 2</div>
+            4 shots before ladder, 1 shot after descending
+          </div>
+
+          <div class="boss-item">
+            <div class="boss-name">Tyrant</div>
+            1 magnum shot, grab key, escape
+          </div>
+        </div>
+      </div>
+
+      <div class="ref-card">
+        <h2>Critical Items</h2>
+        <ul>
+          <li><span class="item-name">Lockpick</span> <span>From Barry (start)</span></li>
+          <li><span class="item-name">Sword Key</span> <span>Graveyard crypt</span></li>
+          <li><span class="item-name">Grenade Launcher</span> <span>Forrest (critical)</span></li>
+          <li><span class="item-name">Serum</span> <span>Save room (Yawn safety)</span></li>
+          <li><span class="item-name">Armour Key</span> <span>Dog Collar puzzle</span></li>
+          <li><span class="item-name">Shield Key</span> <span>Clock puzzle</span></li>
+          <li><span class="item-name">Helmet Key</span> <span>Plant 42</span></li>
+          <li><span class="item-name">Lab Key</span> <span>Code 8462</span></li>
+        </ul>
+      </div>
+
+      <div class="ref-card">
+        <h2>Time-Sensitive Events</h2>
+        
+        <div class="technique-item">
+          <strong>Richard Timer</strong>
+          5 minutes real-time after speaking to Richard. Must complete Music Room, Clock, and reach Yawn.
+        </div>
+
+        <div class="technique-item">
+          <strong>Dog Whistle Fight</strong>
+          Quick shots for fast kill. Free heal available if on Caution.
+        </div>
+
+        <div class="technique-item">
+          <strong>Neptune Skip (Advanced)</strong>
+          Run past Neptune on specific line. Instant death if failed. Push console method is safer.
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <h2>Run Route Overview</h2>
+
+      <div class="timeline-item">
+        <div class="timeline-number">1</div>
+        <div class="timeline-content">
+          <h3>Mansion 1 - Opening (0-15 min)</h3>
+          <p>Lockpick, Emblem, Arrow, Sword Key, East Wing items, Dog Whistle fight</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-number">2</div>
+        <div class="timeline-content">
+          <h3>Armour Key Route (15-25 min)</h3>
+          <p>Coin puzzle, Murder Hall, Grenade Launcher, trigger Richard, Serum, Death Mask 1</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-number">3</div>
+        <div class="timeline-content">
+          <h3>Death Masks & Yawn (25-35 min)</h3>
+          <p>Music Room, Piano, Clock puzzles, Yawn 1, Gallery, Death Masks 2-4, Elder Crimson</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-number">4</div>
+        <div class="timeline-content">
+          <h3>Courtyard & Residence (35-50 min)</h3>
+          <p>Weather vanes, Lisa's Hut, Residence rooms, Aqua Ring, Neptune, Plant 42</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-number">5</div>
+        <div class="timeline-content">
+          <h3>Mansion 2 - Hunters (50-60 min)</h3>
+          <p>Hunter navigation, crusher puzzle, underground access, Yawn 2, gem puzzle</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-number">6</div>
+        <div class="timeline-content">
+          <h3>Underground Facility (60-75 min)</h3>
+          <p>Enrico, boulders, Black Tiger, cylinder puzzle, Lisa Trevor encounters</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-number">7</div>
+        <div class="timeline-content">
+          <h3>Laboratory & Finale (75-90 min)</h3>
+          <p>Computer access, fuel management, Tyrant fight, helipad escape</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div style="margin-top: 2rem; padding: 2rem; background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(139, 0, 0, 0.2); border-radius: 15px;">
+      <h2 style="color: var(--re-gold); margin-bottom: 1rem;">Top Tips for Success</h2>
+      
+      <div style="display: grid; gap: 1rem;">
+        <div style="background: rgba(13, 13, 13, 0.8); padding: 1rem; border-radius: 8px;">
+          <strong style="color: var(--re-gold);">Save Frequently:</strong> Use multiple save slots during practice to isolate difficult sections
+        </div>
+        
+        <div style="background: rgba(13, 13, 13, 0.8); padding: 1rem; border-radius: 8px;">
+          <strong style="color: var(--re-gold);">Know Reset Conditions:</strong> Elder Crimson 4-shot, major damage taken, missed Richard timer
+        </div>
+        
+        <div style="background: rgba(13, 13, 13, 0.8); padding: 1rem; border-radius: 8px;">
+          <strong style="color: var(--re-gold);">Inventory Management:</strong> Movement faster without weapon equipped, combine items early
+        </div>
+        
+        <div style="background: rgba(13, 13, 13, 0.8); padding: 1rem; border-radius: 8px;">
+          <strong style="color: var(--re-gold);">RNG Acceptance:</strong> Some variance is unavoidable, focus on consistent execution
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Blood drip animation
+    const bloodDripsContainer = document.getElementById('bloodDrips');
+    for (let i = 0; i < 5; i++) {
+      const drip = document.createElement('div');
+      drip.className = 'blood-drip';
+      drip.style.left = Math.random() * 100 + '%';
+      drip.style.animationDelay = Math.random() * 3 + 's';
+      drip.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      bloodDripsContainer.appendChild(drip);
+    }
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Background music functionality
+    let backgroundMusic = null;
+    const musicFiles = [
+      '01 R.E. 1 Save Room- Safe Haven.mp3',
+      // Add your preferred Resident Evil themed music files here
+    ];
+
+    function initBackgroundMusic() {
+      // Check if user has previously allowed autoplay
+      const musicAllowed = localStorage.getItem('musicAllowed') === 'true';
+      
+      if (musicAllowed) {
+        startBackgroundMusic();
+      } else {
+        // Show music control button after user interaction
+        document.addEventListener('click', () => {
+          document.getElementById('musicControlButton')?.remove();
+          showMusicControllButton();
+        }, { once: true });
+      }
+    }
+
+    function showMusicControllButton() {
+      const musicButton = document.createElement('div');
+      musicButton.id = 'musicControlButton';
+      musicButton.innerHTML = '🎵 Enable Background Music';
+      musicButton.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(139, 0, 0, 0.8);
+        color: var(--re-white);
+        padding: 10px 15px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+      `;
+      
+      musicButton.addEventListener('mouseenter', () => {
+        musicButton.style.background = 'var(--re-blood)';
+        musicButton.style.transform = 'scale(1.05)';
+      });
+      
+      musicButton.addEventListener('mouseleave', () => {
+        musicButton.style.background = 'rgba(139, 0, 0, 0.8)';
+        musicButton.style.transform = 'scale(1)';
+      });
+
+      musicButton.addEventListener('click', () => {
+        localStorage.setItem('musicAllowed', 'true');
+        musicButton.remove();
+        startBackgroundMusic();
+      });
+
+      document.body.appendChild(musicButton);
+    }
+
+    function startBackgroundMusic() {
+      if (backgroundMusic) return;
+      
+      backgroundMusic = new Audio();
+      backgroundMusic.src = musicFiles[0];
+      backgroundMusic.loop = true;
+      backgroundMusic.volume = 0.3; // Lower volume for background music
+      
+      // Handle autoplay restrictions
+      backgroundMusic.play().then(() => {
+        console.log('Background music started');
+      }).catch(() => {
+        console.log('Autoplay blocked, user will need to interact first');
+      });
+    }
+
+    // Initialize music on page load
+    initBackgroundMusic();
+  </script>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p>Original Guide by Deccyf</p>
+        <p>© 2025 Wheel of Struggle Community Speedrun Guide • All Rights Reserved</p>
+      </div>
+      <div class="footer-buttons">
+        <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
+          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="footer-icon discord-logo">
+          Discord
+        </a>
+        <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank">
+          <img src="Logos/WoS_Discord_Colour_V2.png" alt="Wheel of Struggle" class="footer-icon website-logo">
+          Website
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

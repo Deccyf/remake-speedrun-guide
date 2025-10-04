@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 3: Armour Key & Grenade Launcher - REmake Speedrun Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --re-black: #0D0D0D;
+    --re-dark: #1A1A1A;
+    --re-blood: #8B0000;
+    --re-crimson: #DC143C;
+    --re-green: #7CFC00;
+    --re-gold: #D4AF37;
+    --re-white: #F5F5F5;
+    --re-gray: #808080;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--re-black);
+    color: var(--re-white);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  .fog-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .fog {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: 
+      radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
+      radial-gradient(ellipse at 70% 60%, rgba(124, 252, 0, 0.08) 0%, transparent 40%);
+    animation: fogMove 30s ease-in-out infinite;
+  }
+
+  @keyframes fogMove {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-5%, 5%); }
+    50% { transform: translate(5%, -5%); }
+    75% { transform: translate(-3%, 3%); }
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+    transition: all 0.3s;
+  }
+
+  .header.scrolled {
+    background: rgba(13, 13, 13, 0.98);
+    box-shadow: 0 4px 30px rgba(139, 0, 0, 0.3);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--re-white);
+    text-decoration: none;
+    letter-spacing: 3px;
+    position: relative;
+  }
+
+  .logo::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -30px;
+    width: 20px;
+    height: 2px;
+    background: var(--re-blood);
+    transform: translateY(-50%);
+  }
+
+  .logo::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -30px;
+    width: 20px;
+    height: 2px;
+    background: var(--re-blood);
+    transform: translateY(-50%);
+  }
+
+  .logo span {
+    color: var(--re-blood);
+  }
+
+  .nav {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .nav a {
+    color: var(--re-gray);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--re-blood);
+    transition: width 0.3s;
+  }
+
+  .nav a:hover {
+    color: var(--re-white);
+  }
+
+  .nav a:hover::after {
+    width: 100%;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 73px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(139, 0, 0, 0.2);
+    z-index: 999;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--re-blood), var(--re-crimson));
+    width: 0%;
+    transition: width 0.3s;
+    box-shadow: 0 0 10px var(--re-blood);
+  }
+
+  main {
+    padding-top: 100px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .section-hero {
+    text-align: center;
+    padding: 4rem 0;
+    position: relative;
+  }
+
+  .section-badge {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background: rgba(139, 0, 0, 0.2);
+    border: 1px solid var(--re-blood);
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--re-green);
+    margin-bottom: 1.5rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(124, 252, 0, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(124, 252, 0, 0.6); }
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    letter-spacing: 3px;
+    text-shadow: 
+      0 0 20px rgba(139, 0, 0, 0.5),
+      0 0 40px rgba(139, 0, 0, 0.3);
+    animation: titleGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3); }
+    50% { text-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.5); }
+  }
+
+  .section-meta {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    color: var(--re-gray);
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 3rem;
+    margin-top: 4rem;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 120px;
+    height: fit-content;
+  }
+
+  .toc {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 2rem;
+  }
+
+  .toc h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--re-blood);
+    letter-spacing: 2px;
+  }
+
+  .toc ul {
+    list-style: none;
+  }
+
+  .toc li {
+    margin-bottom: 0.8rem;
+  }
+
+  .toc a {
+    color: var(--re-gray);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 5px;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .toc a::before {
+    content: '▸';
+    position: absolute;
+    left: 0.5rem;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  .toc a:hover {
+    color: var(--re-white);
+    background: rgba(139, 0, 0, 0.2);
+    padding-left: 2rem;
+  }
+
+  .toc a:hover::before {
+    opacity: 1;
+  }
+
+  .toc a.active {
+    color: var(--re-blood);
+    background: rgba(139, 0, 0, 0.2);
+  }
+
+  .section-nav {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .section-nav h4 {
+    font-size: 0.85rem;
+    color: var(--re-gray);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+
+  .nav-link {
+    display: block;
+    color: var(--re-gray);
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s;
+  }
+
+  .nav-link:hover {
+    color: var(--re-gold);
+    background: rgba(212, 175, 55, 0.1);
+  }
+
+  .main-content {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 3rem;
+  }
+
+  .objectives-box {
+    background: rgba(212, 175, 55, 0.1);
+    border: 2px solid var(--re-gold);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .objectives-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent);
+    animation: rotate 20s linear infinite;
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .objectives-box h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--re-gold);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .objectives-box ul {
+    list-style: none;
+    position: relative;
+    z-index: 2;
+  }
+
+  .objectives-box li {
+    padding: 0.8rem 0;
+    padding-left: 2rem;
+    position: relative;
+    color: var(--re-gray);
+    transition: all 0.3s;
+  }
+
+  .objectives-box li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--re-gold);
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .objectives-box li:hover {
+    color: var(--re-white);
+    padding-left: 2.5rem;
+  }
+
+  .content-section {
+    margin-bottom: 3rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .content-section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: var(--re-blood);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(139, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .content-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: var(--re-blood);
+  }
+
+  .content-section h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--re-white);
+    margin: 2rem 0 1rem 0;
+  }
+
+  .content-section p {
+    color: var(--re-gray);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+  }
+
+  .content-section ol {
+    margin-left: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .content-section li {
+    color: var(--re-gray);
+    margin-bottom: 1rem;
+    line-height: 1.8;
+  }
+
+  .content-section strong {
+    color: var(--re-gold);
+  }
+
+  .content-section ul {
+    margin-left: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-box {
+    background: rgba(139, 0, 0, 0.1);
+    border-left: 4px solid var(--re-blood);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .info-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(139, 0, 0, 0.1), transparent);
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+  }
+
+  .info-box-title {
+    font-weight: 700;
+    color: var(--re-blood);
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .info-box p, .info-box ul {
+    position: relative;
+    z-index: 2;
+  }
+
+  .info-box.success {
+    border-left-color: var(--re-green);
+    background: rgba(124, 252, 0, 0.05);
+  }
+
+  .info-box.success .info-box-title {
+    color: var(--re-green);
+  }
+
+  .weapon-highlight {
+    background: rgba(139, 0, 0, 0.2);
+    border: 2px solid var(--re-blood);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .weapon-highlight::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.3), transparent);
+    animation: weaponPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes weaponPulse {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(10%, 10%); }
+  }
+
+  .weapon-highlight h3 {
+    position: relative;
+    z-index: 2;
+    color: var(--re-crimson);
+    margin-bottom: 1rem;
+  }
+
+  .weapon-highlight p {
+    position: relative;
+    z-index: 2;
+  }
+
+  .weapon-highlight ul {
+    position: relative;
+    z-index: 2;
+    margin-top: 1rem;
+  }
+
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 2px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .page-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 2.5rem;
+    background: rgba(139, 0, 0, 0.2);
+    border: 2px solid var(--re-blood);
+    border-radius: 50px;
+    color: var(--re-white);
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(139, 0, 0, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  .page-nav-btn:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  .page-nav-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.5);
+  }
+
+  @media (max-width: 968px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      position: static;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+    }
+
+    .nav {
+      gap: 1.5rem;
+    }
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .footer-info {
+      text-align: center;
+    }
+    .footer-buttons {
+      justify-content: center;
+    }
+  }
+
+  .footer {
+    background: rgba(13, 13, 13, 0.95);
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 8rem;
+  }
+
+  .footer p {
+    color: var(--re-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer-info {
+    text-align: left;
+  }
+
+  .footer-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .discord-btn {
+    background: rgba(88, 101, 242, 0.2);
+    color: #5865f2;
+    border: 1px solid rgba(88, 101, 242, 0.3);
+  }
+
+  .discord-btn:hover {
+    background: #5865f2;
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+  }
+
+  .website-btn {
+    background: rgba(139, 0, 0, 0.2);
+    color: var(--re-blood);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .website-btn:hover {
+    background: var(--re-blood);
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+  }
+
+  .footer-icon {
+    font-size: 1.1rem;
+  }
+
+  .discord-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .website-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    filter: brightness(1.2);
+  }
+</style>
+</head>
+<body>
+  <div class="fog-container">
+    <div class="fog"></div>
+  </div>
+  
+  <div class="blood-drips" id="bloodDrips"></div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressBar"></div>
+  </div>
+
+  <header class="header" id="header">
+    <div class="header-content">
+      <a href="remake_index_page.html" class="logo">RESIDENT <span>EVIL</span></a>
+      <nav class="nav">
+        <a href="remake_index_page.html">Home</a>
+        <a href="remake_guide_page_1.html">Guide Setup</a>
+        <a href="remake_guide_page_2.html">Walkthrough</a>
+        <a href="resources-page.html">Resources</a>
+        <a href="quick-reference-guide.html">Quick Reference</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-hero">
+      <div class="section-badge">SECTION 3 OF 16</div>
+      <h1 class="section-title">Armour Key & Grenade Launcher</h1>
+      <div class="section-meta">
+        <span>10 MIN READ</span>
+        <span>•</span>
+        <span>KEY ITEMS</span>
+        <span>•</span>
+        <span>CRITICAL WEAPON</span>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <aside class="sidebar">
+        <div class="toc">
+          <h3>Contents</h3>
+          <ul>
+            <li><a href="#objectives" class="active">Objectives</a></li>
+            <li><a href="#armour-key">Armour Key</a></li>
+            <li><a href="#grenade-launcher">Grenade Launcher</a></li>
+            <li><a href="#richard">Richard Timer</a></li>
+            <li><a href="#serum">Serum Room</a></li>
+            <li><a href="#death-mask">Death Mask 1</a></li>
+          </ul>
+
+          <div class="section-nav">
+            <h4>Navigate</h4>
+            <a href="remake_guide_page_2.html" class="nav-link">← Section 2: Mansion 1</a>
+            <a href="remake_guide_page_4.html" class="nav-link">Section 4: Death Masks →</a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="main-content">
+        <div class="objectives-box" id="objectives">
+          <h3>Section Objectives</h3>
+          <ul>
+            <li>Obtain Armour Key and activate coin pedestal</li>
+            <li>Navigate Murder Hall with activated Crimson Head</li>
+            <li>Access Grenade Launcher from Forrest's location</li>
+            <li>Speak to Richard and trigger his rescue mission</li>
+            <li>Collect Serum from save room</li>
+            <li>Begin Death Mask collection (Water Tank puzzle)</li>
+          </ul>
+        </div>
+
+        <div class="content-section" id="armour-key">
+          <h2>Armour Key Sequence</h2>
+          
+          <p>This section introduces one of the most dangerous areas in the speedrun: Murder Hall with an activated Crimson Head. Proper execution is essential to avoid significant damage.</p>
+
+          <h3>Coin Puzzle Setup</h3>
+          
+          <ol>
+            <li>Pick up the <strong>Armour Key</strong> from the designated room.</li>
+            <li>Open the Dog Collar in your inventory.</li>
+            <li>Spin around the "coin" item (examine and rotate it).</li>
+            <li>Activate its back side and place it into the pedestal.</li>
+          </ol>
+
+          <div class="info-box">
+            <div class="info-box-title">INVENTORY MANAGEMENT</div>
+            <p>The coin puzzle requires careful inventory manipulation. Practise the spin and activation sequence to minimise menu time.</p>
+          </div>
+
+          <h3>Murder Hall Navigation (Crimson Head Active)</h3>
+          
+          <p>This is arguably the most dangerous section of the early game. The Crimson Head is extremely aggressive and can deal significant damage if not handled properly.</p>
+
+          <div class="info-box">
+            <div class="info-box-title">SAFETY ROUTE</div>
+            <p><strong>Recommended for Beginners:</strong> Run through the first doorway directly in front of the Crimson Head. The Crimson will always lunge and fail when you use this route, giving you time to exit early and avoid the remaining zombies in the hallway.</p>
+          </div>
+
+          <h3>Navigation to Grenade Launcher</h3>
+          
+          <ol start="5">
+            <li>After exiting Murder Hall safely, go back through the door you went through after getting the arrow.</li>
+            <li>Proceed through the top of the main hall to the door at the top right of where you are facing.</li>
+            <li>Travel around the southern walkway to the Armour Key door leading to the Grenade Launcher area.</li>
+          </ol>
+        </div>
+
+        <div class="content-section" id="grenade-launcher">
+          <h2>Grenade Launcher Access</h2>
+          
+          <p>The Grenade Launcher is one of the most important weapons in the Any% speedrun. It's used for multiple boss fights and is essential for optimal times.</p>
+
+          <h3>Forrest Encounter</h3>
+          
+          <ol>
+            <li>Speak to Barry in the cutscene.</li>
+            <li>Mourn Forrest (the cutscene will play automatically).</li>
+            <li>Receive the <strong>Grenade Launcher</strong> - this large, powerful weapon will be your primary boss-killing tool.</li>
+            <li>Never return to this location (it's no longer needed).</li>
+          </ol>
+
+          <div class="weapon-highlight">
+            <h3>Essential Item Acquired</h3>
+            <p>The Grenade Launcher is critical for multiple boss encounters including:</p>
+            <ul style="color: var(--re-gray);">
+              <li>Elder Crimson (3-4 incendiary shells)</li>
+              <li>Black Tiger (web removal + damage)</li>
+              <li>Plant 42 (3 incendiary shells)</li>
+              <li>Yawn 2 (4-5 grenade rounds)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section" id="richard">
+          <h2>Richard Encounter and Timer</h2>
+          
+          <h3>Triggering Richard's Quest</h3>
+          
+          <ol>
+            <li>Return to the main hall.</li>
+            <li>Go into the East Wing and speak to Richard.</li>
+            <li>Skip the cutscene and leave immediately.</li>
+          </ol>
+
+          <div class="info-box">
+            <div class="info-box-title">TIME-SENSITIVE EVENT</div>
+            <p><strong>Richard has 5 minutes in real-time before he dies.</strong> All upcoming tasks (Serum collection, Death Mask 1, Music Room, Clock Puzzle, and reaching Yawn) must be completed within 5 minutes. This is tight but very doable with proper execution.</p>
+          </div>
+
+          <p>The timer begins the moment you trigger Richard's cutscene. If you take longer than 5 minutes, Richard will die before you can save him, and you'll miss out on a critical storyline trigger that affects your route timing.</p>
+        </div>
+
+        <div class="content-section" id="serum">
+          <h2>Serum Save Room</h2>
+          
+          <h3>Item Management</h3>
+          
+          <ol>
+            <li>Proceed to the Serum save room in the West Wing.</li>
+            <li>Deposit the following items in the item box:
+              <ul style="margin-top: 0.5rem;">
+                <li>Handgun (no longer needed for combat)</li>
+                <li>Knife (taking up inventory space)</li>
+                <li>Sword Key (used all doors requiring it)</li>
+              </ul>
+            </li>
+            <li><strong>Before leaving:</strong> Pick up the Serum from the room.</li>
+          </ol>
+
+          <div class="info-box">
+            <div class="info-box-title">SERUM SAFETY</div>
+            <p>This Serum is a safety item for the Yawn 1 encounter. <strong>Yawn poison will end your run</strong> if you don't have the Serum. Always grab it before proceeding. Poison from Yawn is lethal - you will slowly lose health until you die if not treated.</p>
+          </div>
+        </div>
+
+        <div class="content-section" id="death-mask">
+          <h2>Death Mask 1 Collection</h2>
+          
+          <p>This begins the Death Mask collection sequence that will span multiple sections. You need all four masks to access the Elder Crimson boss fight.</p>
+
+          <h3>Water Tank Puzzle</h3>
+          
+          <ol>
+            <li>Move to the water tank room.</li>
+            <li>Use the Chemical on the water tank.</li>
+            <li>Examine the tank, selecting the first options in the dialogue tree until the cutscene begins.</li>
+            <li>Proceed to pick up <strong>Death Mask 1</strong> and exit the room.</li>
+          </ol>
+
+          <h3>Current Inventory Status</h3>
+          
+          <p>At this point, your inventory should contain:</p>
+          
+          <ul style="color: var(--re-gray);">
+            <li>Grenade Launcher (equipped or in first slot)</li>
+            <li>Lockpick</li>
+            <li>Emblem</li>
+            <li>Lighter</li>
+            <li>Serum (critical safety item)</li>
+            <li>Death Mask 1</li>
+          </ul>
+
+          <div class="info-box success">
+            <div class="info-box-title">WHAT'S NEXT</div>
+            <p>Section 4 covers the Music Room puzzle, clock mechanism, Shield Key acquisition, and the first Yawn boss fight. Remember that Richard's timer is still active - you need to complete all of Section 4 before the 5-minute real-time limit expires.</p>
+          </div>
+        </div>
+
+        <div class="page-nav">
+          <a href="remake_guide_page_2.html" class="page-nav-btn">
+            <span>←</span>
+            <span>Section 2: Mansion 1</span>
+          </a>
+          <a href="remake_guide_page_4.html" class="page-nav-btn">
+            <span>Section 4: Death Masks</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          document.querySelectorAll('.toc a').forEach(link => link.classList.remove('active'));
+          this.classList.add('active');
+        }
+      });
+    });
+
+    // Active section highlighting
+    const sections = document.querySelectorAll('.content-section');
+    const tocLinks = document.querySelectorAll('.toc a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p>Original Guide by Deccyf</p>
+        <p>© 2025 Wheel of Struggle Community Speedrun Guide • All Rights Reserved</p>
+      </div>
+      <div class="footer-buttons">
+        <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
+          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="footer-icon discord-logo">
+          Discord
+        </a>
+        <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank">
+          <img src="Logos/WoS_Discord_Colour_V2.png" alt="Wheel of Struggle" class="footer-icon website-logo">
+          Website
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

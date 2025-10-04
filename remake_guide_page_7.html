@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 7: Courtyard & Lisa's Hut - REmake Speedrun Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --re-black: #0D0D0D; --re-dark: #1A1A1A; --re-blood: #8B0000;
+    --re-crimson: #DC143C; --re-green: #7CFC00; --re-gold: #D4AF37;
+    --re-white: #F5F5F5; --re-gray: #808080;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif; background: var(--re-black);
+    color: var(--re-white); line-height: 1.7; overflow-x: hidden;
+  }
+
+  .fog-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; }
+  
+  .fog {
+    position: absolute; width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 60%, rgba(124, 252, 0, 0.08) 0%, transparent 40%);
+    animation: fogMove 30s ease-in-out infinite;
+  }
+
+  @keyframes fogMove {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-5%, 5%); }
+    50% { transform: translate(5%, -5%); }
+    75% { transform: translate(-3%, 3%); }
+  }
+
+  .header {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    background: rgba(13, 13, 13, 0.95); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3); transition: all 0.3s;
+  }
+
+  .header.scrolled { background: rgba(13, 13, 13, 0.98); box-shadow: 0 4px 30px rgba(139, 0, 0, 0.3); }
+
+  .header-content {
+    max-width: 1400px; margin: 0 auto; padding: 1.2rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;
+    color: var(--re-white); text-decoration: none; letter-spacing: 3px; position: relative;
+  }
+
+  .logo::before, .logo::after {
+    content: ''; position: absolute; top: 50%; width: 20px; height: 2px;
+    background: var(--re-blood); transform: translateY(-50%);
+  }
+
+  .logo::before { left: -30px; }
+  .logo::after { right: -30px; }
+  .logo span { color: var(--re-blood); }
+
+  .nav { display: flex; gap: 3rem; align-items: center; }
+
+  .nav a {
+    color: var(--re-gray); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s; position: relative;
+  }
+
+  .nav a::after {
+    content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+    background: var(--re-blood); transition: width 0.3s;
+  }
+
+  .nav a:hover { color: var(--re-white); }
+  .nav a:hover::after { width: 100%; }
+
+  .progress-bar {
+    position: fixed; top: 73px; left: 0; width: 100%; height: 3px;
+    background: rgba(139, 0, 0, 0.2); z-index: 999;
+  }
+
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--re-blood), var(--re-crimson));
+    width: 0%; transition: width 0.3s; box-shadow: 0 0 10px var(--re-blood);
+  }
+
+  main { padding-top: 100px; max-width: 1400px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+
+  .section-hero { text-align: center; padding: 4rem 0; position: relative; }
+
+  .section-badge {
+    display: inline-block; padding: 0.6rem 1.5rem; background: rgba(139, 0, 0, 0.2);
+    border: 1px solid var(--re-blood); border-radius: 30px; font-size: 0.85rem;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 3px;
+    color: var(--re-green); margin-bottom: 1.5rem; animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(124, 252, 0, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(124, 252, 0, 0.6); }
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif; font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem;
+    line-height: 1.1; letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3);
+    animation: titleGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3); }
+    50% { text-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.5); }
+  }
+
+  .section-meta {
+    display: flex; gap: 3rem; justify-content: center;
+    color: var(--re-gray); font-size: 0.95rem; margin-top: 1.5rem;
+  }
+
+  .content-grid { display: grid; grid-template-columns: 250px 1fr; gap: 3rem; margin-top: 4rem; }
+  .sidebar { position: sticky; top: 120px; height: fit-content; }
+
+  .toc {
+    background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.3); border-radius: 15px; padding: 2rem;
+  }
+
+  .toc h3 {
+    font-family: 'Cinzel', serif; font-size: 1.2rem; margin-bottom: 1.5rem;
+    color: var(--re-blood); letter-spacing: 2px;
+  }
+
+  .toc ul { list-style: none; }
+  .toc li { margin-bottom: 0.8rem; }
+
+  .toc a {
+    color: var(--re-gray); text-decoration: none; font-size: 0.95rem;
+    transition: all 0.3s; display: block; padding: 0.5rem; border-radius: 5px;
+    position: relative; padding-left: 1.5rem;
+  }
+
+  .toc a::before { content: '?'; position: absolute; left: 0.5rem; opacity: 0; transition: all 0.3s; }
+  .toc a:hover { color: var(--re-white); background: rgba(139, 0, 0, 0.2); padding-left: 2rem; }
+  .toc a:hover::before { opacity: 1; }
+  .toc a.active { color: var(--re-blood); background: rgba(139, 0, 0, 0.2); }
+
+  .section-nav { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(139, 0, 0, 0.3); }
+
+  .section-nav h4 {
+    font-size: 0.85rem; color: var(--re-gray); text-transform: uppercase;
+    letter-spacing: 2px; margin-bottom: 1rem;
+  }
+
+  .nav-link {
+    display: block; color: var(--re-gray); text-decoration: none; padding: 0.5rem;
+    border-radius: 5px; margin-bottom: 0.5rem; transition: all 0.3s;
+  }
+
+  .nav-link:hover { color: var(--re-gold); background: rgba(212, 175, 55, 0.1); }
+
+  .main-content {
+    background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.2); border-radius: 15px; padding: 3rem;
+  }
+
+  .objectives-box {
+    background: rgba(212, 175, 55, 0.1); border: 2px solid var(--re-gold);
+    border-radius: 15px; padding: 2rem; margin-bottom: 3rem; position: relative; overflow: hidden;
+  }
+
+  .objectives-box::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent);
+    animation: rotate 20s linear infinite;
+  }
+
+  @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .objectives-box h3 {
+    font-family: 'Cinzel', serif; color: var(--re-gold); margin-bottom: 1.5rem;
+    font-size: 1.5rem; position: relative; z-index: 2;
+  }
+
+  .objectives-box ul { list-style: none; position: relative; z-index: 2; }
+
+  .objectives-box li {
+    padding: 0.8rem 0; padding-left: 2rem; position: relative;
+    color: var(--re-gray); transition: all 0.3s;
+  }
+
+  .objectives-box li::before {
+    content: '?'; position: absolute; left: 0; color: var(--re-gold);
+    font-weight: 700; font-size: 1.2rem;
+  }
+
+  .objectives-box li:hover { color: var(--re-white); padding-left: 2.5rem; }
+
+  .content-section { margin-bottom: 3rem; animation: fadeIn 0.8s ease-out; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .content-section h2 {
+    font-family: 'Cinzel', serif; font-size: 2.2rem; color: var(--re-blood);
+    margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid rgba(139, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .content-section h2::after {
+    content: ''; position: absolute; bottom: -2px; left: 0;
+    width: 100px; height: 2px; background: var(--re-blood);
+  }
+
+  .content-section h3 {
+    font-family: 'Cinzel', serif; font-size: 1.5rem;
+    color: var(--re-white); margin: 2rem 0 1rem 0;
+  }
+
+  .content-section p { color: var(--re-gray); line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem; }
+  .content-section ol { margin-left: 2rem; margin-bottom: 1.5rem; }
+  .content-section li { color: var(--re-gray); margin-bottom: 1rem; line-height: 1.8; }
+  .content-section strong { color: var(--re-gold); }
+
+  .mask-order {
+    background: rgba(212, 175, 55, 0.1); border: 2px solid var(--re-gold);
+    border-radius: 15px; padding: 2rem; margin: 2rem 0;
+  }
+
+  .mask-order h4 {
+    font-family: 'Cinzel', serif; color: var(--re-gold);
+    margin-bottom: 1.5rem; font-size: 1.3rem;
+  }
+
+  .mask-list { display: grid; gap: 0.75rem; }
+
+  .mask-item {
+    background: rgba(26, 26, 26, 0.8); padding: 1rem; border-radius: 8px;
+    display: flex; align-items: center; gap: 1rem; transition: all 0.3s;
+  }
+
+  .mask-item:hover { transform: translateX(5px); background: rgba(139, 0, 0, 0.2); }
+
+  .mask-number {
+    background: var(--re-blood); color: white; width: 40px; height: 40px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 1.2rem; flex-shrink: 0;
+  }
+
+  .rng-outcomes {
+    background: rgba(26, 26, 26, 0.8); border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 10px; padding: 2rem; margin: 2rem 0;
+  }
+
+  .rng-outcomes h4 {
+    font-family: 'Cinzel', serif; color: var(--re-blood);
+    margin-bottom: 1.5rem; font-size: 1.3rem;
+  }
+
+  .rng-item {
+    background: rgba(139, 0, 0, 0.1); padding: 1rem; border-radius: 8px;
+    margin-bottom: 1rem; border-left: 3px solid var(--re-gray);
+    transition: all 0.3s;
+  }
+
+  .rng-item:hover { transform: translateX(5px); }
+  .rng-item.best { border-left-color: var(--re-green); }
+  .rng-item.worst { border-left-color: var(--re-blood); }
+  .rng-item strong { color: var(--re-gold); }
+
+  .info-box {
+    background: rgba(139, 0, 0, 0.1); border-left: 4px solid var(--re-blood);
+    padding: 1.5rem; border-radius: 10px; margin: 2rem 0;
+    position: relative; overflow: hidden;
+  }
+
+  .info-box::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, rgba(139, 0, 0, 0.1), transparent);
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+  }
+
+  .info-box-title {
+    font-weight: 700; color: var(--re-blood); margin-bottom: 0.8rem;
+    font-size: 1.1rem; letter-spacing: 1px; position: relative; z-index: 2;
+  }
+
+  .info-box p, .info-box ul { position: relative; z-index: 2; }
+
+  .info-box.warning { border-left-color: var(--re-gold); background: rgba(212, 175, 55, 0.1); }
+  .info-box.warning .info-box-title { color: var(--re-gold); }
+
+  .page-nav {
+    display: flex; justify-content: space-between; margin-top: 4rem;
+    padding-top: 3rem; border-top: 2px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .page-nav-btn {
+    display: inline-flex; align-items: center; gap: 1rem; padding: 1.2rem 2.5rem;
+    background: rgba(139, 0, 0, 0.2); border: 2px solid var(--re-blood); border-radius: 50px;
+    color: var(--re-white); text-decoration: none; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s;
+    position: relative; overflow: hidden;
+  }
+
+  .page-nav-btn::before {
+    content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+    border-radius: 50%; background: rgba(139, 0, 0, 0.3);
+    transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s;
+  }
+
+  .page-nav-btn:hover::before { width: 300px; height: 300px; }
+  .page-nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(139, 0, 0, 0.5); }
+
+  @media (max-width: 968px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .section-title { font-size: 2.5rem; }
+    .nav { gap: 1.5rem; }
+  }
+
+  .blood-drips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .blood-drip {
+    position: absolute;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--re-blood));
+    animation: drip 3s ease-in infinite;
+  }
+
+  @keyframes drip {
+    0% { height: 0; opacity: 0; }
+    10% { opacity: 1; }
+    100% { height: 100vh; opacity: 0; }
+  }
+
+  .footer {
+    background: rgba(13, 13, 13, 0.95);
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 8rem;
+  }
+
+  .footer p {
+    color: var(--re-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer-info {
+    text-align: left;
+  }
+
+  .footer-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .discord-btn {
+    background: rgba(88, 101, 242, 0.2);
+    color: #5865f2;
+    border: 1px solid rgba(88, 101, 242, 0.3);
+  }
+
+  .discord-btn:hover {
+    background: #5865f2;
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+  }
+
+  .website-btn {
+    background: rgba(139, 0, 0, 0.2);
+    color: var(--re-blood);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .website-btn:hover {
+    background: var(--re-blood);
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+  }
+
+  .footer-icon {
+    font-size: 1.1rem;
+  }
+
+  .discord-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .website-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    filter: brightness(1.2);
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .footer-info {
+      text-align: center;
+    }
+    .footer-buttons {
+      justify-content: center;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="fog-container"><div class="fog"></div></div>
+  <div class="blood-drips" id="bloodDrips"></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <header class="header" id="header">
+    <div class="header-content">
+      <a href="remake_index_page.html" class="logo">RESIDENT <span>EVIL</span></a>
+      <nav class="nav">
+        <a href="remake_index_page.html">Home</a>
+        <a href="remake_guide_page_1.html">Guide Setup</a>
+        <a href="remake_guide_page_2.html">Walkthrough</a>
+        <a href="resources-page.html">Resources</a>
+        <a href="quick-reference-guide.html">Quick Reference</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-hero">
+      <div class="section-badge">SECTION 7 OF 16</div>
+      <h1 class="section-title">Courtyard & Lisa's Hut</h1>
+      <div class="section-meta">
+        <span>10 MIN READ</span>
+        <span>�</span>
+        <span>COURTYARD</span>
+        <span>�</span>
+        <span>LISA TREVOR</span>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <aside class="sidebar">
+        <div class="toc">
+          <h3>Contents</h3>
+          <ul>
+            <li><a href="#objectives" class="active">Objectives</a></li>
+            <li><a href="#weather-vane">Weather Vane Puzzle</a></li>
+            <li><a href="#lisas-hut">Lisa's Hut</a></li>
+            <li><a href="#water-management">Water Management</a></li>
+            <li><a href="#residence-access">Residence Access</a></li>
+          </ul>
+
+          <div class="section-nav">
+            <h4>Navigate</h4>
+            <a href="remake_guide_page_6.html" class="nav-link">? Section 6: Elder Crimson Boss Fight</a>
+            <a href="remake_guide_page_8.html" class="nav-link">Section 8: Residence - Early ?</a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="main-content">
+        <div class="objectives-box" id="objectives">
+          <h3>Section Objectives</h3>
+          <ul>
+            <li>Navigate courtyard and solve weather vane puzzle</li>
+            <li>Collect Square Crank from Lisa's Hut</li>
+            <li>Survive first Lisa Trevor encounter</li>
+            <li>Deposit Armour Key and Lighter in storage</li>
+            <li>Lower courtyard water and access elevator</li>
+            <li>Enter Residence through forest path</li>
+          </ul>
+        </div>
+
+        <p>This section introduces Lisa Trevor, a recurring enemy who will appear multiple times throughout the speedrun. Learning to avoid her efficiently is critical for maintaining optimal times.</p>
+
+        <div class="content-section" id="weather-vane">
+          <h2>Weather Vane Puzzle</h2>
+          
+          <p>Move down the steps from the courtyard entrance and proceed toward Lisa's Hut. Before reaching the hut, you'll encounter two weather vanes that must be positioned correctly.</p>
+
+          <h3>Puzzle Solution</h3>
+          
+          <div class="mask-order">
+            <h4>Weather Vane Positions</h4>
+            <p>Stop each vane at the same downward position relative to the screen:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+              <li><strong>First Vane (Red):</strong> Stop at W (West)</li>
+              <li><strong>Second Vane (Blue):</strong> Stop at N (North)</li>
+            </ul>
+            <p style="margin-top: 1rem; color: var(--re-gold);">Both vanes should point downward on your screen when correctly positioned.</p>
+          </div>
+
+          <div class="info-box warning">
+            <div class="info-box-title">RNG Element</div>
+            <p>The movement of these vanes is RNG-based. They spin at variable speeds and you must activate them at the correct moment. This can add 5-15 seconds of variance depending on RNG. There's no strategy to manipulate this - simply wait for the correct position and activate.</p>
+          </div>
+        </div>
+
+        <div class="content-section" id="lisas-hut">
+          <h2>Lisa Trevor Encounter</h2>
+          
+          <p>After solving the weather vane puzzle, proceed to Lisa's Hut. This is your first encounter with Lisa Trevor, one of the game's most unique enemies.</p>
+
+          <h3>Square Crank Collection</h3>
+          
+          <ol>
+            <li>Move to the very back of Lisa's Hut</li>
+            <li>Pick up the <strong>Square Crank</strong> (essential for water management)</li>
+            <li>Go to the nearby storage box</li>
+            <li>Deposit the <strong>Armour Key</strong> (first item in inventory)</li>
+            <li>Deposit the <strong>Lighter</strong> (second item in inventory)</li>
+          </ol>
+
+          <div class="info-box">
+            <div class="info-box-title">Why Deposit These Items?</div>
+            <p>The Armour Key has served its purpose (you've accessed all armour key doors), and the Lighter is no longer needed. Freeing up inventory space now prevents management issues later in the Residence.</p>
+          </div>
+
+          <h3>Lisa Trevor Escape Strategy</h3>
+          
+          <p>At the end of the cutscene, Lisa Trevor spawns and will attempt to attack you. This encounter requires precise timing to avoid damage.</p>
+
+          <div class="info-box warning">
+            <div class="info-box-title">Critical Timing</div>
+            <p><strong>Wait approximately half a second</strong> after the cutscene ends before moving. Then run past Lisa on her right side. This timing avoids damage every time.</p>
+            <p style="margin-top: 0.75rem;"><strong>Running too soon will almost always result in Lisa hitting you.</strong> The half-second wait is crucial for her AI to enter the correct state.</p>
+          </div>
+
+          <h3>Lisa Trevor Mechanics</h3>
+          
+          <p>Lisa Trevor is unique among enemies in Resident Evil:</p>
+          <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+            <li><strong>Cannot be killed:</strong> All damage is temporary, she will always recover</li>
+            <li><strong>High damage output:</strong> Her attacks deal significant damage</li>
+            <li><strong>Recurring enemy:</strong> You'll encounter her again in the underground sections</li>
+            <li><strong>Slow movement:</strong> Can be outrun with proper routing</li>
+            <li><strong>Scripted spawns:</strong> She spawns at predictable locations</li>
+          </ul>
+        </div>
+
+        <div class="content-section" id="water-management">
+          <h2>Courtyard Water Management</h2>
+          
+          <p>After escaping Lisa's Hut, proceed back through the courtyard with your newly acquired Square Crank.</p>
+
+          <h3>Storage Room Navigation</h3>
+          
+          <ol>
+            <li>Proceed back down the path away from the hut</li>
+            <li>Avoid the zombie after the stairs (bait or run past)</li>
+            <li>Return to the storage room at the Courtyard entrance</li>
+            <li>Grab the <strong>FAS (First Aid Spray)</strong> from the room</li>
+            <li>Proceed around the room through the double doors toward Residence area</li>
+          </ol>
+
+          <div class="info-box">
+            <div class="info-box-title">First Aid Spray</div>
+            <p>This FAS provides a full heal and should be saved for emergencies. Only use it if you're in Danger status and don't have time for herbs. It's particularly valuable for the upcoming Residence section where damage is common.</p>
+          </div>
+
+          <h3>Water Lowering Sequence</h3>
+          
+          <ol start="6">
+            <li>Run past the dogs through the gate and up the steps</li>
+            <li>Use the Square Crank on the mechanism to lower the water</li>
+            <li>Proceed around the path to the elevator</li>
+            <li>Take the elevator down</li>
+          </ol>
+
+          <div class="info-box">
+            <div class="info-box-title">Dog Management</div>
+            <p>The dogs in this area can be aggressive. Run straight through without stopping. If you maintain forward momentum, they typically won't catch you. Stopping or hesitating increases the chance of taking damage.</p>
+          </div>
+        </div>
+
+        <div class="content-section" id="residence-access">
+          <h2>Residence Access</h2>
+          
+          <p>After descending in the elevator, navigate through the gate and along the winding path into the Residence area.</p>
+
+          <h3>Path Navigation</h3>
+          
+          <p>The path from the elevator to the Residence is straightforward but has a few enemies:</p>
+          <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+            <li>Stay on the main path</li>
+            <li>Avoid engaging zombies unless absolutely necessary</li>
+            <li>Run through the final gate to enter the Residence proper</li>
+          </ul>
+
+          <h3>Current Inventory Check</h3>
+          
+          <p>Before entering the Residence, verify your inventory contains:</p>
+          <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+            <li>Grenade Launcher</li>
+            <li>Square Crank (just collected)</li>
+            <li>Shield Key</li>
+            <li>Lockpick</li>
+            <li>FAS (first aid spray)</li>
+            <li>Serum (if unused from Yawn)</li>
+            <li>Empty slots for upcoming items</li>
+          </ul>
+
+          <div class="info-box">
+            <div class="info-box-title">What's Next</div>
+            <p>Section 8 covers the early Residence section including Room 002, Room 001, bookshelf puzzle, Aqua Ring access, and the challenging shark room encounter with Neptune. The Residence section is item-heavy, so inventory management becomes critical.</p>
+          </div>
+
+          <h3>Practice Tips for This Section</h3>
+          
+          <p><strong>Weather Vane RNG:</strong> Don't get frustrated by bad RNG here. The variance is unavoidable and 10-15 seconds lost here can easily be made up in other sections with cleaner execution.</p>
+          <p><strong>Lisa Trevor Timing:</strong> Practise the half-second wait after the cutscene. This is one of the most consistent damage-avoidance strats in the run. Missing it costs both health and time to heal later.</p>
+          <p><strong>Square Crank Importance:</strong> The Square Crank is used multiple times in the run. Don't deposit it in storage - you'll need it for the pool later in the route.</p>
+
+          <h3>Alternate Strategies</h3>
+          
+          <p><strong>Safety Herbs:</strong> If you're concerned about damage during the Residence section, there are green herbs available before entering. However, this costs inventory space and time - only grab if you're in Caution or Danger.</p>
+          <p><strong>Dog Avoidance:</strong> Some runners prefer using the handgun to kill one dog near the water mechanism. This costs ammo and time but guarantees safety. For optimal times, run past without fighting.</p>
+        </div>
+
+        <div class="page-nav">
+          <a href="remake_guide_page_6.html" class="page-nav-btn">
+            <span>?</span>
+            <span>Section 6: Elder Crimson Boss Fight</span>
+          </a>
+          <a href="remake_guide_page_8.html" class="page-nav-btn">
+            <span>Section 8: Residence - Early</span>
+            <span>?</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Blood drip animation
+    const bloodDripsContainer = document.getElementById('bloodDrips');
+    for (let i = 0; i < 5; i++) {
+      const drip = document.createElement('div');
+      drip.className = 'blood-drip';
+      drip.style.left = Math.random() * 100 + '%';
+      drip.style.animationDelay = Math.random() * 3 + 's';
+      drip.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      bloodDripsContainer.appendChild(drip);
+    }
+
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
+    });
+
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      header.classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.querySelectorAll('.toc a').forEach(link => link.classList.remove('active'));
+          this.classList.add('active');
+        }
+      });
+    });
+
+    const sections = document.querySelectorAll('.content-section');
+    const tocLinks = document.querySelectorAll('.toc a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        if (scrollY >= section.offsetTop - 150) current = section.getAttribute('id');
+      });
+
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      });
+    });
+  </script>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p>Original Guide by Deccyf</p>
+        <p>� 2025 Wheel of Struggle Community Speedrun Guide � All Rights Reserved</p>
+      </div>
+      <div class="footer-buttons">
+        <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
+          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="footer-icon discord-logo">
+          Discord
+        </a>
+        <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank">
+          <img src="Logos/WoS_Discord_Colour_V2.png" alt="Wheel of Struggle" class="footer-icon website-logo">
+          Website
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
