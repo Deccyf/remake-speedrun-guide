@@ -519,23 +519,27 @@
     
     main {
       padding-top: 120px;
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding-left: 0;
+      padding-right: 0;
     }
     
     .content-grid {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1.5rem;
+      padding: 0 1rem;
     }
     
     .sidebar {
       position: static;
       order: 2;
+      width: 100%;
+      padding: 1rem;
     }
     
     .main-content {
-      padding: 2rem 1.5rem;
+      padding: 1rem;
       order: 1;
+      width: 100%;
     }
     
     .section-title {
@@ -704,12 +708,21 @@
     
     main {
       padding-top: 140px;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    
+    .content-grid {
+      gap: 1rem;
+      padding: 0 0.5rem;
     }
     
     .main-content {
-      padding: 1.5rem 1rem;
+      padding: 0.5rem;
+    }
+    
+    .sidebar {
+      padding: 0.5rem;
     }
     
     .section-title {
