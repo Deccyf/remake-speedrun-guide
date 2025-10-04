@@ -908,6 +908,225 @@
     50% { transform: scale(1.1); opacity: 0.6; }
   }
 
+  /* CRITICAL SEQUENCE STYLING */
+  .critical-sequence {
+    background: rgba(26, 26, 26, 0.8);
+    border: 2px solid var(--re-gold);
+    border-radius: 15px;
+    margin: 2rem 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    animation: sequenceGlow 2s ease-in-out infinite;
+    box-shadow: 
+      0 0 20px rgba(212, 175, 55, 0.4),
+      inset 0 0 20px rgba(212, 175, 55, 0.1);
+  }
+
+  @keyframes sequenceGlow {
+    0%, 100% { 
+      box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.4),
+        inset 0 0 20px rgba(212, 175, 55, 0.1);
+    }
+    50% { 
+      box-shadow: 
+        0 0 30px rgba(212, 175, 55, 0.6),
+        inset 0 0 30px rgba(212, 175, 55, 0.2);
+    }
+  }
+
+  .sequence-header {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sequence-icon {
+    font-size: 2.5rem;
+    animation: sequenceIconPulse 1.5s ease-in-out infinite;
+    margin-bottom: 0.5rem;
+  }
+
+  @keyframes sequenceIconPulse {
+    0%, 100% { 
+      transform: scale(1);
+      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
+    }
+    50% { 
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 20px rgba(212, 175, 55, 1));
+    }
+  }
+
+  .sequence-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--re-gold);
+    text-shadow: 
+      0 0 10px rgba(212, 175, 55, 0.8),
+      0 0 20px rgba(212, 175, 55, 0.6);
+    animation: sequenceTitleGlow 2s ease-in-out infinite alternate;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+  }
+
+  @keyframes sequenceTitleGlow {
+    0% { text-shadow: 0 0 10px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.6); }
+    100% { text-shadow: 0 0 15px rgba(212, 175, 55, 1), 0 0 30px rgba(212, 175, 55, 0.8); }
+  }
+
+  .sequence-subtitle {
+    font-size: 0.9rem;
+    color: var(--re-crimson);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: subtitleBlink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes subtitleBlink {
+    0%, 80% { opacity: 1; }
+    90% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+
+  .sequence-steps {
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .step-item:last-child {
+    border-bottom: none;
+  }
+
+  .step-item:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 10px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .step-number {
+    background: var(--re-gold);
+    color: var(--re-black);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    box-shadow: 
+      0 0 15px rgba(212, 175, 55, 0.6),
+      inset 0 0 10px rgba(255, 255, 255, 0.2);
+    animation: stepNumberGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes stepNumberGlow {
+    0%, 100% { 
+      box-shadow: 
+        0 0 15px rgba(212, 175, 55, 0.6),
+        inset 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+    50% { 
+      box-shadow: 
+        0 0 25px rgba(212, 175, 55, 0.8),
+        inset 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--re-white);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+  }
+
+  .step-description {
+    color: var(--re-gray);
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  .sequence-warning {
+    background: rgba(220, 20, 60, 0.2);
+    border-top: 2px solid var(--re-crimson);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .warning-icon-small {
+    font-size: 1.5rem;
+    animation: warningSmallBlink 1s ease-in-out infinite;
+  }
+
+  @keyframes warningSmallBlink {
+    0%, 50% { opacity: 1; }
+    51% { opacity: 0.4; }
+    100% { opacity: 1; }
+  }
+
+  .warning-text {
+    color: var(--re-crimson);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.95rem;
+    animation: warningTextPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes warningTextPulse {
+    0%, 100% { opacity: 0.9; }
+    50% { opacity: 1; }
+  }
+
+  /* Background effect for sequence */
+  .critical-sequence::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.05), transparent);
+    animation: sequenceBackgroundPulse 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes sequenceBackgroundPulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.1); opacity: 0.5; }
+  }
+
   .page-nav {
     display: flex;
     justify-content: space-between;
@@ -1311,6 +1530,45 @@
             <p>At this point, check your timer. You should have at least 1-2 minutes remaining on Richard's timer. If you're cutting it close, skip any safety strategies and proceed directly to Yawn.</p>
           </div>
         </div>
+
+         <div class="critical-sequence">
+           <div class="sequence-header">
+             <div class="sequence-icon">⚡</div>
+             <h3 class="sequence-title">SAVE RICHARD - CRITICAL SEQUENCE</h3>
+             <div class="sequence-subtitle">Execute these steps IMMEDIATELY</div>
+           </div>
+           
+           <div class="sequence-steps">
+             <div class="step-item">
+               <div class="step-number">1</div>
+               <div class="step-content">
+                 <div class="step-title">Proceed to East Wing</div>
+                 <div class="step-description">Move immediately to the East Wing without delay</div>
+               </div>
+             </div>
+             
+             <div class="step-item">
+               <div class="step-number">2</div>
+               <div class="step-content">
+                 <div class="step-title">Speak to Richard</div>
+                 <div class="step-description">Interact with Richard and skip the cutscene quickly</div>
+               </div>
+             </div>
+             
+             <div class="step-item">
+               <div class="step-number">3</div>
+               <div class="step-content">
+                 <div class="step-title">Reach Yawn's Room</div>
+                 <div class="step-description">Proceed immediately to Yawn's room to complete the save</div>
+               </div>
+             </div>
+           </div>
+           
+           <div class="sequence-warning">
+             <div class="warning-icon-small">⚠️</div>
+             <span class="warning-text">This sequence must be completed before the timer expires!</span>
+           </div>
+         </div>
 
         <div class="content-section" id="yawn">
           <h2>Yawn 1 Boss Fight</h2>
