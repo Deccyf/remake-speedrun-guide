@@ -660,6 +660,10 @@
       padding: 0 1.5rem;
     }
     
+    body {
+      background-attachment: scroll !important;
+    }
+    
     .header-content {
       padding: 1rem 1.5rem;
       flex-direction: column;
@@ -688,6 +692,10 @@
       background: rgba(139, 0, 0, 0.1);
     }
     
+    main {
+      padding-top: 120px;
+    }
+    
     .hero {
       padding: 8rem 1rem 6rem;
       text-align: center;
@@ -708,6 +716,20 @@
       font-size: 0.95rem;
       line-height: 1.6;
       margin-bottom: 2.5rem;
+    }
+    
+    .stats-container {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin: 3rem auto 0;
+    }
+    
+    .stat-box {
+      padding: 1.5rem;
+    }
+    
+    .stat-value {
+      font-size: 2.5rem;
     }
     
     .cta-buttons {
@@ -731,37 +753,44 @@
       margin-bottom: 3rem;
     }
     
-    .cards-grid {
+    .guide-grid {
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
     
-    .quick-links-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-    
-    .info-card {
+    .guide-card {
       padding: 1.5rem;
     }
     
-    .info-card h3 {
-      font-size: 1.2rem;
+    .guide-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .guide-card p {
+      font-size: 0.9rem;
+      line-height: 1.6;
       margin-bottom: 1rem;
     }
     
-    .info-card p {
-      font-size: 0.9rem;
-      line-height: 1.6;
+    .guide-meta {
+      font-size: 0.8rem;
+      padding-top: 1rem;
     }
     
-    .quick-link-item h4 {
+    .cta-section {
+      padding: 3rem 2rem;
+      margin: 6rem auto;
+    }
+    
+    .cta-title {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-text {
       font-size: 1rem;
-    }
-    
-    .features-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     /* Music control for mobile */
@@ -781,11 +810,6 @@
 
   /* Very small screens (mobile portrait) */
   @media (max-width: 480px) {
-    :root {
-      --hero-title-size: 1.8rem;
-      --section-title-size: 1.5rem;
-    }
-    
     .container {
       padding: 0 1rem;
       max-width: 100%;
@@ -810,6 +834,10 @@
       font-size: 0.75rem;
     }
     
+    main {
+      padding-top: 140px;
+    }
+    
     .hero {
       padding: 6rem 1rem 4rem;
     }
@@ -831,6 +859,23 @@
       margin-bottom: 2rem;
     }
     
+    .stats-container {
+      gap: 1rem;
+      margin: 2rem auto 0;
+    }
+    
+    .stat-box {
+      padding: 1rem;
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+    }
+    
+    .stat-label {
+      font-size: 0.8rem;
+    }
+    
     .btn {
       padding: 0.8rem 1.2rem;
       font-size: 0.85rem;
@@ -846,18 +891,43 @@
       margin-bottom: 2rem;
     }
     
-    .info-card {
+    .guide-grid {
+      gap: 1rem;
+    }
+    
+    .guide-card {
       padding: 1.2rem;
     }
     
-    .info-card h3 {
+    .guide-card h3 {
       font-size: 1.1rem;
       margin-bottom: 0.8rem;
     }
     
-    .info-card p {
+    .guide-card p {
       font-size: 0.8rem;
       line-height: 1.5;
+      margin-bottom: 0.8rem;
+    }
+    
+    .guide-meta {
+      font-size: 0.7rem;
+      padding-top: 0.8rem;
+    }
+    
+    .cta-section {
+      padding: 2rem 1.5rem;
+      margin: 4rem auto;
+    }
+    
+    .cta-title {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .cta-text {
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
     }
 
     /* Footer adjustments */
