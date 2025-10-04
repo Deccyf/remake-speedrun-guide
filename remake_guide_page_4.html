@@ -579,6 +579,335 @@
     color: var(--re-gold);
   }
 
+  /* URGENT TIMER WARNING STYLING */
+  .urgent-warning {
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.95), rgba(139, 0, 0, 0.9));
+    border: 3px solid var(--re-crimson);
+    border-radius: 15px;
+    margin: 3rem 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    animation: urgentPulse 2s ease-in-out infinite;
+    box-shadow: 
+      0 0 30px rgba(220, 20, 60, 0.6),
+      inset 0 0 30px rgba(220, 20, 60, 0.3);
+  }
+
+  @keyframes urgentPulse {
+    0%, 100% { 
+      transform: scale(1);
+      box-shadow: 
+        0 0 30px rgba(220, 20, 60, 0.6),
+        inset 0 0 30px rgba(220, 20, 60, 0.3);
+    }
+    50% { 
+      transform: scale(1.02);
+      box-shadow: 
+        0 0 50px rgba(220, 20, 60, 0.8),
+        inset 0 0 50px rgba(220, 20, 60, 0.5);
+    }
+  }
+
+  .warning-header {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .warning-icon {
+    font-size: 3rem;
+    animation: warningBlink 0.5s ease-in-out infinite;
+    margin-bottom: 0.5rem;
+  }
+
+  @keyframes warningBlink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+  }
+
+  .warning-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--re-white);
+    text-shadow: 
+      0 0 10px rgba(220, 20, 60, 0.8),
+      0 0 20px rgba(220, 20, 60, 0.6),
+      0 0 30px rgba(220, 20, 60, 0.4);
+    animation: textGlow 1.5s ease-in-out infinite alternate;
+    margin-bottom: 0.5rem;
+    letter-spacing: 3px;
+  }
+
+  @keyframes textGlow {
+    0% { text-shadow: 0 0 10px rgba(220, 20, 60, 0.8), 0 0 20px rgba(220, 20, 60, 0.6); }
+    100% { text-shadow: 0 0 20px rgba(220, 20, 60, 1), 0 0 40px rgba(220, 20, 60, 0.8); }
+  }
+
+  .warning-subtitle {
+    font-size: 1rem;
+    color: var(--re-gold);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: subtitlePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes subtitlePulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+
+  .timer-container {
+    background: rgba(0, 0, 0, 0.9);
+    margin: 0;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .timer-display {
+    text-align: center;
+    position: relative;
+  }
+
+  .timer-label {
+    font-size: 0.9rem;
+    color: var(--re-gray);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    animation: labelBlink 1s ease-in-out infinite;
+  }
+
+  @keyframes labelBlink {
+    0%, 80% { opacity: 1; }
+    90% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  .timer-numbers {
+    font-family: 'Cinzel', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--re-crimson);
+    text-shadow: 
+      0 0 10px rgba(220, 20, 60, 0.8),
+      0 0 20px rgba(220, 20, 60, 0.6),
+      0 0 40px rgba(220, 20, 60, 0.4);
+    animation: timerGlow 0.8s ease-in-out infinite;
+    margin-bottom: 1rem;
+  }
+
+  @keyframes timerGlow {
+    0%, 100% { 
+      transform: scale(1);
+      text-shadow: 0 0 10px rgba(220, 20, 60, 0.8), 0 0 20px rgba(220, 20, 60, 0.6);
+    }
+    50% { 
+      transform: scale(1.05);
+      text-shadow: 0 0 20px rgba(220, 20, 60, 1), 0 0 40px rgba(220, 20, 60, 0.8);
+    }
+  }
+
+  .timer-bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid rgba(220, 20, 60, 0.3);
+  }
+
+  .timer-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--re-crimson), var(--re-blood));
+    width: 100%;
+    border-radius: 5px;
+    animation: progressShrink 300s linear forwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @keyframes progressShrink {
+    from { width: 100%; }
+    to { width: 0%; }
+  }
+
+  .timer-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progressShimmer 2s ease-in-out infinite;
+  }
+
+  @keyframes progressShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .warning-content {
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .warning-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 2;
+  }
+
+  .warning-content strong {
+    color: var(--re-gold);
+    font-weight: 700;
+  }
+
+  .checklist-urgent {
+    margin: 1.5rem 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .urgent-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(220, 20, 60, 0.3);
+    font-weight: 600;
+    color: var(--re-white);
+    animation: urgentItemPulse 3s ease-in-out infinite;
+  }
+
+  .urgent-item:last-child {
+    border-bottom: none;
+  }
+
+  @keyframes urgentItemPulse {
+    0%, 90% { opacity: 1; }
+    95% { opacity: 0.7; }
+    100% { opacity: 1; }
+  }
+
+  .urgent-checkbox {
+    font-size: 1.2rem;
+    color: var(--re-gold);
+    font-weight: 900;
+    animation: checkboxBlink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes checkboxBlink {
+    0%, 50% { opacity: 1; }
+    51% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+
+  .timer-threat {
+    background: rgba(139, 0, 0, 0.3);
+    border: 2px solid var(--re-blood);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .timer-threat p {
+    color: var(--re-crimson);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .timer-threat ul {
+    list-style: none;
+    position: relative;
+    z-index: 2;
+  }
+
+  .timer-threat li {
+    padding: 0.5rem 0;
+    color: var(--re-white);
+    font-weight: 600;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .timer-threat li::before {
+    content: '❌';
+    position: absolute;
+    left: 0;
+    animation: threatBlink 1s ease-in-out infinite;
+  }
+
+  @keyframes threatBlink {
+    0%, 80% { opacity: 1; }
+    90% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+
+  .warning-footer {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-text {
+    color: var(--re-crimson);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: footerPulse 1s ease-in-out infinite;
+  }
+
+  @keyframes footerPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+
+  .alarm-flash {
+    width: 20px;
+    height: 20px;
+    background: var(--re-crimson);
+    border-radius: 50%;
+    animation: alarmFlash 0.5s ease-in-out infinite;
+  }
+
+  @keyframes alarmFlash {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(1.2); }
+  }
+
+  /* Background alarm effects */
+  .urgent-warning::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(220, 20, 60, 0.1), transparent);
+    animation: backgroundPulse 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes backgroundPulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.1); opacity: 0.6; }
+  }
+
   .page-nav {
     display: flex;
     justify-content: space-between;
@@ -846,9 +1175,61 @@
           </ul>
         </div>
 
-        <div class="info-box">
-          <div class="info-box-title">RICHARD TIMER ACTIVE</div>
-          <p>Remember: Richard's 5-minute real-time timer is still running from Section 3. You must complete this entire section and reach Yawn before time expires. With optimal execution, you should have 30-60 seconds remaining when you trigger the Yawn cutscene.</p>
+        <div class="urgent-warning" id="richardTimerWarning">
+          <div class="warning-header">
+            <div class="warning-icon">⚠️</div>
+            <div class="warning-title">CRITICAL TIMER ACTIVE</div>
+            <div class="warning-subtitle">RICHARD'S LIFE DEPENDS ON YOUR SPEED</div>
+          </div>
+          
+          <div class="timer-container">
+            <div class="timer-display" id="richardTimer">
+              <div class="timer-label">TIME REMAINING</div>
+              <div class="timer-numbers">
+                <span id="minutes">04</span>:<span id="seconds">59</span>
+              </div>
+              <div class="timer-bar">
+                <div class="timer-progress" id="timerProgress"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="warning-content">
+            <div style="text-align: center; margin-bottom: 1rem;">
+              <button onclick="startRichardTimerNow()" style="background: rgba(220, 20, 60, 0.8); color: white; border: 2px solid var(--re-crimson); padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;" onmouseover="this.style.background='var(--re-crimson)'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='rgba(220, 20, 60, 0.8)'; this.style.transform='scale(1)'">
+                🔴 START TIMER NOW 🔴
+              </button>
+              <button onclick="resetRichardTimer()" style="background: rgba(0, 0, 0, 0.8); color: var(--re-gray); border: 2px solid var(--re-gray); padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; margin-left: 1rem;" onmouseover="this.style.background='var(--re-gray)'; this.style.color='white'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='rgba(0, 0, 0, 0.8)'; this.style.color='var(--re-gray)'; this.style.transform='scale(1)'">
+                Reset Timer
+              </button>
+            </div>
+            <p><strong>⚠️ CRITICAL WARNING ⚠️</strong></p>
+            <p>Richard's 5-minute real-time timer started in <strong>Section 3</strong> and is running continuously. You must complete this entire section and reach the Yawn cutscene before time expires.</p>
+            
+            <div class="checklist-urgent">
+              <div class="urgent-item">
+                <span class="urgent-checkbox">□</span>
+                Complete Music Room puzzle
+              </div>
+              <div class="urgent-item">
+                <span class="urgent-checkbox">□</span>
+                Solve Piano puzzle for Gold Emblem
+              </div>
+              <div class="urgent-item">
+                <span class="urgent-checkbox">□</span>
+                Execute Clock puzzle and obtain Shield Key
+              </div>
+              <div class="urgent-item">
+                <span class="urgent-checkbox">□</span>
+                Reach Yawn cutscene safely
+              </div>
+            </div>
+          </div>
+          <div class="warning-footer">
+            <div class="alarm-flash"></div>
+            <span class="footer-text">SPEED IS ESSENTIAL • EVERY SECOND COUNTS</span>
+            <div class="alarm-flash"></div>
+          </div>
         </div>
 
         <div class="content-section" id="music-room">
@@ -1002,6 +1383,140 @@
       drip.style.animationDuration = (Math.random() * 2 + 2) + 's';
       bloodDripsContainer.appendChild(drip);
     }
+
+    // RICHARD TIMER COUNTDOWN - URGENT WARNING SYSTEM
+    let richardTimeLeft = 5 * 60; // 5 minutes in seconds
+    let timerInterval = null;
+    
+    function startRichardTimer() {
+      timerInterval = setInterval(() => {
+        richardTimeLeft--;
+        updateTimerDisplay();
+        updateProgressBar();
+        
+        if (richardTimeLeft <= 0) {
+          clearInterval(timerInterval);
+          timerExpired();
+        }
+      }, 1000);
+    }
+    
+    function updateTimerDisplay() {
+      const minutes = Math.floor(richardTimeLeft / 60);
+      const seconds = richardTimeLeft % 60;
+      
+      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+      
+      // Change colors based on time remaining
+      const timerElement = document.getElementById('richardTimer');
+      const timerNumbers = document.querySelector('.timer-numbers');
+      
+      if (richardTimeLeft <= 60) { // Less than 1 minute
+        timerNumbers.style.color = '#FF0000'; // Bright red
+        timerNumbers.style.animation = 'timerGlow 0.3s ease-in-out infinite'; // Faster glow
+        timerElement.style.animation = 'urgentPulse 0.5s ease-in-out infinite'; // Faster pulse
+      } else if (richardTimeLeft <= 120) { // Less than 2 minutes
+        timerNumbers.style.color = '#FF4500'; // Orange-red
+      }
+    }
+    
+    function updateProgressBar() {
+      const totalTime = 5 * 60; // 5 minutes
+      const percentageRemaining = (richardTimeLeft / totalTime) * 100;
+      
+      document.getElementById('timerProgress').style.width = percentageRemaining + '%';
+      
+      // Change progress bar color based on time
+      const progressBar = document.getElementById('timerProgress');
+      if (richardTimeLeft <= 60) {
+        progressBar.style.background = 'linear-gradient(90deg, #FF0000, #CC0000)'; // Bright red
+      } else if (richardTimeLeft <= 120) {
+        progressBar.style.background = 'linear-gradient(90deg, #FF4500, #DC143C)'; // Orange-red
+      }
+    }
+    
+    function timerExpired() {
+      document.getElementById('minutes').textContent = '00';
+      document.getElementById('seconds').textContent = '00';
+      document.getElementById('timerProgress').style.width = '0%';
+      
+      // Add critical failure styling
+      const warningElement = document.getElementById('richardTimerWarning');
+      warningElement.style.background = 'linear-gradient(135deg, rgba(255, 0, 0, 0.95), rgba(204, 0, 0, 0.9))';
+      warningElement.style.boxShadow = '0 0 50px rgba(255, 0, 0, 1), inset 0 0 50px rgba(255, 0, 0, 0.5)';
+      
+      // Add failure message
+      const timerContainer = document.querySelector('.timer-container');
+      const failureMsg = document.createElement('div');
+      failureMsg.innerHTML = '<div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 0, 0, 0.3); border: 2px solid #FF0000; border-radius: 10px; text-align: center; animation: urgentPulse 0.5s ease-in-out infinite;"><strong style="color: #FF0000; font-size: 1.2rem;">❌ TIMER EXPIRED ❌</strong><br><span style="color: white;">Richard has died. Reset required.</span></div>';
+      timerContainer.appendChild(failureMsg);
+      
+      // Stop all animations and show critical state
+      document.querySelector('.warning-title').textContent = 'TIMER EXPIRED - RICHARD DIED';
+      document.querySelector('.warning-icon').textContent = '💀';
+      
+      console.log('Richard Timer Expired - Run Reset Required');
+    }
+    
+    // Check if timer is already running (persistent across page reloads)
+    const timerStorageKey = 'richardTimerStart';
+    const timerRemainingKey = 'richardTimerRemaining';
+    
+    function initializeTimer() {
+      const startTime = localStorage.getItem(timerStorageKey);
+      const customTimeRemaining = localStorage.getItem(timerRemainingKey);
+      
+      if (startTime) {
+        const elapsed = Math.floor((Date.now() - parseInt(startTime)) / 1000);
+        richardTimeLeft = Math.max(0, 5 * 60 - elapsed);
+      } else if (customTimeRemaining) {
+        richardTimeLeft = parseInt(customTimeRemaining);
+      }
+      
+      // If timer has started in section 3, start counting down
+      if (startTime || customTimeRemaining) {
+        localStorage.setItem(timerStorageKey, Date.now().toString());
+        startRichardTimer();
+        updateTimerDisplay();
+        updateProgressBar();
+      }
+    }
+    
+    // Function to manually start timer (for testing or if coming from Section 3)
+    function startRichardTimerNow() {
+      localStorage.setItem(timerStorageKey, Date.now().toString());
+      richardTimeLeft = 5 * 60;
+      startRichardTimer();
+      updateTimerDisplay();
+      updateProgressBar();
+    }
+    
+    // Function to reset timer
+    function resetRichardTimer() {
+      clearInterval(timerInterval);
+      localStorage.removeItem(timerStorageKey);
+      localStorage.removeItem(timerRemainingKey);
+      richardTimeLeft = 5 * 60;
+      document.getElementById('minutes').textContent = '05';
+      document.getElementById('seconds').textContent = '00';
+      document.getElementById('timerProgress').style.width = '100%';
+      
+      // Reset styling
+      const warningElement = document.getElementById('richardTimerWarning');
+      warningElement.style.background = 'linear-gradient(135deg, rgba(220, 20, 60, 0.95), rgba(139, 0, 0, 0.9))';
+      warningElement.style.boxShadow = '0 0 30px rgba(220, 20, 60, 0.6), inset 0 0 30px rgba(220, 20, 60, 0.3)';
+      
+      document.querySelector('.warning-title').textContent = 'CRITICAL TIMER ACTIVE';
+      document.querySelector('.warning-icon').textContent = '⚠️';
+    }
+    
+    // Initialize timer on page load
+    initializeTimer();
+    
+    // Add manual controls for testing and manual use
+    window.startRichardTimerNow = startRichardTimerNow;
+    window.resetRichardTimer = resetRichardTimer;
 
     window.addEventListener('scroll', () => {
       const winScroll = document.documentElement.scrollTop;
