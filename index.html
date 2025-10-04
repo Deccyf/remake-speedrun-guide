@@ -22,10 +22,16 @@
 
   body {
     font-family: 'Barlow', sans-serif;
-    background: var(--re-black);
+    background: 
+      linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.75)),
+      url('Logos/hqdefault.jpg') center center fixed;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: var(--re-white);
     line-height: 1.6;
     overflow-x: hidden;
+    min-height: 100vh;
   }
 
   .fog-container {
@@ -43,9 +49,10 @@
     width: 200%;
     height: 200%;
     background: 
-      radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
-      radial-gradient(ellipse at 70% 60%, rgba(124, 252, 0, 0.08) 0%, transparent 40%),
-      radial-gradient(ellipse at 50% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+      radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(220, 20, 60, 0.15) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+      radial-gradient(ellipse at 20% 80%, rgba(0, 0, 0, 0.3) 0%, transparent 60%);
     animation: fogMove 30s ease-in-out infinite;
   }
 
@@ -86,15 +93,17 @@
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(13, 13, 13, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+    background: rgba(13, 13, 13, 0.8);
+    backdrop-filter: blur(15px) saturate(1.5);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.4);
     transition: all 0.3s;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
   }
 
   .header.scrolled {
-    background: rgba(13, 13, 13, 0.98);
-    box-shadow: 0 4px 30px rgba(139, 0, 0, 0.3);
+    background: rgba(13, 13, 13, 0.9);
+    box-shadow: 0 4px 30px rgba(139, 0, 0, 0.4);
+    backdrop-filter: blur(20px) saturate(1.8);
   }
 
   .header-content {
