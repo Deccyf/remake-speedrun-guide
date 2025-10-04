@@ -1137,5 +1137,168 @@
       </div>
     </div>
   </footer>
-</body>
+\n
+  <script>
+    // ENHANCED MUSIC CONTROL SYSTEM
+    let backgroundMusic = null;
+    let musicControlPanel = null;
+    const musicFiles = ['01 R.E. 1 Save Room- Safe Haven.mp3'];
+
+    function createMusicControl() {
+      musicControlPanel = document.createElement('div');
+      musicControlPanel.id = 'musicControlPanel';
+      musicControlPanel.innerHTML = `
+        <div class="music-control-header">
+          <span class="music-icon">🎵</span>
+          <span class="music-title">Background Music</span>
+          <button id="musicCloseBtn" class="music-close-btn">×</button>
+        </div>
+        <div class="music-control-content">
+          <button id="musicToggleBtn" class="music-toggle-btn">
+            <span id="musicToggleIcon">▶️</span>
+            <span id="musicToggleText">Play</span>
+          </button>
+          <div class="music-volume-container">
+            <span class="music-volume-label">Volume</span>
+            <input type="range" id="musicVolumeSlider" min="0" max="100" value="30" class="music-volume-slider">
+            <span id="musicVolumeValue">30</span>
+          </div>
+          <div class="music-status" id="musicStatus">Ready to play</div>
+        </div>
+      `;
+      
+      musicControlPanel.style.cssText = `
+        position: fixed; bottom: 20px; right: 20px; width: 250px; background: rgba(13, 13, 13, 0.95);
+        border: 2px solid var(--re-blood); border-radius: 15px; box-shadow: 0 8px 30px rgba(139, 0, 0, 0.4);
+        backdrop-filter: blur(20px); z-index: 1000; opacity: 0; transform: translateY(20px);
+        transition: all 0.3s ease; font-family: 'Barlow', sans-serif;
+      `;
+
+      const style = document.createElement('style');
+      style.textContent = `
+        .music-control-header { background: var(--re-blood); color: white; padding: 12px 15px;
+          border-radius: 13px 13qx 0 0; display: flex; align-items: center; justify-content: space-between;
+          font-weight: 700; font-size: 14px; }
+        .music-icon { font-size: 16px; }
+        .music-close-btn { background: none; border: none; color: white; font-size: 20px;
+          cursor: pointer; padding: 0; width: 25px; height: 25px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center; transition: background 0.2s ease; }
+        .music-close-btn:hover { background: rgba(255, 255, 255, 0.2); }
+        .music-control-content { padding: 15px; }
+        .music-toggle-btn { width: 100%; background: rgba(139, 0, 0, 0.2); border: 2px solid var(--re-blood);
+          color: white; padding: 12px 15px; border-radius: 25px; cursor: pointer; display: flex;
+          align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 14px;
+          margin-bottom: 15px; transition: all 0.3s ease; }
+        .music-toggle-btn:hover { background: var(--re-blood); transform: translateY(-2px);
+          box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4); }
+        .music-volume-container { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .music-volume-label { color: var(--re-gray); font-size: 12px; font-weight: 600; min-width: 50px; }
+        .music-volume-slider { flex: 1; height: 6px; background: rgba(139, 0, 0, 0.3);
+          border-radius: 3px; outline: none; cursor: pointer; }
+        .music-volume-slider::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px;
+          background: var(--re-blood); border-radius: 50%; cursor: pointer; box-shadow: 0 0 8px rgba(139, 0, 0, 0.6); }
+        .music-volume-slider::-moz-range-thumb { width: 18px; height: 18px; background: var(--re-blood);
+          border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 0 8px rgba(139, 0, 0, 0.6); }
+        #musicVolumeValue { color: var(--re-white); font-weight: 600; font-size: 12px; min-width: 30px; text-align: right; }
+        .music-status { color: var(--re-gray); font-size: 11px; font-weight: 500; text-align: center;
+          padding: 5px; background: rgba(139, 0, 0, 0.1); border-radius: 8px; margin-top: 10px; }
+      `;
+      document.head.appendChild(style);
+      document.body.appendChild(musicControlPanel);
+      
+      setTimeout(() => { musicControlPanel.style.opacity = '1'; musicControlPanel.style.transform = 'translateY(0)'; }, 100);
+
+      setupMusicControlEvents();
+    }
+
+    function setupMusicControlEvents() {
+      document.getElementById('musicToggleBtn').addEventListener('click', toggleMusic);
+      document.getElementById('musicVolumeSlider').addEventListener('input', updateVolume);
+      document.getElementById('musicCloseBtn').addEventListener('click', hideMusicControl);
+      document.getElementById('musicVolumeValue').textContent = document.getElementById('musicVolumeSlider').value;
+      updateVolume();
+    }
+
+    function toggleMusic() {
+      const toggleIcon = document.getElementById('musicToggleIcon');
+      const toggleText = document.getElementById('musicToggleText');
+      const status = document.getElementById('musicStatus');
+      if (!backgroundMusic) { startBackgroundMusic(); toggleIcon.textContent = '⏸️'; toggleText.textContent = 'Pause';
+        status.textContent = 'Playing Resident Evil Theme'; status.style.color = 'var(--re-green)'; }
+      else if (backgroundMusic.paused) { backgroundMusic.play(); toggleIcon.textContent = '⏸️'; toggleText.textContent = 'Pause';
+        status.textContent = 'Playing Resident Evil Theme'; status.style.color = 'var(--re-green)'; }
+      else { backgroundMusic.pause(); toggleIcon.textContent = '▶️'; toggleText.textContent = 'Play';
+        status.textContent = 'Music paused'; status.style.color = 'var(--re-gray)'; }
+    }
+
+    function updateVolume() {
+      const volumeSlider = document.getElementById('musicVolumeSlider');
+      const volumeValue = document.getElementById('musicVolumeValue');
+      const volume = parseInt(volumeSlider.value) / 100;
+      volumeValue.textContent = volumeSlider.value;
+      if (backgroundMusic) backgroundMusic.volume = volume;
+      localStorage.setItem('musicVolume', volumeSlider.value);
+    }
+
+    function startBackgroundMusic() {
+      if (backgroundMusic) return;
+      backgroundMusic = new Audio();
+      backgroundMusic.src = musicFiles[0];
+      backgroundMusic.loop = true;
+      const savedVolume = localStorage.getItem('musicVolume') || '30';
+      backgroundMusic.volume = parseInt(savedVolume) / 100;
+      document.getElementById('musicVolumeSlider').value = savedVolume;
+      document.getElementById('musicVolumeValue').textContent = savedVolume;
+      backgroundMusic.play().then(() => {
+        document.getElementById('musicStatus').textContent = 'Playing Resident Evil Theme';
+        document.getElementById('musicStatus').style.color = 'var(--re-green)';
+        document.getElementById('musicToggleIcon').textContent = '⏸️';
+        document.getElementById('musicToggleText').textContent = 'Pause';
+      }).catch(() => {
+        document.getElementById('musicStatus').textContent = 'Click play to start music';
+        document.getElementById('musicStatus').style.color = 'var(--re-gray)';
+      });
+      backgroundMusic.addEventListener('ended', () => { backgroundMusic.currentTime = 0; backgroundMusic.play(); });
+      backgroundMusic.addEventListener('error', (e) => {
+        document.getElementById('musicStatus').textContent = 'Music file not found';
+        document.getElementById('musicStatus').style.color = 'var(--re-blood)';
+      });
+    }
+
+    function hideMusicControl() {
+      if (musicControlPanel) {
+        musicControlPanel.style.opacity = '0'; musicControlPanel.style.transform = 'translateY(20px)';
+        setTimeout(() => { if (musicControlPanel && musicControlPanel.parentNode) musicControlPanel.parentNode.removeChild(musicControlPanel); musicControlPanel = null; }, 300);
+      }
+    }
+
+    function showMusicControlButton() {
+      const musicButton = document.createElement('div');
+      musicButton.id = 'musicControlButton';
+      musicButton.innerHTML = '🎵 Music';
+      musicButton.style.cssText = `position: fixed; bottom: 20px; right: 20px; background: rgba(139, 0, 0, 0.8);
+        color: var(--re-white); padding: 12px 18px; border-radius: 25px; cursor: pointer; font-size: 14px; font-weight: 600;
+        z-index: 1000; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3); border: 2px solid rgba(139, 0, 0, 0.3);`;
+      
+      musicButton.addEventListener('mouseenter', () => { musicButton.style.background = 'var(--re-blood)'; musicButton.style.transform = 'scale(1.05)'; musicButton.style.boxShadow = '0 6px 20px rgba(139, 0, 0, 0.5)'; });
+      musicButton.addEventListener('mouseleave', () => { musicButton.style.background = 'rgba(139, 0, 0, 0.8)'; musicButton.style.transform = 'scale(1)'; musicButton.style.boxShadow = '0 4px 15px rgba(139, 0, 0, 0.3)'; });
+      musicButton.addEventListener('click', () => { createMusicControl(); musicButton.remove(); });
+      document.body.appendChild(musicButton);
+    }
+
+    function initBackgroundMusic() {
+      const musicInteracted = localStorage.getItem('musicInteracted') === 'true';
+      if (!musicInteracted) {
+        document.addEventListener('click', () => {
+          localStorage.setItem('musicInteracted', 'true');
+          document.getElementById('musicControlButton')?.remove();
+          showMusicControlButton();
+        }, { once: true });
+      } else {
+        showMusicControlButton();
+      }
+    }
+
+    initBackgroundMusic();
+  </script>\n</body>
 </html>
