@@ -548,72 +548,80 @@
 
 
   /* ==================================================
-     MOBILE RESPONSIVE DESIGN
+     MOBILE RESPONSIVE DESIGN - INDUSTRY STANDARDS
      ================================================== */
   
-  /* Medium screens (tablets) */
-  @media (max-width: 1024px) {
-    .container { 
-      max-width: 100%; 
-      padding: 0 1.5rem;
-    }
-    
-    .guide-content {
-      padding: 0 1rem;
-    }
-    
-    .guide-section {
-      margin-bottom: 3rem;
-    }
-  }
+  /* Mobile First Approach - Base styles for mobile */
 
   /* Small screens (mobile landscape) */
   @media (max-width: 768px) {
-    .container { 
-      max-width: 100%; 
-      padding: 0 1rem;
+    /* Reset and base mobile styles */
+    * {
+      box-sizing: border-box;
     }
     
     body {
       background-attachment: scroll !important;
+      overflow-x: hidden;
     }
     
+    /* Header mobile optimization */
     .header-content {
       padding: 1rem;
       flex-direction: column;
       gap: 1rem;
+      max-width: 100%;
     }
     
     .logo {
       font-size: 1.4rem;
       letter-spacing: 2px;
+      text-align: center;
     }
     
+    /* Navigation - Industry standard mobile nav */
     .nav {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.5rem;
       width: 100%;
-      max-width: 400px;
+      max-width: 100%;
     }
     
     .nav a {
-      padding: 0.6rem 0.8rem;
+      padding: 0.75rem 0.5rem;
       font-size: 0.8rem;
       text-align: center;
       border: 1px solid rgba(139, 0, 0, 0.3);
       border-radius: 8px;
       background: rgba(139, 0, 0, 0.1);
+      min-height: 44px; /* Touch target minimum */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
+    /* Main content area */
     main {
       padding-top: 120px;
-      padding-left: 0;
-      padding-right: 0;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      max-width: 100%;
+      overflow-x: hidden;
     }
     
+    /* Hero section */
     .section-hero {
-      padding: 2rem 1rem;
+      padding: 2rem 0;
+      text-align: center;
+    }
+    
+    .section-title {
+      font-size: 2rem !important;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      word-wrap: break-word;
+      line-height: 1.2;
     }
     
     .section-meta {
@@ -622,36 +630,31 @@
       font-size: 0.8rem;
     }
     
-    .section-title {
-      font-size: 1.8rem !important;
-      margin-bottom: 2rem;
-      text-align: center;
-      line-height: 1.2;
-      letter-spacing: 1px;
-    }
-    
-    main {
-      padding: 0 1rem;
-    }
-    
+    /* Grid layout - Industry standard single column */
     .grid {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
-      padding: 0 1rem;
+      gap: 1rem;
+      padding: 0;
+      max-width: 100%;
     }
     
     .ref-card {
       padding: 1.5rem;
+      margin-bottom: 1rem;
+      width: 100%;
+      box-sizing: border-box;
     }
     
     .ref-card h2 {
       font-size: 1.3rem;
-      margin-bottom: 0.8rem;
+      margin-bottom: 1rem;
+      word-wrap: break-word;
     }
     
     .ref-card h3 {
       font-size: 1.1rem;
       margin: 1rem 0 0.6rem 0;
+      word-wrap: break-word;
     }
     
     .ref-card li {
@@ -690,6 +693,7 @@
     .timeline h2 {
       font-size: 1.5rem;
       margin-bottom: 1rem;
+      word-wrap: break-word;
     }
     
     .timeline-item {
@@ -707,6 +711,7 @@
     .timeline-content h3 {
       font-size: 1rem;
       margin-bottom: 0.4rem;
+      word-wrap: break-word;
     }
     
     .timeline-content p {
@@ -714,7 +719,7 @@
       line-height: 1.5;
     }
     
-    /* Footer adjustments */
+    /* Footer */
     .footer-content {
       flex-direction: column;
       gap: 1.5rem;
@@ -727,32 +732,13 @@
       gap: 0.8rem;
       align-items: center;
     }
-
-    /* Music control for mobile */
-    .music-control-panel {
-      width: 90vw !important;
-      max-width: 300px !important;
-      bottom: 80px !important;
-      right: 5vw !important;
-    }
-    
-    #musicControlButton {
-      bottom: 15px !important;
-      right: 15px !important;
-      padding: 10px 15px !important;
-      font-size: 12px !important;
-    }
   }
 
   /* Very small screens (mobile portrait) */
   @media (max-width: 480px) {
-    .container {
-      padding: 0 0.8rem;
-      max-width: 100%;
-    }
-    
+    /* Even more compact for small phones */
     .header-content {
-      padding: 0.8rem 0.5rem;
+      padding: 0.8rem;
     }
     
     .logo {
@@ -762,45 +748,37 @@
     
     .nav {
       grid-template-columns: 1fr;
-      gap: 0.3rem;
+      gap: 0.5rem;
     }
     
     .nav a {
-      padding: 0.5rem 0.6rem;
-      font-size: 0.75rem;
+      padding: 0.8rem 0.5rem;
+      font-size: 0.8rem;
+      min-height: 48px;
     }
     
     main {
       padding-top: 140px;
-      padding-left: 0;
-      padding-right: 0;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
     
     .section-hero {
-      padding: 1.5rem 0.5rem;
+      padding: 1.5rem 0;
+    }
+    
+    .section-title {
+      font-size: 1.5rem !important;
+      margin-bottom: 1rem;
     }
     
     .section-meta {
-      flex-direction: column;
       gap: 0.3rem;
       font-size: 0.7rem;
     }
     
-    .section-title {
-      font-size: 1.3rem !important;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      line-height: 1.2;
-      letter-spacing: 0.5px;
-    }
-    
-    main {
-      padding: 0 0.5rem;
-    }
-    
     .grid {
-      gap: 1rem;
-      padding: 0 0.5rem;
+      gap: 0.8rem;
     }
     
     .ref-card {
@@ -809,7 +787,7 @@
     
     .ref-card h2 {
       font-size: 1.1rem;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.8rem;
     }
     
     .ref-card h3 {
@@ -876,7 +854,6 @@
       line-height: 1.4;
     }
     
-    /* Footer */
     .footer-content {
       padding: 1.5rem 0.5rem;
     }
@@ -887,71 +864,17 @@
     }
   }
 
-  /* Ultra small screens */
-  @media (max-width: 320px) {
-    .nav a { 
-      padding: 0.3rem 0.4rem; 
-      font-size: 0.7rem; 
-    }
-    
-    .guide-content {
-      padding: 1rem 0.3rem;
-      font-size: 0.8rem;
-    }
-    
-    .section-title {
-      font-size: 1.3rem !important;
-    }
-  }
-
   /* Touch device improvements */
   @media (hover: none) and (pointer: coarse) {
     .btn:hover,
-    .nav a:hover,
-    .quick-link-item:hover {
+    .ref-card:hover,
+    .nav a:hover {
       transform: none !important;
     }
     
-    .btn:active {
-      background: rgba(139, 0, 0, 0.8) !important;
+    .btn:active,
+    .ref-card:active {
       transform: scale(0.98);
-    }
-  }
-
-  /* Landscape orientation on phones */
-  @media (max-height: 600px) and (orientation: landscape) {
-    .guide-content {
-      padding: 1rem 0.5rem;
-    }
-    
-    .section-title {
-      font-size: 1.5rem !important;
-      margin-bottom: 1rem;
-    }
-    
-    .guide-section {
-      margin-bottom: 1.5rem;
-    }
-    
-    .guide-section h3 {
-      font-size: 1.1rem;
-    }
-  }
-
-  /* Print styles */
-  @media print {
-    .header, .footer, #musicControlButton, .music-control-panel {
-      display: none !important;
-    }
-    
-    .guide-content {
-      padding: 0;
-      font-size: 12pt;
-    }
-    
-    body {
-      background: white !important;
-      color: black !important;
     }
   }\n</style>
 </head>

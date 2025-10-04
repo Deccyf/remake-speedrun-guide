@@ -622,22 +622,6 @@
     filter: brightness(1.2);
   }
 
-  @media (max-width: 768px) {
-    .hero-title { font-size: 3rem; }
-    .stats-container { grid-template-columns: 1fr; }
-    .guide-grid { grid-template-columns: 1fr; }
-    .nav { gap: 1.5rem; }
-    .footer-content {
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .footer-info {
-      text-align: center;
-    }
-    .footer-buttons {
-      justify-content: center;
-    }
-  }
 
   .reveal {
     opacity: 0;
@@ -651,71 +635,80 @@
   }
 
   /* ==================================================
-     MOBILE RESPONSIVE DESIGN
+     MOBILE RESPONSIVE DESIGN - INDUSTRY STANDARDS
      ================================================== */
   
-  /* Medium screens (tablets) */
-  @media (max-width: 1024px) {
-    .container { max-width: 90%; }
-    .section-title { font-size: 2.5rem; }
-    .hero-title { font-size: 3rem; }
-    .info-card { padding: 1.5rem; }
-  }
-
+  /* Mobile First Approach - Base styles for mobile */
+  
   /* Small screens (mobile landscape) */
   @media (max-width: 768px) {
-    .container { 
-      max-width: 100%; 
-      padding: 0 1rem;
+    /* Reset and base mobile styles */
+    * {
+      box-sizing: border-box;
     }
     
     body {
       background-attachment: scroll !important;
+      overflow-x: hidden;
     }
     
+    /* Header mobile optimization */
     .header-content {
       padding: 1rem;
       flex-direction: column;
       gap: 1rem;
+      max-width: 100%;
     }
     
     .logo {
       font-size: 1.4rem;
       letter-spacing: 2px;
+      text-align: center;
     }
     
+    /* Navigation - Industry standard mobile nav */
     .nav {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.5rem;
       width: 100%;
-      max-width: 400px;
+      max-width: 100%;
     }
     
     .nav a {
-      padding: 0.6rem 0.8rem;
-      font-size: 0.85rem;
+      padding: 0.75rem 0.5rem;
+      font-size: 0.8rem;
       text-align: center;
       border: 1px solid rgba(139, 0, 0, 0.3);
       border-radius: 8px;
       background: rgba(139, 0, 0, 0.1);
+      min-height: 44px; /* Touch target minimum */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
+    /* Main content area */
     main {
       padding-top: 120px;
-      padding-left: 0;
-      padding-right: 0;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      max-width: 100%;
+      overflow-x: hidden;
     }
     
+    /* Hero section */
     .hero {
-      padding: 8rem 1rem 6rem;
+      padding: 2rem 0;
       text-align: center;
+      min-height: auto;
     }
     
     .hero-title {
-      font-size: 2.2rem;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      word-wrap: break-word;
     }
     
     .hero-subtitle {
@@ -723,16 +716,12 @@
       margin-bottom: 2rem;
     }
     
-    .hero-description {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-    }
-    
+    /* Stats container */
     .stats-container {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin: 3rem auto 0;
+      gap: 1rem;
+      margin: 2rem auto 0;
+      max-width: 100%;
     }
     
     .stat-box {
@@ -743,43 +732,39 @@
       font-size: 2.5rem;
     }
     
-    .cta-buttons {
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-    
-    .btn {
-      padding: 1rem 1.5rem;
-      font-size: 0.95rem;
-      min-width: 200px;
-    }
-    
+    /* Section styling */
     .section {
-      padding: 4rem 0;
+      padding: 2rem 0;
+      max-width: 100%;
     }
     
     .section-title {
-      font-size: 2rem;
-      margin-bottom: 3rem;
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      word-wrap: break-word;
     }
     
+    /* Guide grid - Industry standard single column */
     .guide-grid {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
-      padding: 0 1rem;
+      gap: 1rem;
       max-width: 100%;
-      overflow-x: hidden;
+      padding: 0;
     }
     
     .guide-card {
       padding: 1.5rem;
+      margin-bottom: 1rem;
+      width: 100%;
+      box-sizing: border-box;
     }
     
     .guide-card h3 {
       font-size: 1.2rem;
       margin-bottom: 0.8rem;
       line-height: 1.3;
+      word-wrap: break-word;
     }
     
     .guide-card p {
@@ -793,13 +778,14 @@
       padding-top: 1rem;
     }
     
+    /* CTA section */
     .cta-section {
-      padding: 3rem 2rem;
-      margin: 6rem auto;
+      padding: 2rem 1rem;
+      margin: 3rem auto;
     }
     
     .cta-title {
-      font-size: 2.2rem;
+      font-size: 2rem;
       margin-bottom: 1rem;
     }
     
@@ -807,31 +793,35 @@
       font-size: 1rem;
       margin-bottom: 2rem;
     }
-
-    /* Music control for mobile */
-    .music-control-panel {
-      width: 90vw;
+    
+    .btn {
+      padding: 1rem 2rem;
+      font-size: 0.9rem;
+      min-width: 200px;
+      width: 100%;
       max-width: 300px;
-      bottom: 80px !important;
     }
     
-    #musicControlButton {
-      bottom: 15px !important;
-      right: 15px !important;
-      padding: 10px 15px !important;
-      font-size: 12px !important;
+    /* Footer */
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    
+    .footer-buttons {
+      flex-direction: column;
+      gap: 0.8rem;
+      align-items: center;
     }
   }
 
   /* Very small screens (mobile portrait) */
   @media (max-width: 480px) {
-    .container {
-      padding: 0 1rem;
-      max-width: 100%;
-    }
-    
+    /* Even more compact for small phones */
     .header-content {
-      padding: 0.8rem 1rem;
+      padding: 0.8rem;
     }
     
     .logo {
@@ -841,44 +831,36 @@
     
     .nav {
       grid-template-columns: 1fr;
-      gap: 0.3rem;
+      gap: 0.5rem;
     }
     
     .nav a {
-      padding: 0.5rem 0.6rem;
-      font-size: 0.75rem;
+      padding: 0.8rem 0.5rem;
+      font-size: 0.8rem;
+      min-height: 48px;
     }
     
     main {
       padding-top: 140px;
-      padding-left: 0;
-      padding-right: 0;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
     
     .hero {
-      padding: 6rem 1rem 4rem;
+      padding: 1.5rem 0;
     }
     
     .hero-title {
-      font-size: 1.8rem;
-      line-height: 1.3;
-      margin-bottom: 1rem;
+      font-size: 2rem;
+      line-height: 1.2;
     }
     
     .hero-subtitle {
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
-    }
-    
-    .hero-description {
-      font-size: 0.85rem;
-      line-height: 1.5;
-      margin-bottom: 2rem;
     }
     
     .stats-container {
-      gap: 1rem;
-      margin: 2rem auto 0;
+      gap: 0.8rem;
     }
     
     .stat-box {
@@ -893,146 +875,65 @@
       font-size: 0.8rem;
     }
     
-    .btn {
-      padding: 0.8rem 1.2rem;
-      font-size: 0.85rem;
-      min-width: 160px;
-    }
-    
     .section {
-      padding: 3rem 0;
+      padding: 1.5rem 0;
     }
     
     .section-title {
       font-size: 1.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
     
     .guide-grid {
-      gap: 1rem;
-      padding: 0 0.5rem;
-      max-width: 100%;
-      overflow-x: hidden;
+      gap: 0.8rem;
     }
     
     .guide-card {
-      padding: 1.2rem;
+      padding: 1rem;
     }
     
     .guide-card h3 {
-      font-size: 1rem;
-      margin-bottom: 0.8rem;
-      line-height: 1.3;
+      font-size: 1.1rem;
     }
     
     .guide-card p {
-      font-size: 0.8rem;
-      line-height: 1.5;
-      margin-bottom: 0.8rem;
+      font-size: 0.85rem;
     }
     
     .guide-meta {
-      font-size: 0.7rem;
-      padding-top: 0.8rem;
+      font-size: 0.75rem;
     }
     
     .cta-section {
-      padding: 2rem 1.5rem;
-      margin: 4rem auto;
+      padding: 1.5rem 0.5rem;
+      margin: 2rem auto;
     }
     
     .cta-title {
-      font-size: 1.8rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.6rem;
     }
     
     .cta-text {
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Footer adjustments */
-    .footer {
-      padding: 2rem 0;
     }
     
-    .footer-content {
-      flex-direction: column;
-      gap: 1.5rem;
-      text-align: center;
-    }
-    
-    .footer-buttons {
-      flex-direction: column;
-      gap: 0.8rem;
-      align-items: center;
-    }
-    
-    .footer-btn {
+    .btn {
       padding: 0.8rem 1.5rem;
       font-size: 0.85rem;
+      min-width: 180px;
     }
-  }
-
-  /* Ultra small screens (very old phones) */
-  @media (max-width: 320px) {
-    .hero-title { font-size: 1.5rem; }
-    .section-title { font-size: 1.3rem; }
-    .btn { padding: 0.7rem 1rem; font-size: 0.8rem; }
-    .nav a { padding: 0.3rem 0.5rem; font-size: 0.7rem; }
   }
 
   /* Touch device improvements */
   @media (hover: none) and (pointer: coarse) {
-    .btn:hover {
-      transform: none;
-      background: rgba(139, 0, 0, 0.8);
-    }
-    
-    .card:hover {
-      transform: none;
-    }
-    
-    .quick-link-item:hover {
-      transform: none;
-      background: rgba(220, 20, 60, 0.1);
-    }
-    
+    .btn:hover,
+    .guide-card:hover,
     .nav a:hover {
-      color: var(--re-gold);
       transform: none;
     }
-  }
-
-  /* Landscape phone orientation */
-  @media (max-height: 600px) and (orientation: landscape) {
-    .hero {
-      padding: 4rem 1rem 2rem;
-    }
     
-    .hero-title {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-    
-    .section {
-      padding: 2.5rem 0;
-    }
-    
-    .section-title {
-      margin-bottom: 2rem;
-    }
-  }
-
-  /* Ensure text remains readable */
-  @media (max-width: 480px) {
-    p, li {
-      font-size: 0.85rem;
-      line-height: 1.5;
-    }
-    
-    h1, h2, h3, h4 {
-      line-height: 1.2;
+    .btn:active {
+      transform: scale(0.98);
     }
   }
 </style>
