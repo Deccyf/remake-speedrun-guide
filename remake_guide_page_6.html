@@ -501,14 +501,20 @@
     }
     
     .nav {
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.3rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 400px;
     }
     
     .nav a {
-      padding: 0.5rem 0.6rem;
+      padding: 0.6rem 0.8rem;
       font-size: 0.8rem;
+      text-align: center;
+      border: 1px solid rgba(139, 0, 0, 0.3);
+      border-radius: 8px;
+      background: rgba(139, 0, 0, 0.1);
     }
     
     .guide-content {
@@ -621,11 +627,12 @@
     }
     
     .nav {
-      gap: 0.2rem;
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
     }
     
     .nav a {
-      padding: 0.4rem 0.5rem;
+      padding: 0.5rem 0.6rem;
       font-size: 0.75rem;
     }
     
