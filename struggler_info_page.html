@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About StruggleR - REmake Speedrun Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --re-black: #0D0D0D; --re-dark: #1A1A1A; --re-blood: #8B0000;
+    --re-crimson: #DC143C; --re-green: #7CFC00; --re-gold: #D4AF37;
+    --re-white: #F5F5F5; --re-gray: #808080; --re-purple: #9B59B6;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif; background: var(--re-black);
+    color: var(--re-white); line-height: 1.7; overflow-x: hidden;
+  }
+
+  .fog-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; }
+  
+  .fog {
+    position: absolute; width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 60%, rgba(124, 252, 0, 0.08) 0%, transparent 40%);
+    animation: fogMove 30s ease-in-out infinite;
+  }
+
+  @keyframes fogMove {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-5%, 5%); }
+    50% { transform: translate(5%, -5%); }
+    75% { transform: translate(-3%, 3%); }
+  }
+
+  .header {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    background: rgba(13, 13, 13, 0.95); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3); transition: all 0.3s;
+  }
+
+  .header.scrolled { background: rgba(13, 13, 13, 0.98); box-shadow: 0 4px 30px rgba(139, 0, 0, 0.3); }
+
+  .header-content {
+    max-width: 1400px; margin: 0 auto; padding: 1.2rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;
+    color: var(--re-white); text-decoration: none; letter-spacing: 3px; position: relative;
+  }
+
+  .logo::before, .logo::after {
+    content: ''; position: absolute; top: 50%; width: 20px; height: 2px;
+    background: var(--re-blood); transform: translateY(-50%);
+  }
+
+  .logo::before { left: -30px; }
+  .logo::after { right: -30px; }
+  .logo span { color: var(--re-blood); }
+
+  .nav { display: flex; gap: 3rem; align-items: center; }
+
+  .nav a {
+    color: var(--re-gray); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s; position: relative;
+  }
+
+  .nav a::after {
+    content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+    background: var(--re-blood); transition: width 0.3s;
+  }
+
+  .nav a:hover { color: var(--re-white); }
+  .nav a:hover::after { width: 100%; }
+
+  .progress-bar {
+    position: fixed; top: 73px; left: 0; width: 100%; height: 3px;
+    background: rgba(139, 0, 0, 0.2); z-index: 999;
+  }
+
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--re-blood), var(--re-crimson));
+    width: 0%; transition: width 0.3s; box-shadow: 0 0 10px var(--re-blood);
+  }
+
+  main { padding-top: 100px; max-width: 1400px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+
+  .section-hero { text-align: center; padding: 4rem 0; position: relative; }
+
+  .section-badge {
+    display: inline-block; padding: 0.6rem 1.5rem; background: rgba(155, 89, 182, 0.2);
+    border: 1px solid var(--re-purple); border-radius: 30px; font-size: 0.85rem;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 3px;
+    color: var(--re-purple); margin-bottom: 1.5rem; animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(155, 89, 182, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(155, 89, 182, 0.6); }
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif; font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem;
+    line-height: 1.1; letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(155, 89, 182, 0.5), 0 0 40px rgba(155, 89, 182, 0.3);
+    animation: titleGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(155, 89, 182, 0.5), 0 0 40px rgba(155, 89, 182, 0.3); }
+    50% { text-shadow: 0 0 30px rgba(155, 89, 182, 0.8), 0 0 60px rgba(155, 89, 182, 0.5); }
+  }
+
+  .section-meta {
+    display: flex; gap: 3rem; justify-content: center;
+    color: var(--re-gray); font-size: 0.95rem; margin-top: 1.5rem;
+  }
+
+  .main-content {
+    background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 0, 0, 0.2); border-radius: 15px; padding: 3rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .struggler-logo {
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+    display: block;
+  }
+
+  .info-box {
+    background: rgba(155, 89, 182, 0.1); border-left: 4px solid var(--re-purple);
+    padding: 1.5rem; border-radius: 10px; margin: 2rem 0;
+    position: relative; overflow: hidden;
+  }
+
+  .info-box::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, rgba(155, 89, 182, 0.1), transparent);
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+  }
+
+  .info-box-title {
+    font-weight: 700; color: var(--re-purple); margin-bottom: 0.8rem;
+    font-size: 1.1rem; letter-spacing: 1px; position: relative; z-index: 2;
+  }
+
+  .info-box p, .info-box ul { position: relative; z-index: 2; }
+
+  .race-details {
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(155, 89, 182, 0.2));
+    border: 2px solid var(--re-purple);
+    border-radius: 15px; padding: 2.5rem; margin: 2rem 0;
+    position: relative; overflow: hidden;
+  }
+
+  .race-details h3 {
+    font-family: 'Cinzel', serif; color: var(--re-purple);
+    font-size: 2rem; margin-bottom: 1.5rem; text-align: center;
+  }
+
+  .racers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .racer-card {
+    background: rgba(13, 13, 13, 0.8);
+    border: 2px solid var(--re-purple);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .racer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(155, 89, 182, 0.4);
+  }
+
+  .racer-card img {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .racer-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--re-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .calendar-section {
+    margin: 3rem 0;
+    text-align: center;
+  }
+
+  .calendar-section img {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 12px;
+    border: 2px solid var(--re-purple);
+    margin: 1rem auto;
+    display: block;
+  }
+
+  .stream-banner {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .stream-banner img {
+    width: 100%;
+    border-radius: 12px;
+    border: 2px solid var(--re-blood);
+  }
+
+  .content-section { margin-bottom: 3rem; animation: fadeIn 0.8s ease-out; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .content-section h2 {
+    font-family: 'Cinzel', serif; font-size: 2.2rem; color: var(--re-blood);
+    margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid rgba(139, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .content-section h2::after {
+    content: ''; position: absolute; bottom: -2px; left: 0;
+    width: 100px; height: 2px; background: var(--re-blood);
+  }
+
+  .content-section p { color: var(--re-gray); line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem; }
+  .content-section ul { margin-left: 2rem; margin-bottom: 1.5rem; }
+  .content-section li { color: var(--re-gray); margin-bottom: 1rem; line-height: 1.8; }
+  .content-section strong { color: var(--re-gold); }
+
+  .page-nav {
+    display: flex; justify-content: center; margin-top: 4rem;
+    padding-top: 3rem; border-top: 2px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .page-nav-btn {
+    display: inline-flex; align-items: center; gap: 1rem; padding: 1.2rem 2.5rem;
+    background: rgba(139, 0, 0, 0.2); border: 2px solid var(--re-blood); border-radius: 50px;
+    color: var(--re-white); text-decoration: none; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s;
+    position: relative; overflow: hidden;
+  }
+
+  .page-nav-btn::before {
+    content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+    border-radius: 50%; background: rgba(139, 0, 0, 0.3);
+    transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s;
+  }
+
+  .page-nav-btn:hover::before { width: 300px; height: 300px; }
+  .page-nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(139, 0, 0, 0.5); }
+
+  @media (max-width: 968px) {
+    .section-title { font-size: 2.5rem; }
+    .nav { gap: 1.5rem; }
+    .racers-grid { grid-template-columns: 1fr; }
+  }
+
+  .blood-drips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .blood-drip {
+    position: absolute;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--re-blood));
+    animation: drip 3s ease-in infinite;
+  }
+
+  @keyframes drip {
+    0% { height: 0; opacity: 0; }
+    10% { opacity: 1; }
+    100% { height: 100vh; opacity: 0; }
+  }
+
+  .footer {
+    background: rgba(13, 13, 13, 0.95);
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 8rem;
+  }
+
+  .footer p {
+    color: var(--re-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer-info {
+    text-align: left;
+  }
+
+  .footer-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .discord-btn {
+    background: rgba(88, 101, 242, 0.2);
+    color: #5865f2;
+    border: 1px solid rgba(88, 101, 242, 0.3);
+  }
+
+  .discord-btn:hover {
+    background: #5865f2;
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+  }
+
+  .website-btn {
+    background: rgba(139, 0, 0, 0.2);
+    color: var(--re-blood);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+  }
+
+  .website-btn:hover {
+    background: var(--re-blood);
+    color: var(--re-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+  }
+
+  .discord-logo, .website-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .website-logo {
+    filter: brightness(1.2);
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .footer-info {
+      text-align: center;
+    }
+    .footer-buttons {
+      justify-content: center;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="fog-container"><div class="fog"></div></div>
+  <div class="blood-drips" id="bloodDrips"></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <header class="header" id="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">RESIDENT <span>EVIL</span></a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="remake_guide_page_1.html">Guide Setup</a>
+        <a href="remake_guide_page_2.html">Walkthrough</a>
+        <a href="resources-page.html">Resources</a>
+        <a href="quick-reference-guide.html">Quick Reference</a>
+        <a href="struggler_info_page.html">StruggleR</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-hero">
+      <div class="section-badge">SPECIAL EVENT</div>
+      <h1 class="section-title">About StruggleR</h1>
+      <div class="section-meta">
+        <span>RACING COMPETITION</span>
+        <span>•</span>
+        <span>JANUARY 18, 2026</span>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <img src="Logo/struggleR_logo.png" alt="StruggleR Logo" class="struggler-logo">
+
+      <div class="content-section">
+        <h2>What is StruggleR?</h2>
+        <p>StruggleR is an exciting racing competition where gamers race their favourite games against each other in head-to-head speedrun battles. It's part of the Wheel of Struggle community, bringing together speedrunners from all skill levels to compete, learn, and have fun.</p>
+
+        <p>The format is simple but thrilling: two competitors learn the same speedrun route, practice their execution, and then race live to see who can complete the game fastest. It's not just about raw skill—it's about consistency, adaptation, and handling the pressure of live competition.</p>
+      </div>
+
+      <div class="race-details">
+        <h3>Resident Evil REmake Race</h3>
+        <p style="text-align: center; color: var(--re-white); font-size: 1.2rem; margin-bottom: 2rem;">
+          <strong>Game:</strong> Resident Evil (2002 Remake)<br>
+          <strong>Category:</strong> Jill, Normal Difficulty, Any%<br>
+          <strong>Race Date:</strong> January 18, 2026
+        </p>
+
+        <div class="info-box">
+          <div class="info-box-title">CREATED FOR THIS RACE</div>
+          <p>This comprehensive speedrun guide was created specifically for Enbyzee and Geckish as they learn the Resident Evil REmake speedrun to compete against each other. Every section, strategy, and tip has been designed to help them master this classic survival horror speedrun.</p>
+        </div>
+
+        <div class="racers-grid">
+          <div class="racer-card">
+            <img src="https://github.com/user-attachments/assets/af26a4f9-49e7-44a9-9e5c-b1bd9f8e8f23" alt="Enbyzee">
+            <div class="racer-name">ENBYZEE</div>
+            <p style="color: var(--re-gray);">Racer #1</p>
+          </div>
+
+          <div class="racer-card">
+            <img src="https://github.com/user-attachments/assets/7f2a9ac6-fcb9-4a53-bf70-d57f45d6bd54" alt="Geckish">
+            <div class="racer-name">GECKISH</div>
+            <p style="color: var(--re-gray);">Racer #2</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stream-banner">
+        <img src="/Logos/THUMB_s3r30_remake.png" alt="Resident Evil StruggleR Racer Card">
+      </div>
+
+      <div class="content-section">
+        <h2>The Journey to Race Day</h2>
+        <p>Both racers are following this guide to learn the optimal route through the Spencer Mansion. They'll master:</p>
+        <ul>
+          <li><strong>Optimal routing</strong> through all 16 sections</li>
+          <li><strong>Boss strategies</strong> for Yawn, Elder Crimson, Plant 42, Black Tiger, and Tyrant</li>
+          <li><strong>Advanced techniques</strong> like pump cancelling, door cancelling, and enemy manipulation</li>
+          <li><strong>Inventory management</strong> throughout the entire run</li>
+          <li><strong>RNG management</strong> for dealing with unpredictable elements</li>
+        </ul>
+
+        <p>The race will test not only their execution but their ability to stay calm under pressure, adapt to bad RNG, and make split-second decisions when things don't go according to plan.</p>
+      </div>
+
+      <div class="calendar-section">
+        <h2 style="font-family: 'Cinzel', serif; font-size: 2.2rem; color: var(--re-purple); margin-bottom: 2rem;">Mark Your Calendars</h2>
+        <img src="/Logos/calendar_26_01.png" alt="January 2026 Calendar">
+        <p style="color: var(--re-gray); font-style: italic; margin-top: 1rem;">
+          All times/dates local UK time. Check #struggler-schedule in the WoS Discord and the WoS Twitch channel schedule for up-to-date listings and timestamps!
+        </p>
+      </div>
+
+      <div class="info-box">
+        <div class="info-box-title">JOIN THE COMMUNITY</div>
+        <p>Want to watch the race live or participate in future StruggleR events? Join the Wheel of Struggle Discord community! You'll find practice streams, strategy discussions, and announcements for upcoming races.</p>
+        <p style="margin-top: 1rem;">Whether you're a veteran speedrunner or completely new to the scene, everyone is welcome. Who knows—you might be inspired to take on your own StruggleR challenge!</p>
+      </div>
+
+      <div class="page-nav">
+        <a href="index.html" class="page-nav-btn">
+          <span>← Back to Guide Home</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const bloodDripsContainer = document.getElementById('bloodDrips');
+    for (let i = 0; i < 5; i++) {
+      const drip = document.createElement('div');
+      drip.className = 'blood-drip';
+      drip.style.left = Math.random() * 100 + '%';
+      drip.style.animationDelay = Math.random() * 3 + 's';
+      drip.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      bloodDripsContainer.appendChild(drip);
+    }
+
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
+    });
+
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      header.classList.toggle('scrolled', window.scrollY > 100);
+    });
+  </script>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p>Original Guide by Deccyf</p>
+        <p>Created for Enbyzee vs Geckish • StruggleR Event</p>
+        <p>© 2025 Wheel of Struggle Community Speedrun Guide • All Rights Reserved</p>
+      </div>
+      <div class="footer-buttons">
+        <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
+          <img src="e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="discord-logo">
+          Discord
+        </a>
+        <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank">
+          <img src="WoS_Discord_Colour_V2.png" alt="Wheel of Struggle" class="website-logo">
+          Website
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
