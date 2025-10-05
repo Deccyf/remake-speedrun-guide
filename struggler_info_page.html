@@ -275,129 +275,367 @@
   .page-nav-btn:hover::before { width: 300px; height: 300px; }
   .page-nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(139, 0, 0, 0.5); }
 
-  @media (max-width: 968px) {
-    .section-title { font-size: 2.5rem; }
-    .nav { gap: 1.5rem; }
-    .racers-grid { grid-template-columns: 1fr; }
+  /* ==================================================
+     COMPREHENSIVE MOBILE-FIRST RESPONSIVE DESIGN
+     ================================================== */
+
+  /* Mobile-First Base Styles (320px+) */
+  * {
+    box-sizing: border-box;
   }
 
-  .blood-drips {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
   }
 
-  .blood-drip {
+  /* Touch-friendly base styles */
+  a, button, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Mobile Navigation */
+  .nav {
+    display: none;
+    flex-direction: column;
     position: absolute;
-    width: 2px;
-    height: 0;
-    background: linear-gradient(180deg, transparent, var(--re-blood));
-    animation: drip 3s ease-in infinite;
-  }
-
-  @keyframes drip {
-    0% { height: 0; opacity: 0; }
-    10% { opacity: 1; }
-    100% { height: 100vh; opacity: 0; }
-  }
-
-  .footer {
-    background: rgba(13, 13, 13, 0.95);
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(13, 13, 13, 0.98);
+    backdrop-filter: blur(20px);
     border-top: 1px solid rgba(139, 0, 0, 0.3);
-    padding: 3rem 2rem;
+    padding: 1rem;
+    z-index: 999;
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .nav a {
+    padding: 1rem;
+    margin: 0.25rem 0;
+    border-radius: 8px;
+    background: rgba(139, 0, 0, 0.1);
+    border: 1px solid rgba(139, 0, 0, 0.2);
     text-align: center;
-    margin-top: 8rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
   }
 
-  .footer p {
-    color: var(--re-gray);
+  .nav a:hover {
+    background: rgba(139, 0, 0, 0.2);
+    transform: none;
+  }
+
+  /* Hamburger Menu */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+  }
+
+  .hamburger span {
+    width: 100%;
+    height: 3px;
+    background: var(--re-white);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  /* Mobile Header */
+  .header-content {
+    padding: 1rem;
+    position: relative;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  /* Mobile Main Content */
+  main {
+    padding-top: 80px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .section-hero {
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .section-meta {
+    flex-direction: column;
+    gap: 0.5rem;
     font-size: 0.9rem;
-    margin-bottom: 0.5rem;
   }
 
-  .footer-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
+  .main-content {
+    padding: 1.5rem;
+    margin: 1rem 0;
   }
 
-  .footer-info {
-    text-align: left;
+  .content-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
   }
 
-  .footer-buttons {
-    display: flex;
+  .content-section p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .info-box {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  .race-details {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .race-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .racers-grid {
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
 
-  .footer-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: 600;
+  .racer-card {
+    padding: 1rem;
+  }
+
+  .racer-name {
+    font-size: 1.2rem;
+  }
+
+  .stream-banner {
+    margin: 1rem 0;
+    text-align: center;
+  }
+
+  .stream-banner img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .calendar-section img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .page-nav-btn {
+    padding: 1rem 2rem;
     font-size: 0.9rem;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    width: 100%;
+    text-align: center;
   }
 
-  .discord-btn {
-    background: rgba(88, 101, 242, 0.2);
-    color: #5865f2;
-    border: 1px solid rgba(88, 101, 242, 0.3);
+  /* Mobile Footer */
+  .footer {
+    padding: 2rem 1rem;
+    margin-top: 4rem;
   }
 
-  .discord-btn:hover {
-    background: #5865f2;
-    color: var(--re-white);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+  .footer-content {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
   }
 
-  .website-btn {
-    background: rgba(139, 0, 0, 0.2);
-    color: var(--re-blood);
-    border: 1px solid rgba(139, 0, 0, 0.3);
+  .footer-buttons {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
   }
 
-  .website-btn:hover {
-    background: var(--re-blood);
-    color: var(--re-white);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+  .footer-btn {
+    padding: 1rem 2rem;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
   }
 
-  .discord-logo, .website-logo {
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-    margin-right: 0.5rem;
+  /* Disable hover effects on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    .nav a:hover,
+    .page-nav-btn:hover,
+    .footer-btn:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .nav a:active,
+    .page-nav-btn:active,
+    .footer-btn:active {
+      transform: scale(0.98);
+      background: rgba(139, 0, 0, 0.3);
+    }
   }
 
-  .website-logo {
-    filter: brightness(1.2);
-  }
+  /* Tablet Styles (768px - 1023px) */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .nav {
+      display: flex;
+      position: static;
+      flex-direction: row;
+      background: transparent;
+      border: none;
+      padding: 0;
+      gap: 2rem;
+    }
 
-  @media (max-width: 768px) {
-    .footer-content {
-      flex-direction: column;
+    .hamburger {
+      display: none;
+    }
+
+    .nav a {
+      padding: 0.5rem 1rem;
+      margin: 0;
+      background: transparent;
+      border: none;
+      font-size: 0.9rem;
+    }
+
+    .header-content {
+      padding: 1.5rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+    }
+
+    main {
+      padding-top: 100px;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+    }
+
+    .main-content {
+      padding: 2rem;
+    }
+
+    .racers-grid {
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
     }
-    .footer-info {
-      text-align: center;
+
+    .footer-content {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
     }
+
     .footer-buttons {
-      justify-content: center;
+      flex-direction: row;
+    }
+
+    .footer-btn {
+      width: auto;
+      max-width: none;
+    }
+  }
+
+  /* Desktop Styles (1024px+) */
+  @media (min-width: 1024px) {
+    .nav {
+      display: flex;
+      position: static;
+      flex-direction: row;
+      background: transparent;
+      border: none;
+      padding: 0;
+      gap: 3rem;
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    .nav a {
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      border: none;
+      font-size: 0.95rem;
+    }
+
+    .header-content {
+      padding: 1.2rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+    }
+
+    main {
+      padding-top: 100px;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .section-title {
+      font-size: 3.5rem;
+    }
+
+    .main-content {
+      padding: 3rem;
+    }
+
+    .racers-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .page-nav-btn {
+      width: auto;
+    }
+
+    .footer-btn {
+      width: auto;
+      max-width: none;
     }
   }
 </style>
@@ -410,7 +648,12 @@
   <header class="header" id="header">
     <div class="header-content">
       <a href="index.html" class="logo">RESIDENT <span>EVIL</span></a>
-      <nav class="nav">
+      <button class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="nav" id="nav">
         <a href="index.html">Home</a>
         <a href="remake_guide_page_1.html">Guide Setup</a>
         <a href="remake_guide_page_2.html">Walkthrough</a>
@@ -509,6 +752,32 @@
   </main>
 
   <script>
+    // Mobile Navigation
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.getElementById('nav');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    nav.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+      }
+    });
+
+    // Blood drip animation
     const bloodDripsContainer = document.getElementById('bloodDrips');
     for (let i = 0; i < 5; i++) {
       const drip = document.createElement('div');
@@ -519,12 +788,14 @@
       bloodDripsContainer.appendChild(drip);
     }
 
+    // Progress bar
     window.addEventListener('scroll', () => {
       const winScroll = document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
     });
 
+    // Header scroll effect
     window.addEventListener('scroll', () => {
       const header = document.getElementById('header');
       header.classList.toggle('scrolled', window.scrollY > 100);

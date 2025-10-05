@@ -728,272 +728,349 @@
 
 
   /* ==================================================
-     MOBILE RESPONSIVE DESIGN - INDUSTRY STANDARDS
+     COMPREHENSIVE MOBILE-FIRST RESPONSIVE DESIGN
      ================================================== */
-  
-  /* Mobile First Approach - Base styles for mobile */
 
-  /* Small screens (mobile landscape) */
-  @media (max-width: 768px) {
-    /* Reset and base mobile styles */
-    * {
-      box-sizing: border-box;
-    }
-    
-    body {
-      background-attachment: scroll !important;
-      overflow-x: hidden;
-    }
-    
-    /* Header mobile optimization */
-    .header-content {
-      padding: 1rem;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 100%;
-    }
-    
-    .logo {
-      font-size: 1.4rem;
-      letter-spacing: 2px;
-      text-align: center;
-    }
-    
-    /* Navigation - Industry standard mobile nav */
-    .nav {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-      width: 100%;
-      max-width: 100%;
-    }
-    
-    .nav a {
-      padding: 0.75rem 0.5rem;
-      font-size: 0.8rem;
-      text-align: center;
-      border: 1px solid rgba(139, 0, 0, 0.3);
-      border-radius: 8px;
-      background: rgba(139, 0, 0, 0.1);
-      min-height: 44px; /* Touch target minimum */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    /* Main content area */
-    main {
-      padding-top: 120px;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-    
-    /* Hero section */
-    .section-hero {
-      padding: 2rem 0;
-      text-align: center;
-    }
-    
-    .section-title {
-      font-size: 2rem !important;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      word-wrap: break-word;
-      line-height: 1.2;
-    }
-    
-    .section-meta {
-      flex-direction: column;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-    }
-    
-    /* Content sections */
-    .content-section {
-      padding: 0;
-      margin-bottom: 2rem;
-    }
-    
-    .content-section h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      word-wrap: break-word;
-    }
-    
-    /* Grid layouts - Industry standard single column */
-    .resource-grid, .video-grid, .community-links {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      padding: 0;
-      max-width: 100%;
-    }
-    
-    .resource-card, .video-card, .community-card {
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    
-    .resource-card h3, .video-info h4, .community-card h4 {
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
-      word-wrap: break-word;
-    }
-    
-    .resource-card p, .video-info p, .community-card p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    
-    /* Leaderboard table */
-    .leaderboard {
-      padding: 1rem;
-      overflow-x: auto;
-    }
-    
-    .leaderboard-table {
-      min-width: 100%;
-    }
-    
-    .leaderboard-table th,
-    .leaderboard-table td {
-      padding: 0.5rem;
-      font-size: 0.8rem;
-    }
-    
-    /* Buttons */
-    .btn, .resource-link, .watch-btn, .community-link {
-      padding: 0.8rem 1rem;
-      font-size: 0.8rem;
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    /* Footer */
-    .footer-content {
-      flex-direction: column;
-      gap: 1.5rem;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    
-    .footer-buttons {
-      flex-direction: column;
-      gap: 0.8rem;
-      align-items: center;
-    }
+  /* Mobile-First Base Styles (320px+) */
+  * {
+    box-sizing: border-box;
   }
 
-  /* Very small screens (mobile portrait) */
-  @media (max-width: 480px) {
-    /* Even more compact for small phones */
-    .header-content {
-      padding: 0.8rem;
-    }
-    
-    .logo {
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-    }
-    
-    .nav {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-    }
-    
-    .nav a {
-      padding: 0.8rem 0.5rem;
-      font-size: 0.8rem;
-      min-height: 48px;
-    }
-    
-    main {
-      padding-top: 140px;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-    }
-    
-    .section-hero {
-      padding: 1.5rem 0;
-    }
-    
-    .section-title {
-      font-size: 1.5rem !important;
-      margin-bottom: 1rem;
-    }
-    
-    .section-meta {
-      gap: 0.3rem;
-      font-size: 0.7rem;
-    }
-    
-    .content-section {
-      margin-bottom: 1.5rem;
-    }
-    
-    .content-section h2 {
-      font-size: 1.3rem;
-      margin-bottom: 0.8rem;
-    }
-    
-    .resource-grid, .video-grid, .community-links {
-      gap: 0.8rem;
-    }
-    
-    .resource-card, .video-card, .community-card {
-      padding: 1rem;
-    }
-    
-    .resource-card h3, .video-info h4, .community-card h4 {
-      font-size: 1.1rem;
-    }
-    
-    .resource-card p, .video-info p, .community-card p {
-      font-size: 0.85rem;
-    }
-    
-    .leaderboard {
-      padding: 0.8rem;
-    }
-    
-    .leaderboard-table th,
-    .leaderboard-table td {
-      padding: 0.4rem;
-      font-size: 0.75rem;
-    }
-    
-    .btn, .resource-link, .watch-btn, .community-link {
-      padding: 0.7rem 0.8rem;
-      font-size: 0.75rem;
-    }
-    
-    .footer-content {
-      padding: 1.5rem 0.5rem;
-    }
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
   }
 
-  /* Touch device improvements */
+  /* Touch-friendly base styles */
+  a, button, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Mobile Navigation */
+  .nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(13, 13, 13, 0.98);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
+    padding: 1rem;
+    z-index: 999;
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .nav a {
+    padding: 1rem;
+    margin: 0.25rem 0;
+    border-radius: 8px;
+    background: rgba(139, 0, 0, 0.1);
+    border: 1px solid rgba(139, 0, 0, 0.2);
+    text-align: center;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(139, 0, 0, 0.2);
+    transform: none;
+  }
+
+  /* Hamburger Menu */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+  }
+
+  .hamburger span {
+    width: 100%;
+    height: 3px;
+    background: var(--re-white);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  /* Mobile Header */
+  .header-content {
+    padding: 1rem;
+    position: relative;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  /* Mobile Main Content */
+  main {
+    padding-top: 80px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .section-hero {
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .section-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .content-section {
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  .content-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .resource-grid, .video-grid, .community-links {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .resource-card, .video-card, .community-card {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .resource-card h3, .video-info h4, .community-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .resource-card p, .video-info p, .community-card p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .leaderboard {
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  .leaderboard-table {
+    min-width: 100%;
+  }
+
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .btn, .resource-link, .watch-btn, .community-link {
+    padding: 0.8rem 1rem;
+    font-size: 0.8rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mobile Footer */
+  .footer {
+    padding: 2rem 1rem;
+    margin-top: 4rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .footer-buttons {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .footer-btn {
+    padding: 1rem 2rem;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  /* Disable hover effects on touch devices */
   @media (hover: none) and (pointer: coarse) {
-    .btn:hover,
+    .nav a:hover,
     .resource-card:hover,
     .video-card:hover,
     .community-card:hover,
-    .nav a:hover {
-      transform: none !important;
+    .footer-btn:hover {
+      transform: none;
+      box-shadow: none;
     }
     
-    .btn:active,
+    .nav a:active,
     .resource-card:active,
     .video-card:active,
-    .community-card:active {
+    .community-card:active,
+    .footer-btn:active {
       transform: scale(0.98);
+      background: rgba(139, 0, 0, 0.3);
+    }
+  }
+
+  /* Tablet Styles (768px - 1023px) */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .nav {
+      display: flex;
+      position: static;
+      flex-direction: row;
+      background: transparent;
+      border: none;
+      padding: 0;
+      gap: 2rem;
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    .nav a {
+      padding: 0.5rem 1rem;
+      margin: 0;
+      background: transparent;
+      border: none;
+      font-size: 0.9rem;
+    }
+
+    .header-content {
+      padding: 1.5rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+    }
+
+    main {
+      padding-top: 100px;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+    }
+
+    .resource-grid, .video-grid, .community-links {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .footer-content {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    .footer-buttons {
+      flex-direction: row;
+    }
+
+    .footer-btn {
+      width: auto;
+      max-width: none;
+    }
+  }
+
+  /* Desktop Styles (1024px+) */
+  @media (min-width: 1024px) {
+    .nav {
+      display: flex;
+      position: static;
+      flex-direction: row;
+      background: transparent;
+      border: none;
+      padding: 0;
+      gap: 3rem;
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    .nav a {
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      border: none;
+      font-size: 0.95rem;
+    }
+
+    .header-content {
+      padding: 1.2rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+    }
+
+    main {
+      padding-top: 100px;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .section-title {
+      font-size: 3.5rem;
+    }
+
+    .resource-grid, .video-grid, .community-links {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-btn {
+      width: auto;
+      max-width: none;
     }
   }\n</style>
 </head>
@@ -1007,7 +1084,12 @@
   <header class="header" id="header">
     <div class="header-content">
       <a href="index.html" class="logo">RESIDENT <span>EVIL</span></a>
-      <nav class="nav">
+      <button class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="nav" id="nav">
         <a href="index.html">Home</a>
         <a href="remake_guide_page_1.html">Guide Setup</a>
         <a href="remake_guide_page_2.html">Walkthrough</a>
@@ -1297,6 +1379,31 @@
   </main>
 
   <script>
+    // Mobile Navigation
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.getElementById('nav');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    nav.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+      }
+    });
+
     // Blood drip animation
     const bloodDripsContainer = document.getElementById('bloodDrips');
     for (let i = 0; i < 5; i++) {
