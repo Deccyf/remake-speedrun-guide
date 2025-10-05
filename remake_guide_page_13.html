@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Section 13: Underground Facility - REMake Speedrun Guide</title>
+<title>Section 12: Underground Facility - REMake Speedrun Guide</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
   
@@ -467,6 +467,33 @@
       justify-content: center;
     }
   }
+/* Nav hover dropdown */
+.dropdown { position: relative; }
+.dropdown-toggle { display: inline-block; }
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 320px;
+  background: rgba(26, 26, 26, 0.98);
+  border: 1px solid rgba(139, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  z-index: 1001;
+}
+.dropdown:hover .dropdown-menu { display: block; }
+.dropdown-menu a {
+  display: block;
+  padding: 0.6rem 1rem;
+  color: var(--re-gray);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.dropdown-menu a:hover { background: rgba(139,0,0,0.2); color: var(--re-white); }
 
 
   /* ==================================================
@@ -948,8 +975,27 @@
       <a href="index.html" class="logo">RESIDENT <span>EVIL</span></a>
       <nav class="nav">
         <a href="index.html">Home</a>
-        <a href="remake_guide_page_1.html">Guide Setup</a>
-        <a href="remake_guide_page_2.html">Walkthrough</a>
+        <a href="remake_guide_page_1.html">Setup Guide</a>
+        <div class="dropdown">
+          <a href="remake_guide_page_2.html" class="dropdown-toggle">Walkthrough</a>
+          <div class="dropdown-menu">
+            <a href="remake_guide_page_2.html">Section 1: Mansion 1 - Opening</a>
+            <a href="remake_guide_page_3.html">Section 2: Armour Key & Grenade Launcher</a>
+            <a href="remake_guide_page_4.html">Section 3: Death Masks 2-4 & Yawn 1</a>
+            <a href="remake_guide_page_5.html">Section 4: Gallery & Death Masks 3-4</a>
+            <a href="remake_guide_page_6.html">Section 5: Elder Crimson Boss Fight</a>
+            <a href="remake_guide_page_7.html">Section 6: Courtyard & Lisa's Hut</a>
+            <a href="remake_guide_page_8.html">Section 7: Residence - Early</a>
+            <a href="remake_guide_page_9.html">Section 8: Neptune & Aqua Ring</a>
+            <a href="remake_guide_page_10.html">Section 9: Plant 42 Boss</a>
+            <a href="remake_guide_page_11.html">Section 10: Mansion 2 - Hunter Navigation</a>
+            <a href="remake_guide_page_12.html">Section 11: Yawn 2 & Gem Collection</a>
+            <a href="remake_guide_page_13.html">Section 12: Underground Facility</a>
+            <a href="remake_guide_page_14.html">Section 13: Lisa Trevor Underground</a>
+            <a href="remake_guide_page_15.html">Section 14: Laboratory</a>
+            <a href="remake_guide_page_16.html">Section 15: Tyrant & Helipad</a>
+          </div>
+        </div>
         <a href="resources-page.html">Resources</a>
         <a href="quick-reference-guide.html">Quick Reference</a>
         <a href="struggler_info_page.html">StruggleR</a>
@@ -959,7 +1005,7 @@
 
   <main>
     <div class="section-hero">
-      <div class="section-badge">SECTION 13 OF 16</div>
+      <div class="section-badge">SECTION 12 OF 15</div>
       <h1 class="section-title">Underground Facility</h1>
       <div class="section-meta">
         <span>•</span>
@@ -984,8 +1030,8 @@
 
           <div class="section-nav">
             <h4>Navigate</h4>
-            <a href="remake_guide_page_12.html" class="nav-link">← Section 12: Underground Access</a>
-            <a href="remake_guide_page_14.html" class="nav-link">Section 14: Lisa Underground →</a>
+            <a href="remake_guide_page_12.html" class="nav-link">← Section 11: Underground Access</a>
+            <a href="remake_guide_page_14.html" class="nav-link">Section 13: Lisa Underground →</a>
           </div>
         </div>
       </aside>
@@ -1196,10 +1242,10 @@
         <div class="page-nav">
           <a href="remake_guide_page_12.html" class="page-nav-btn">
             <span>←</span>
-            <span>Section 12: Underground Access</span>
+            <span>Section 11: Underground Access</span>
           </a>
           <a href="remake_guide_page_14.html" class="page-nav-btn">
-            <span>Section 14: Lisa Underground</span>
+            <span>Section 13: Lisa Underground</span>
             <span>→</span>
           </a>
         </div>

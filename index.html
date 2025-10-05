@@ -173,6 +173,34 @@
   .nav a:hover { color: var(--re-white); }
   .nav a:hover::after { width: 100%; }
 
+  /* Nav hover dropdown */
+  .dropdown { position: relative; }
+  .dropdown-toggle { display: inline-block; }
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 320px;
+    background: rgba(26, 26, 26, 0.98);
+    border: 1px solid rgba(139, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 1001;
+  }
+  .dropdown:hover .dropdown-menu { display: block; }
+  .dropdown-menu a {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: var(--re-gray);
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .dropdown-menu a:hover { background: rgba(139,0,0,0.2); color: var(--re-white); }
+
   main { 
     padding-top: 80px; 
     overflow-x: hidden;
@@ -950,8 +978,27 @@
       <a href="index.html" class="logo">RESIDENT <span>EVIL</span></a>
       <nav class="nav">
         <a href="index.html">Home</a>
-        <a href="remake_guide_page_1.html">Guide Setup</a>
-        <a href="remake_guide_page_2.html">Walkthrough</a>
+        <a href="remake_guide_page_1.html">Setup Guide</a>
+        <div class="dropdown">
+          <a href="remake_guide_page_2.html" class="dropdown-toggle">Walkthrough</a>
+          <div class="dropdown-menu">
+            <a href="remake_guide_page_2.html">Section 1: Mansion 1 - Opening</a>
+            <a href="remake_guide_page_3.html">Section 2: Armour Key & Grenade Launcher</a>
+            <a href="remake_guide_page_4.html">Section 3: Death Masks 2-4 & Yawn 1</a>
+            <a href="remake_guide_page_5.html">Section 4: Gallery & Death Masks 3-4</a>
+            <a href="remake_guide_page_6.html">Section 5: Elder Crimson Boss Fight</a>
+            <a href="remake_guide_page_7.html">Section 6: Courtyard & Lisa's Hut</a>
+            <a href="remake_guide_page_8.html">Section 7: Residence - Early</a>
+            <a href="remake_guide_page_9.html">Section 8: Neptune & Aqua Ring</a>
+            <a href="remake_guide_page_10.html">Section 9: Plant 42 Boss</a>
+            <a href="remake_guide_page_11.html">Section 10: Mansion 2 - Hunter Navigation</a>
+            <a href="remake_guide_page_12.html">Section 11: Yawn 2 & Gem Collection</a>
+            <a href="remake_guide_page_13.html">Section 12: Underground Facility</a>
+            <a href="remake_guide_page_14.html">Section 13: Lisa Trevor Underground</a>
+            <a href="remake_guide_page_15.html">Section 14: Laboratory</a>
+            <a href="remake_guide_page_16.html">Section 15: Tyrant & Helipad</a>
+          </div>
+        </div>
         <a href="resources-page.html">Resources</a>
         <a href="quick-reference-guide.html">Quick Reference</a>
         <a href="struggler_info_page.html">StruggleR</a>
@@ -969,7 +1016,7 @@
         
         <div class="stats-container">
           <div class="stat-box">
-            <span class="stat-value">16</span>
+            <span class="stat-value">15</span>
             <span class="stat-label">Sections</span>
           </div>
           <div class="stat-box">
@@ -992,8 +1039,8 @@
       
       <div class="guide-grid">
         <a href="remake_guide_page_1.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 01</span>
-          <h3>Setup & Core Techniques</h3>
+          <span class="guide-number">SETUP</span>
+          <h3>Setup Guide</h3>
           <p>Essential requirements, platform setup, core techniques, and movement optimisation.</p>
           <div class="guide-meta">
             <span>ESSENTIAL</span>
@@ -1001,7 +1048,7 @@
         </a>
 
         <a href="remake_guide_page_2.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 02</span>
+          <span class="guide-number">SECTION 01</span>
           <h3>Mansion 1 - Opening</h3>
           <p>Initial setup, Murder Hallway navigation, graveyard access, and Dog Whistle encounter.</p>
           <div class="guide-meta">
@@ -1010,7 +1057,7 @@
         </a>
 
         <a href="remake_guide_page_3.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 03</span>
+          <span class="guide-number">SECTION 02</span>
           <h3>Armour Key & Grenade Launcher</h3>
           <p>Armour Key sequence, Murder Hall navigation, Grenade Launcher access, and Richard timer.</p>
           <div class="guide-meta">
@@ -1019,7 +1066,7 @@
         </a>
 
         <a href="remake_guide_page_4.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 04</span>
+          <span class="guide-number">SECTION 03</span>
           <h3>Death Masks 2-4 & Yawn 1</h3>
           <p>Music Room puzzle, Piano puzzle, Clock puzzle, and first Yawn boss encounter.</p>
           <div class="guide-meta">
@@ -1028,7 +1075,7 @@
         </a>
 
         <a href="remake_guide_page_5.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 05</span>
+          <span class="guide-number">SECTION 04</span>
           <h3>Gallery & Death Masks 3-4</h3>
           <p>Armour Gallery statue puzzle, painting puzzle, and final Death Mask collection.</p>
           <div class="guide-meta">
@@ -1037,7 +1084,7 @@
         </a>
 
         <a href="remake_guide_page_6.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 06</span>
+          <span class="guide-number">SECTION 05</span>
           <h3>Elder Crimson Boss Fight</h3>
           <p>Death Mask placement, Elder Crimson combat strategy, RNG outcomes, and item collection.</p>
           <div class="guide-meta">
@@ -1046,7 +1093,7 @@
         </a>
 
         <a href="remake_guide_page_7.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 07</span>
+          <span class="guide-number">SECTION 06</span>
           <h3>Courtyard & Lisa's Hut</h3>
           <p>Weather vane puzzle, Lisa Trevor encounter, and residence access route.</p>
           <div class="guide-meta">
@@ -1055,7 +1102,7 @@
         </a>
 
         <a href="remake_guide_page_8.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 08</span>
+          <span class="guide-number">SECTION 07</span>
           <h3>Residence - Early</h3>
           <p>Room navigation, bookshelf puzzle, and Aqua Ring access strategies.</p>
           <div class="guide-meta">
@@ -1064,7 +1111,7 @@
         </a>
 
         <a href="remake_guide_page_9.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 09</span>
+          <span class="guide-number">SECTION 08</span>
           <h3>Neptune & Aqua Ring</h3>
           <p>Control room puzzle, Neptune fight, and Gallery Key retrieval tactics.</p>
           <div class="guide-meta">
@@ -1073,7 +1120,7 @@
         </a>
 
         <a href="remake_guide_page_10.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 10</span>
+          <span class="guide-number">SECTION 09</span>
           <h3>Plant 42 Boss</h3>
           <p>Book puzzle solution, optimal Plant 42 strategy, and Helmet Key acquisition.</p>
           <div class="guide-meta">
@@ -1082,7 +1129,7 @@
         </a>
 
         <a href="remake_guide_page_11.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 11</span>
+          <span class="guide-number">SECTION 10</span>
           <h3>Hunter Mansion</h3>
           <p>Hunter navigation, crusher puzzle, and underground elevator access.</p>
           <div class="guide-meta">
@@ -1091,7 +1138,7 @@
         </a>
 
         <a href="remake_guide_page_12.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 12</span>
+          <span class="guide-number">SECTION 11</span>
           <h3>Underground Access</h3>
           <p>Elevator mechanics, underground navigation, and key item collection.</p>
           <div class="guide-meta">
@@ -1100,7 +1147,7 @@
         </a>
 
         <a href="remake_guide_page_13.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 13</span>
+          <span class="guide-number">SECTION 12</span>
           <h3>Underground</h3>
           <p>Boulder puzzles, Black Tiger encounter, and cylinder mechanism solutions.</p>
           <div class="guide-meta">
@@ -1109,7 +1156,7 @@
         </a>
 
         <a href="remake_guide_page_14.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 14</span>
+          <span class="guide-number">SECTION 13</span>
           <h3>Lisa Underground</h3>
           <p>Box puzzles, compactor section, and Lisa encounters with optimal routing.</p>
           <div class="guide-meta">
@@ -1118,7 +1165,7 @@
         </a>
 
         <a href="remake_guide_page_15.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 15</span>
+          <span class="guide-number">SECTION 14</span>
           <h3>Laboratory</h3>
           <p>Computer access, fuel management, power activation, and lab navigation.</p>
           <div class="guide-meta">
@@ -1127,7 +1174,7 @@
         </a>
 
         <a href="remake_guide_page_16.html" class="guide-card reveal">
-          <span class="guide-number">SECTION 16</span>
+          <span class="guide-number">SECTION 15</span>
           <h3>Tyrant & Helipad</h3>
           <p>Final boss strategies, helipad escape, and speedrun completion.</p>
           <div class="guide-meta">
@@ -1166,6 +1213,15 @@
   </footer>
 
   <script>
+    // Walkthrough jump-to navigation
+    (function(){
+      const sel = document.getElementById('jumpSelect-hero');
+      if (sel) {
+        sel.addEventListener('change', function(){
+          if (this.value) window.location.href = this.value;
+        });
+      }
+    })();
     // Blood drip animation
     const bloodDripsContainer = document.getElementById('bloodDrips');
     for (let i = 0; i < 5; i++) {
