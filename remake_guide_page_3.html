@@ -1281,12 +1281,7 @@
   <header class="header" id="header">
     <div class="header-content">
       <a href="index.html" class="logo">RESIDENT <span>EVIL</span></a>
-      <button class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav class="nav" id="nav">
+      <nav class="nav">
         <a href="index.html">Home</a>
         <a href="remake_guide_page_1.html">Guide Setup</a>
         <a href="remake_guide_page_2.html">Walkthrough</a>
@@ -1495,31 +1490,6 @@
   </main>
 
   <script>
-    // Mobile Navigation
-    const hamburger = document.getElementById('hamburger');
-    const nav = document.getElementById('nav');
-
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      nav.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking on a link
-    nav.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
-        hamburger.classList.remove('active');
-        nav.classList.remove('active');
-      }
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
-        hamburger.classList.remove('active');
-        nav.classList.remove('active');
-      }
-    });
-
     // Progress bar
     window.addEventListener('scroll', () => {
       const winScroll = document.documentElement.scrollTop;
