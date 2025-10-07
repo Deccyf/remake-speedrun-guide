@@ -809,6 +809,17 @@
       justify-content: center;
     }
     
+    /* CRITICAL FIX: Dropdown navigation for mobile */
+    .dropdown { grid-column: 1 / -1; display: block; }
+    .dropdown-toggle { width: 100%; padding: 0.75rem 0.5rem; font-size: 0.8rem; text-align: center; border: 1px solid rgba(139, 0, 0, 0.3); border-radius: 8px; background: rgba(139, 0, 0, 0.1); min-height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+    .dropdown-toggle::after { content: ' ▼'; font-size: 0.7rem; margin-left: 0.5rem; transition: transform 0.3s; }
+    .dropdown.open .dropdown-toggle::after { transform: rotate(180deg); }
+    .dropdown-menu { display: none !important; position: static !important; width: 100%; margin-top: 0.5rem; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: rgba(13, 13, 13, 0.95); border-radius: 8px; padding: 0; }
+    .dropdown.open .dropdown-menu { display: block !important; max-height: 800px; padding: 0.5rem 0; overflow-y: auto; }
+    .dropdown:hover .dropdown-menu { display: none !important; }
+    .dropdown-menu a { font-size: 0.75rem; padding: 0.7rem 1rem; border-bottom: 1px solid rgba(139, 0, 0, 0.2); white-space: normal; line-height: 1.4; }
+    .dropdown-menu a:last-child { border-bottom: none; }
+    
     /* Main content area */
     main {
       padding-top: 120px;
@@ -882,16 +893,19 @@
     .leaderboard {
       padding: 1rem;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     }
     
     .leaderboard-table {
-      min-width: 100%;
+      min-width: 600px; /* Force horizontal scroll on mobile */
+      width: 100%;
     }
     
     .leaderboard-table th,
     .leaderboard-table td {
-      padding: 0.5rem;
-      font-size: 0.8rem;
+      padding: 0.5rem 0.4rem;
+      font-size: 0.75rem;
+      white-space: nowrap; /* Prevent text wrapping in cells */
     }
     
     /* Buttons */
@@ -1627,5 +1641,29 @@
     }
 
     initBackgroundMusic();
+    
+    // MOBILE DROPDOWN NAVIGATION FIX
+    (function() {
+      const dropdown = document.querySelector('.dropdown');
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+      if (!dropdown || !dropdownToggle || !dropdownMenu) return;
+      function isMobile() { return window.innerWidth <= 768; }
+      dropdownToggle.addEventListener('click', function(e) {
+        if (isMobile()) { e.preventDefault(); e.stopPropagation(); dropdown.classList.toggle('open'); }
+      });
+      document.addEventListener('click', function(e) {
+        if (isMobile() && !dropdown.contains(e.target)) dropdown.classList.remove('open');
+      });
+      dropdownMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() { if (isMobile()) dropdown.classList.remove('open'); });
+      });
+      let wasMobile = isMobile();
+      window.addEventListener('resize', function() {
+        const nowMobile = isMobile();
+        if (wasMobile !== nowMobile) dropdown.classList.remove('open');
+        wasMobile = nowMobile;
+      });
+    })();
   </script>\n</body>
 </html>
