@@ -1834,29 +1834,45 @@
 
     function startBackgroundMusic() {
       if (backgroundMusic) return;
-      
+
       backgroundMusic = new Audio();
       backgroundMusic.src = musicFiles[0];
       backgroundMusic.loop = true;
-      
+
+      // Restore saved state from session storage (persists across page navigation)
+      const savedTime = parseFloat(sessionStorage.getItem('musicTime')) || 0;
+      const wasPlaying = sessionStorage.getItem('musicPlaying') !== 'false';
+
       const savedVolume = localStorage.getItem('musicVolume') || '30';
       backgroundMusic.volume = parseInt(savedVolume) / 100;
-      
+
       document.getElementById('musicVolumeSlider').value = savedVolume;
       document.getElementById('musicVolumeValue').textContent = savedVolume;
 
-      backgroundMusic.play().then(() => {
-        document.getElementById('musicStatus').textContent = 'Playing Resident Evil Theme';
-        document.getElementById('musicStatus').style.color = 'var(--re-green)';
+      // Set time position once audio is loaded
+      backgroundMusic.addEventListener('loadedmetadata', () => {
+        if (savedTime > 0 && savedTime < backgroundMusic.duration) {
+          backgroundMusic.currentTime = savedTime;
+        }
+      }, { once: true });
 
-        const toggleIcon = document.getElementById('musicToggleIcon');
-        const toggleText = document.getElementById('musicToggleText');
-        toggleIcon.textContent = '⏸️';
-        toggleText.textContent = 'Pause';
-      }).catch(() => {
-        document.getElementById('musicStatus').textContent = 'Click play to start music';
+      if (wasPlaying) {
+        backgroundMusic.play().then(() => {
+          document.getElementById('musicStatus').textContent = 'Playing Resident Evil Theme';
+          document.getElementById('musicStatus').style.color = 'var(--re-green)';
+
+          const toggleIcon = document.getElementById('musicToggleIcon');
+          const toggleText = document.getElementById('musicToggleText');
+          toggleIcon.textContent = '⏸️';
+          toggleText.textContent = 'Pause';
+        }).catch(() => {
+          document.getElementById('musicStatus').textContent = 'Click play to start music';
+          document.getElementById('musicStatus').style.color = 'var(--re-gray)';
+        });
+      } else {
+        document.getElementById('musicStatus').textContent = 'Music paused';
         document.getElementById('musicStatus').style.color = 'var(--re-gray)';
-      });
+      }
 
       // Handle music end/errors
       backgroundMusic.addEventListener('ended', () => {
@@ -1864,8 +1880,7 @@
         backgroundMusic.play();
       });
 
-      backgroundMusic.addEventListener('error', (e) => {
-        console.error('Music error:', e);
+      backgroundMusic.addEventListener('error', () => {
         document.getElementById('musicStatus').textContent = 'Music file not found';
         document.getElementById('musicStatus').style.color = 'var(--re-blood)';
       });
@@ -1944,6 +1959,15 @@
 
     // Initialize music system
     initBackgroundMusic();
+
+    // Save music state before page unload (for persistence across navigation)
+    window.addEventListener('pagehide', () => {
+      if (backgroundMusic) {
+        sessionStorage.setItem('musicPlaying', !backgroundMusic.paused);
+        sessionStorage.setItem('musicTime', backgroundMusic.currentTime);
+        sessionStorage.setItem('musicVolume', backgroundMusic.volume);
+      }
+    });
   </script>
 
   <footer class="footer">

@@ -1403,18 +1403,41 @@
 
     function startBackgroundMusic() {
       if (backgroundMusic) return;
-      
+
       backgroundMusic = new Audio();
-      // Use your preferred music file URL here
       backgroundMusic.src = musicFiles[0];
       backgroundMusic.loop = true;
-      backgroundMusic.volume = 0.3; // Lower volume for background music
-      
+
+      // Restore saved state from session storage (persists across page navigation)
+      const savedTime = parseFloat(sessionStorage.getItem('musicTime')) || 0;
+      const savedVolume = parseFloat(sessionStorage.getItem('musicVolume'));
+      const wasPlaying = sessionStorage.getItem('musicPlaying') !== 'false';
+
+      backgroundMusic.volume = !isNaN(savedVolume) ? savedVolume : 0.3;
+
+      // Set time position once audio is loaded
+      backgroundMusic.addEventListener('loadedmetadata', () => {
+        if (savedTime > 0 && savedTime < backgroundMusic.duration) {
+          backgroundMusic.currentTime = savedTime;
+        }
+      }, { once: true });
+
       // Handle autoplay restrictions
-      backgroundMusic.play().catch(() => {
-        // Autoplay blocked - user will need to interact first
-      });
+      if (wasPlaying) {
+        backgroundMusic.play().catch(() => {
+          // Autoplay blocked - user will need to interact first
+        });
+      }
     }
+
+    // Save music state before page unload (for persistence across navigation)
+    window.addEventListener('pagehide', () => {
+      if (backgroundMusic) {
+        sessionStorage.setItem('musicPlaying', !backgroundMusic.paused);
+        sessionStorage.setItem('musicTime', backgroundMusic.currentTime);
+        sessionStorage.setItem('musicVolume', backgroundMusic.volume);
+      }
+    });
 
     // Initialize music on page load
     initBackgroundMusic();
