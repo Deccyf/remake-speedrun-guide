@@ -1398,12 +1398,12 @@
         // Show music control button after user interaction
         document.addEventListener('click', () => {
           document.getElementById('musicControlButton')?.remove();
-          showMusicControllButton();
+          showMusicControlButton();
         }, { once: true });
       }
     }
 
-    function showMusicControllButton() {
+    function showMusicControlButton() {
       const musicButton = document.createElement('div');
       musicButton.id = 'musicControlButton';
       musicButton.innerHTML = '🎵 Enable Background Music';
@@ -1451,10 +1451,8 @@
       backgroundMusic.volume = 0.3; // Lower volume for background music
       
       // Handle autoplay restrictions
-      backgroundMusic.play().then(() => {
-        console.log('Background music started');
-      }).catch(() => {
-        console.log('Autoplay blocked, user will need to interact first');
+      backgroundMusic.play().catch(() => {
+        // Autoplay blocked - user will need to interact first
       });
     }
 

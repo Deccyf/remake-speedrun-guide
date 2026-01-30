@@ -1846,16 +1846,14 @@
       document.getElementById('musicVolumeValue').textContent = savedVolume;
 
       backgroundMusic.play().then(() => {
-        console.log('Background music started');
         document.getElementById('musicStatus').textContent = 'Playing Resident Evil Theme';
         document.getElementById('musicStatus').style.color = 'var(--re-green)';
-        
+
         const toggleIcon = document.getElementById('musicToggleIcon');
         const toggleText = document.getElementById('musicToggleText');
         toggleIcon.textContent = '⏸️';
         toggleText.textContent = 'Pause';
-      }).catch((error) => {
-        console.log('Autoplay blocked:', error);
+      }).catch(() => {
         document.getElementById('musicStatus').textContent = 'Click play to start music';
         document.getElementById('musicStatus').style.color = 'var(--re-gray)';
       });
