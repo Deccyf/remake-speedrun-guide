@@ -491,3 +491,64 @@ document.addEventListener('DOMContentLoaded', initBackgroundMusic);
     wasMobile = nowMobile;
   });
 })();
+
+// ============================================
+// PROGRESS BAR (for guide pages)
+// ============================================
+(function initProgressBar() {
+  const progressBar = document.getElementById('progressBar');
+  if (!progressBar) return;
+
+  window.addEventListener('scroll', () => {
+    const winScroll = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    progressBar.style.width = scrolled + '%';
+  });
+})();
+
+// ============================================
+// SMOOTH SCROLLING FOR ANCHOR LINKS
+// ============================================
+(function initSmoothScrolling() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Update TOC active state if applicable
+        document.querySelectorAll('.toc a').forEach(link => link.classList.remove('active'));
+        this.classList.add('active');
+      }
+    });
+  });
+})();
+
+// ============================================
+// ACTIVE SECTION HIGHLIGHTING (for guide pages with TOC)
+// ============================================
+(function initActiveSectionHighlighting() {
+  const sections = document.querySelectorAll('.content-section');
+  const tocLinks = document.querySelectorAll('.toc a');
+
+  if (!sections.length || !tocLinks.length) return;
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (scrollY >= sectionTop - 150) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    tocLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+})();
