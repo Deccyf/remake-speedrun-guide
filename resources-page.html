@@ -3,364 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Resources & Tools - REmake Speedrun Guide</title>
+<title>Speedrun Resources - REmake Speedrun Guide</title>
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="guide-common.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
-  
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --re-black: #0D0D0D;
-    --re-dark: #1A1A1A;
-    --re-blood: #8B0000;
-    --re-crimson: #DC143C;
-    --re-green: #7CFC00;
-    --re-gold: #D4AF37;
-    --re-white: #F5F5F5;
-    --re-gray: #808080;
-  }
-
-  body {
-    font-family: 'Barlow', sans-serif;
-    background: var(--re-black);
-    color: var(--re-white);
-    line-height: 1.7;
-    overflow-x: hidden;
-    word-wrap: break-word;
-    word-break: break-word;
-  }
-
-  .fog-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-  }
-
-  .fog {
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: 
-      radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
-      radial-gradient(ellipse at 70% 60%, rgba(124, 252, 0, 0.08) 0%, transparent 40%);
-    animation: fogMove 30s ease-in-out infinite;
-  }
-
-  @keyframes fogMove {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(-5%, 5%); }
-    50% { transform: translate(5%, -5%); }
-    75% { transform: translate(-3%, 3%); }
-  }
-
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background: rgba(13, 13, 13, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
-    transition: all 0.3s;
-  }
-
-  .header.scrolled {
-    background: rgba(13, 13, 13, 0.98);
-    box-shadow: 0 4px 30px rgba(139, 0, 0, 0.3);
-  }
-
-  .header-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1.2rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .logo {
-    font-family: 'Cinzel', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--re-white);
-    text-decoration: none;
-    letter-spacing: 3px;
-    position: relative;
-    transition: all 0.4s;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .logo-img {
-    height: 50px;
-    width: auto;
-    filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.6));
-    transition: all 0.3s ease;
-  }
-
-  .logo-img:hover {
-    transform: rotate(360deg);
-    filter: drop-shadow(0 0 12px rgba(139, 0, 0, 0.8));
-  }
-
-  .logo::before, .logo::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 20px;
-    height: 2px;
-    background: var(--re-blood);
-    transform: translateY(-50%);
-  }
-
-  .logo::before { left: -30px; }
-  .logo::after { right: -30px; }
-  .logo span { color: var(--re-blood); }
-
-  .nav {
-    display: flex;
-    gap: 3rem;
-    align-items: center;
-  }
-
-  .nav a {
-    color: var(--re-gray);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: all 0.3s;
-    position: relative;
-  }
-  /* Nav hover dropdown */
-  .dropdown { position: relative; }
-  .dropdown-toggle { display: inline-block; }
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 320px;
-    background: rgba(26, 26, 26, 0.98);
-    border: 1px solid rgba(139, 0, 0, 0.4);
-    border-radius: 8px;
-    padding: 0.5rem 0;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    z-index: 1001;
-  }
-  .dropdown:hover .dropdown-menu { display: block; }
-  .dropdown-menu a {
-    display: block;
-    padding: 0.6rem 1rem;
-    color: var(--re-gray);
-    text-decoration: none;
-    font-weight: 600;
-    letter-spacing: 1px;
-    white-space: nowrap;
-  }
-  .dropdown-menu a:hover { background: rgba(139,0,0,0.2); color: var(--re-white); }
-
-  .nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--re-blood);
-    transition: width 0.3s;
-  }
-
-  .nav a:hover {
-    color: var(--re-white);
-  }
-
-  .nav a:hover::after {
-    width: 100%;
-  }
-
-  main {
-    padding-top: 100px;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    overflow-x: hidden;
-    width: 100%;
-  }
-
-  .section-hero {
-    text-align: center;
-    padding: 4rem 0;
-    position: relative;
-  }
-
-  .section-badge {
-    display: inline-block;
-    padding: 0.6rem 1.5rem;
-    background: rgba(139, 0, 0, 0.2);
-    border: 1px solid var(--re-blood);
-    border-radius: 30px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--re-green);
-    margin-bottom: 1.5rem;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 10px rgba(124, 252, 0, 0.3); }
-    50% { box-shadow: 0 0 20px rgba(124, 252, 0, 0.6); }
-  }
-
-  .section-title {
-    font-family: 'Cinzel', serif;
-    font-size: 3.5rem;
-    font-weight: 900;
-    margin-bottom: 1rem;
-    line-height: 1.1;
-    letter-spacing: 3px;
-    text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3);
-    animation: titleGlow 3s ease-in-out infinite;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  @keyframes titleGlow {
-    0%, 100% { text-shadow: 0 0 20px rgba(139, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.3); }
-    50% { text-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.5); }
-  }
-
-  .section-meta {
-    display: flex;
-    gap: 3rem;
-    justify-content: center;
-    color: var(--re-gray);
-    font-size: 0.95rem;
-    margin-top: 1.5rem;
-  }
-
-  .content-section {
-    margin-bottom: 3rem;
-    animation: fadeIn 0.8s ease-out;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .content-section h2 {
-    font-family: 'Cinzel', serif;
-    font-size: 2.2rem;
-    color: var(--re-blood);
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid rgba(139, 0, 0, 0.3);
-    position: relative;
-  }
-
-  .content-section h2::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100px;
-    height: 2px;
-    background: var(--re-blood);
-  }
-
+  /* Page-specific styles for Resources page */
+  main { max-width: 1200px; margin: 0 auto; padding: 0 2rem 2rem; }
   .resource-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
     margin: 2rem 0;
   }
-
   .resource-card {
     background: rgba(26, 26, 26, 0.8);
     border: 1px solid rgba(139, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 1.5rem;
-    transition: all 0.4s;
-    position: relative;
-    overflow: hidden;
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.3s;
   }
-
-  .resource-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(139, 0, 0, 0.1), transparent);
-    transform: scale(0);
-    transition: transform 0.6s;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .resource-card:hover::before {
-    transform: scale(1);
-  }
-
   .resource-card:hover {
     transform: translateY(-5px);
     border-color: var(--re-blood);
-    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(139, 0, 0, 0.3);
   }
-
-  .resource-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .resource-logo {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.3));
-    transition: all 0.3s ease;
-  }
-
-  .resource-logo:hover {
-    filter: drop-shadow(0 0 12px rgba(139, 0, 0, 0.6));
-    transform: scale(1.1);
-  }
-
+  .resource-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .resource-logo { width: 60px; height: 60px; object-fit: contain; }
   .resource-card h3 {
     font-family: 'Cinzel', serif;
-    color: var(--re-blood);
-    margin-bottom: 0.8rem;
-    font-size: 1.1rem;
-  }
-
-  .resource-card p {
-    color: var(--re-gray);
-    font-size: 0.95rem;
+    color: var(--re-white);
     margin-bottom: 1rem;
-    line-height: 1.6;
   }
-
+  .resource-card p { color: var(--re-gray); margin-bottom: 1.5rem; line-height: 1.6; }
   .resource-link {
     display: inline-flex;
     align-items: center;
@@ -368,683 +42,125 @@
     color: var(--re-gold);
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 2;
+    transition: all 0.3s;
   }
-
-  .resource-link:hover {
-    color: var(--re-blood);
-    gap: 0.75rem;
-  }
-
+  .resource-link:hover { color: var(--re-white); transform: translateX(5px); }
   .video-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
     margin: 2rem 0;
   }
-
   .video-card {
     background: rgba(26, 26, 26, 0.8);
     border: 1px solid rgba(139, 0, 0, 0.3);
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
-    transition: all 0.4s;
-    position: relative;
+    transition: all 0.3s;
   }
-
   .video-card:hover {
     transform: translateY(-5px);
-    border-color: var(--re-blood);
-    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(139, 0, 0, 0.3);
   }
-
-  .video-thumbnail {
-    width: 100%;
-    height: 180px;
-    background: linear-gradient(135deg, var(--re-dark), var(--re-black));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    color: var(--re-blood);
-    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
-  }
-
-  .video-embed {
-    width: 100%;
-    height: 200px;
-    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
-  }
-
+  .video-embed { position: relative; padding-bottom: 56.25%; height: 0; }
   .video-embed iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 8px 8px 0 0;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
   }
-
-  .video-info {
-    padding: 1.5rem;
-  }
-
-  .video-info h4 {
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    color: var(--re-white);
-  }
-
-  .video-meta {
-    display: flex;
-    justify-content: space-between;
-    color: var(--re-gray);
-    font-size: 0.85rem;
-    margin-bottom: 1rem;
-  }
-
-  .video-info p {
-    color: var(--re-gray);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-
+  .video-info { padding: 1.5rem; }
+  .video-info h4 { font-family: 'Cinzel', serif; color: var(--re-white); margin-bottom: 0.5rem; }
+  .video-meta { color: var(--re-gray); font-size: 0.9rem; margin-bottom: 1rem; }
+  .video-meta span { margin-right: 1rem; }
   .watch-btn {
     display: inline-block;
-    background: rgba(139, 0, 0, 0.2);
-    color: var(--re-blood);
     padding: 0.5rem 1rem;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    border: 1px solid var(--re-blood);
-  }
-
-  .watch-btn:hover {
     background: var(--re-blood);
     color: var(--re-white);
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: all 0.3s;
   }
-
-  .leaderboard {
-    background: rgba(26, 26, 26, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(139, 0, 0, 0.2);
-    border-radius: 15px;
-    padding: 2rem;
-    margin: 2rem 0;
-  }
-
-  .leaderboard h3 {
-    font-family: 'Cinzel', serif;
-    color: var(--re-blood);
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
+  .watch-btn:hover { background: var(--re-crimson); transform: translateY(-2px); }
+  .leaderboard { margin: 2rem 0; }
+  .leaderboard h3 { font-family: 'Cinzel', serif; color: var(--re-gold); margin-bottom: 0.5rem; }
   .leaderboard-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1.5rem;
+    margin: 1.5rem 0;
+    background: rgba(26, 26, 26, 0.6);
+    border-radius: 10px;
+    overflow: hidden;
   }
-
+  .leaderboard-table th, .leaderboard-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+  }
   .leaderboard-table th {
     background: rgba(139, 0, 0, 0.3);
     color: var(--re-blood);
-    padding: 1rem;
-    text-align: left;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.9rem;
-    border-bottom: 2px solid rgba(139, 0, 0, 0.3);
+    letter-spacing: 1px;
+    font-size: 0.85rem;
   }
-
-  .leaderboard-table td {
-    padding: 1rem;
-    border-bottom: 1px solid rgba(139, 0, 0, 0.2);
-    color: var(--re-gray);
-  }
-
-  .leaderboard-table tr:hover {
-    background: rgba(139, 0, 0, 0.1);
-  }
-
-  .rank {
-    font-weight: 700;
-    color: var(--re-gold);
-  }
-
-  .rank.first {
-    color: #fbbf24;
-  }
-
-  .rank.second {
-    color: #9ca3af;
-  }
-
-  .rank.third {
-    color: #cd7f32;
-  }
-
+  .leaderboard-table td { color: var(--re-gray); }
+  .leaderboard-table tr:hover { background: rgba(139, 0, 0, 0.1); }
+  .rank { font-weight: 700; }
+  .rank.first { color: gold; }
+  .rank.second { color: silver; }
+  .rank.third { color: #cd7f32; }
   .community-links {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
     margin: 2rem 0;
   }
-
   .community-card {
     background: rgba(26, 26, 26, 0.8);
     border: 1px solid rgba(139, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 1.5rem;
+    border-radius: 15px;
+    padding: 2rem;
     text-align: center;
-    transition: all 0.4s;
-    position: relative;
-    overflow: hidden;
+    transition: all 0.3s;
   }
-
-  .community-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(139, 0, 0, 0.1), transparent);
-    transform: scale(0);
-    transition: transform 0.6s;
-    pointer-events: none;
-  }
-
-  .community-card:hover::before {
-    transform: scale(1);
-  }
-
   .community-card:hover {
     transform: translateY(-5px);
-    border-color: var(--re-blood);
-    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
+    border-color: var(--re-gold);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
   }
-
-  .community-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .community-logo {
-    height: 32px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: 1rem;
-  }
-
-  /* Specific styling for Twitch logo to maintain proper aspect ratio */
-  .community-icon img[alt="Twitch"] {
-    height: 32px;
-    width: auto;
-    min-width: 32px;
-  }
-
-  .community-card h4 {
-    font-family: 'Cinzel', serif;
-    margin-bottom: 0.5rem;
-    color: var(--re-white);
-    font-size: 1.1rem;
-  }
-
-  .community-card p {
-    color: var(--re-gray);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-
+  .community-icon { margin-bottom: 1rem; }
+  .community-logo { width: 60px; height: 60px; object-fit: contain; }
+  .community-card h4 { font-family: 'Cinzel', serif; color: var(--re-white); margin-bottom: 0.5rem; }
+  .community-card p { color: var(--re-gray); margin-bottom: 1rem; font-size: 0.95rem; }
   .community-link {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: transparent;
+    border: 2px solid var(--re-gold);
     color: var(--re-gold);
     text-decoration: none;
+    border-radius: 20px;
     font-weight: 600;
-    transition: color 0.3s ease;
+    transition: all 0.3s;
   }
-
   .community-link:hover {
-    color: var(--re-blood);
+    background: var(--re-gold);
+    color: var(--re-black);
   }
-
-  .blood-drips {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .blood-drip {
-    position: absolute;
-    width: 2px;
-    height: 0;
-    background: linear-gradient(180deg, transparent, var(--re-blood));
-    animation: drip 3s ease-in infinite;
-  }
-
-  @keyframes drip {
-    0% { height: 0; opacity: 0; }
-    10% { opacity: 1; }
-    100% { height: 100vh; opacity: 0; }
-  }
-
-  @media (max-width: 968px) {
-    .resource-grid, .video-grid, .community-links {
-      grid-template-columns: 1fr;
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-    }
-
-    .nav {
-      gap: 1.5rem;
-    }
-    .footer-content {
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .footer-info {
-      text-align: center;
-    }
-    .footer-buttons {
-      justify-content: center;
-    }
-  }
-
-  .footer {
-    background: rgba(13, 13, 13, 0.95);
-    border-top: 1px solid rgba(139, 0, 0, 0.3);
-    padding: 3rem 2rem;
-    text-align: center;
-    margin-top: 8rem;
-  }
-
-  .footer p {
-    color: var(--re-gray);
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .footer-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .footer-info {
-    text-align: left;
-  }
-
-  .footer-buttons {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .footer-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .discord-btn {
-    background: rgba(88, 101, 242, 0.2);
-    color: #5865f2;
-    border: 1px solid rgba(88, 101, 242, 0.3);
-  }
-
-  .discord-btn:hover {
-    background: #5865f2;
-    color: var(--re-white);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
-  }
-
-  .website-btn {
-    background: rgba(139, 0, 0, 0.2);
-    color: var(--re-blood);
-    border: 1px solid rgba(139, 0, 0, 0.3);
-  }
-
-  .website-btn:hover {
-    background: var(--re-blood);
-    color: var(--re-white);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
-  }
-
-  .footer-icon {
-    font-size: 1.1rem;
-  }
-
-  .discord-logo {
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-    margin-right: 0.5rem;
-  }
-
-  .website-logo {
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-    margin-right: 0.5rem;
-    filter: brightness(1.2);
-  }
-
-
-  /* ==================================================
-     MOBILE RESPONSIVE DESIGN - INDUSTRY STANDARDS
-     ================================================== */
-  
-  /* Mobile First Approach - Base styles for mobile */
-
-  /* Small screens (mobile landscape) */
   @media (max-width: 768px) {
-    /* Reset and base mobile styles */
-    * {
-      box-sizing: border-box;
-    }
-    
-    body {
-      background-attachment: scroll !important;
-      overflow-x: hidden;
-    }
-    
-    /* Header mobile optimization */
-    .header-content {
-      padding: 1rem;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 100%;
-    }
-    
-    .logo {
-      font-size: 1.4rem;
-      letter-spacing: 2px;
-      text-align: center;
-    }
-    
-    /* Navigation - Industry standard mobile nav */
-    .nav {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-      width: 100%;
-      max-width: 100%;
-    }
-    
-    .nav a {
-      padding: 0.75rem 0.5rem;
-      font-size: 0.8rem;
-      text-align: center;
-      border: 1px solid rgba(139, 0, 0, 0.3);
-      border-radius: 8px;
-      background: rgba(139, 0, 0, 0.1);
-      min-height: 44px; /* Touch target minimum */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    /* CRITICAL FIX: Dropdown navigation for mobile */
-    .dropdown { grid-column: 1 / -1; display: block; }
-    .dropdown-toggle { width: 100%; padding: 0.75rem 0.5rem; font-size: 0.8rem; text-align: center; border: 1px solid rgba(139, 0, 0, 0.3); border-radius: 8px; background: rgba(139, 0, 0, 0.1); min-height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
-    .dropdown-toggle::after { content: ' ▼'; font-size: 0.7rem; margin-left: 0.5rem; transition: transform 0.3s; }
-    .dropdown.open .dropdown-toggle::after { transform: rotate(180deg); }
-    .dropdown-menu { display: none !important; position: static !important; width: 100%; margin-top: 0.5rem; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: rgba(13, 13, 13, 0.95); border-radius: 8px; padding: 0; }
-    .dropdown.open .dropdown-menu { display: block !important; max-height: 800px; padding: 0.5rem 0; overflow-y: auto; }
-    .dropdown:hover .dropdown-menu { display: none !important; }
-    .dropdown-menu a { font-size: 0.75rem; padding: 0.7rem 1rem; border-bottom: 1px solid rgba(139, 0, 0, 0.2); white-space: normal; line-height: 1.4; }
-    .dropdown-menu a:last-child { border-bottom: none; }
-    
-    /* Main content area */
-    main {
-      padding-top: 120px;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-    
-    /* Hero section */
-    .section-hero {
-      padding: 2rem 0;
-      text-align: center;
-    }
-    
-    .section-title {
-      font-size: 2rem !important;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      word-wrap: break-word;
-      line-height: 1.2;
-    }
-    
-    .section-meta {
-      flex-direction: column;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-    }
-    
-    /* Content sections */
-    .content-section {
-      padding: 0;
-      margin-bottom: 2rem;
-    }
-    
-    .content-section h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      word-wrap: break-word;
-    }
-    
-    /* Grid layouts - Industry standard single column */
-    .resource-grid, .video-grid, .community-links {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      padding: 0;
-      max-width: 100%;
-    }
-    
-    .resource-card, .video-card, .community-card {
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    
-    .resource-card h3, .video-info h4, .community-card h4 {
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
-      word-wrap: break-word;
-    }
-    
-    .resource-card p, .video-info p, .community-card p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    
-    /* Leaderboard table */
-    .leaderboard {
-      padding: 1rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-    }
-    
-    .leaderboard-table {
-      min-width: 600px; /* Force horizontal scroll on mobile */
-      width: 100%;
-    }
-    
-    .leaderboard-table th,
-    .leaderboard-table td {
-      padding: 0.5rem 0.4rem;
-      font-size: 0.75rem;
-      white-space: nowrap; /* Prevent text wrapping in cells */
-    }
-    
-    /* Buttons */
-    .btn, .resource-link, .watch-btn, .community-link {
-      padding: 0.8rem 1rem;
-      font-size: 0.8rem;
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    /* Footer */
-    .footer-content {
-      flex-direction: column;
-      gap: 1.5rem;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    
-    .footer-buttons {
-      flex-direction: column;
-      gap: 0.8rem;
-      align-items: center;
-    }
+    .video-grid { grid-template-columns: 1fr; }
+    .leaderboard-table { font-size: 0.85rem; }
+    .leaderboard-table th, .leaderboard-table td { padding: 0.75rem 0.5rem; }
   }
-
-  /* Very small screens (mobile portrait) */
-  @media (max-width: 480px) {
-    /* Even more compact for small phones */
-    .header-content {
-      padding: 0.8rem;
-    }
-    
-    .logo {
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-    }
-    
-    .nav {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-    }
-    
-    .nav a {
-      padding: 0.8rem 0.5rem;
-      font-size: 0.8rem;
-      min-height: 48px;
-    }
-    
-    main {
-      padding-top: 140px;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-    }
-    
-    .section-hero {
-      padding: 1.5rem 0;
-    }
-    
-    .section-title {
-      font-size: 1.5rem !important;
-      margin-bottom: 1rem;
-    }
-    
-    .section-meta {
-      gap: 0.3rem;
-      font-size: 0.7rem;
-    }
-    
-    .content-section {
-      margin-bottom: 1.5rem;
-    }
-    
-    .content-section h2 {
-      font-size: 1.3rem;
-      margin-bottom: 0.8rem;
-    }
-    
-    .resource-grid, .video-grid, .community-links {
-      gap: 0.8rem;
-    }
-    
-    .resource-card, .video-card, .community-card {
-      padding: 1rem;
-    }
-    
-    .resource-card h3, .video-info h4, .community-card h4 {
-      font-size: 1.1rem;
-    }
-    
-    .resource-card p, .video-info p, .community-card p {
-      font-size: 0.85rem;
-    }
-    
-    .leaderboard {
-      padding: 0.8rem;
-    }
-    
-    .leaderboard-table th,
-    .leaderboard-table td {
-      padding: 0.4rem;
-      font-size: 0.75rem;
-    }
-    
-    .btn, .resource-link, .watch-btn, .community-link {
-      padding: 0.7rem 0.8rem;
-      font-size: 0.75rem;
-    }
-    
-    .footer-content {
-      padding: 1.5rem 0.5rem;
-    }
-  }
-
-  /* Touch device improvements */
-  @media (hover: none) and (pointer: coarse) {
-    .btn:hover,
-    .resource-card:hover,
-    .video-card:hover,
-    .community-card:hover,
-    .nav a:hover {
-      transform: none !important;
-    }
-    
-    .btn:active,
-    .resource-card:active,
-    .video-card:active,
-    .community-card:active {
-      transform: scale(0.98);
-    }
-  }\n</style>
+</style>
 </head>
 <body>
-  <div class="fog-container">
-    <div class="fog"></div>
-  </div>
-  
+  <div class="fog-container"><div class="fog"></div></div>
   <div class="blood-drips" id="bloodDrips"></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
 
   <header class="header" id="header">
     <div class="header-content">
@@ -1091,6 +207,7 @@
         <span>COMMUNITY</span>
       </div>
     </div>
+
     <div class="content-section">
       <h2>Essential Tools</h2>
 
@@ -1101,20 +218,14 @@
           </div>
           <h3>LiveSplit</h3>
           <p>The most popular speedrun timer with auto-splitting support, customizable layouts, and comprehensive comparison features.</p>
-          <a href="https://livesplit.org/" class="resource-link" target="_blank">
-            Download LiveSplit
-            <span>→</span>
-          </a>
+          <a href="https://livesplit.org/" class="resource-link" target="_blank">Download LiveSplit <span>→</span></a>
         </div>
 
         <div class="resource-card">
           <div class="resource-icon">📖</div>
           <h3>Speedrun Guides</h3>
           <p>Comprehensive guides and walkthroughs for Resident Evil HD Remaster. Access detailed strategies, route explanations, and technique breakdowns from the community.</p>
-          <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam/guides" class="resource-link" target="_blank">
-            View Guides
-            <span>→</span>
-          </a>
+          <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam/guides" class="resource-link" target="_blank">View Guides <span>→</span></a>
         </div>
 
         <div class="resource-card">
@@ -1123,20 +234,14 @@
           </div>
           <h3>Game on Steam</h3>
           <p>Official HD Remaster of Resident Evil on Steam. Best platform for speedrunning with optimal load times and performance.</p>
-          <a href="https://store.steampowered.com/app/304240/Resident_Evil/" class="resource-link" target="_blank">
-            Steam Store Page
-            <span>→</span>
-          </a>
+          <a href="https://store.steampowered.com/app/304240/Resident_Evil/" class="resource-link" target="_blank">Steam Store Page <span>→</span></a>
         </div>
 
         <div class="resource-card">
           <div class="resource-icon">📝</div>
           <h3>Split Templates</h3>
           <p>Pre-made LiveSplit templates for all major categories including Jill Any%, Chris Any%, and 100% runs.</p>
-          <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam/resources" class="resource-link" target="_blank">
-            Download Splits
-            <span>→</span>
-          </a>
+          <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam/resources" class="resource-link" target="_blank">Download Splits <span>→</span></a>
         </div>
 
         <div class="resource-card">
@@ -1145,55 +250,27 @@
           </div>
           <h3>OBS Studio</h3>
           <p>Free and open-source streaming and recording software. Essential for recording your runs and streaming on Twitch.</p>
-          <a href="https://obsproject.com/" class="resource-link" target="_blank">
-            Get OBS Studio
-            <span>→</span>
-          </a>
-        </div>
-
-        <div class="resource-card">
-          <div class="resource-icon">🔧</div>
-          <h3>Practice Tools</h3>
-          <p>Save states and practice tools for learning specific sections without full run attempts. Available through community mods and guides.</p>
-          <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam/resources" class="resource-link" target="_blank">
-            View Tools
-            <span>→</span>
-          </a>
+          <a href="https://obsproject.com/" class="resource-link" target="_blank">Get OBS Studio <span>→</span></a>
         </div>
       </div>
     </div>
 
     <div class="content-section">
-      <h2>Video Tutorials</h2>
+      <h2>Recommended Runs</h2>
 
       <div class="video-grid">
         <div class="video-card">
           <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/Ow-pK8JMW6M" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/w0SXXnWQ3MI" frameborder="0" allowfullscreen></iframe>
           </div>
           <div class="video-info">
-            <h4>World Record Run by UndeadAvenged</h4>
+            <h4>World Record Run</h4>
             <div class="video-meta">
-              <span>00:48:30</span>
-              <span>World Record</span>
+              <span>48:30</span>
+              <span>Jill Any%</span>
             </div>
-            <p>Watch the current world record holder execute the optimal route with near-perfect execution.</p>
-            <a href="https://youtu.be/Ow-pK8JMW6M" class="watch-btn" target="_blank">Watch Full Video</a>
-          </div>
-        </div>
-
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/dISh-Rg0894" frameborder="0" allowfullscreen></iframe>
-          </div>
-          <div class="video-info">
-            <h4>Beginner Tutorial by Pessimism</h4>
-            <div class="video-meta">
-              <span>1:11:55</span>
-              <span>Full Tutorial</span>
-            </div>
-            <p>Comprehensive beginner-friendly tutorial covering all techniques and strategies from start to finish.</p>
-            <a href="https://www.youtube.com/watch?v=dISh-Rg0894" class="watch-btn" target="_blank">Watch Full Video</a>
+            <p>Watch the current world record by UndeadAvenged.</p>
+            <a href="https://www.youtube.com/watch?v=w0SXXnWQ3MI" class="watch-btn" target="_blank">Watch Full Video</a>
           </div>
         </div>
 
@@ -1220,7 +297,7 @@
       <div class="leaderboard">
         <h3>Jill Any% - Normal Difficulty (Top 10)</h3>
         <p style="color: var(--re-gray); margin-top: 0.5rem;">Current as of October 2025. Visit speedrun.com for live rankings.</p>
-        
+
         <table class="leaderboard-table">
           <thead>
             <tr>
@@ -1318,8 +395,7 @@
 
         <div style="margin-top: 2rem; text-align: center;">
           <a href="https://www.speedrun.com/resident_evil_hd_remaster_steam" class="resource-link" target="_blank">
-            View Full Leaderboards on Speedrun.com
-            <span>→</span>
+            View Full Leaderboards on Speedrun.com <span>→</span>
           </a>
         </div>
       </div>
@@ -1359,131 +435,6 @@
     </div>
   </main>
 
-  <script>
-    // Blood drip animation
-    const bloodDripsContainer = document.getElementById('bloodDrips');
-    for (let i = 0; i < 5; i++) {
-      const drip = document.createElement('div');
-      drip.className = 'blood-drip';
-      drip.style.left = Math.random() * 100 + '%';
-      drip.style.animationDelay = Math.random() * 3 + 's';
-      drip.style.animationDuration = (Math.random() * 2 + 2) + 's';
-      bloodDripsContainer.appendChild(drip);
-    }
-
-    // Header scroll effect
-    window.addEventListener('scroll', () => {
-      const header = document.getElementById('header');
-      if (window.scrollY > 100) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
-
-    // Background music functionality
-    let backgroundMusic = null;
-    const musicFiles = [
-      '01 R.E. 1 Save Room- Safe Haven.mp3',
-      // Add your preferred Resident Evil themed music files here
-    ];
-
-    function initBackgroundMusic() {
-      // Check if user has previously allowed autoplay
-      const musicAllowed = localStorage.getItem('musicAllowed') === 'true';
-      
-      if (musicAllowed) {
-        startBackgroundMusic();
-      } else {
-        // Show music control button after user interaction
-        document.addEventListener('click', () => {
-          document.getElementById('musicControlButton')?.remove();
-          showMusicControlButton();
-        }, { once: true });
-      }
-    }
-
-    function showMusicControlButton() {
-      const musicButton = document.createElement('div');
-      musicButton.id = 'musicControlButton';
-      musicButton.innerHTML = '🎵 Enable Background Music';
-      musicButton.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: rgba(139, 0, 0, 0.8);
-        color: var(--re-white);
-        padding: 10px 15px;
-        border-radius: 25px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 600;
-        z-index: 1000;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
-      `;
-      
-      musicButton.addEventListener('mouseenter', () => {
-        musicButton.style.background = 'var(--re-blood)';
-        musicButton.style.transform = 'scale(1.05)';
-      });
-      
-      musicButton.addEventListener('mouseleave', () => {
-        musicButton.style.background = 'rgba(139, 0, 0, 0.8)';
-        musicButton.style.transform = 'scale(1)';
-      });
-
-      musicButton.addEventListener('click', () => {
-        localStorage.setItem('musicAllowed', 'true');
-        musicButton.remove();
-        startBackgroundMusic();
-      });
-
-      document.body.appendChild(musicButton);
-    }
-
-    function startBackgroundMusic() {
-      if (backgroundMusic) return;
-
-      backgroundMusic = new Audio();
-      backgroundMusic.src = musicFiles[0];
-      backgroundMusic.loop = true;
-
-      // Restore saved state from session storage (persists across page navigation)
-      const savedTime = parseFloat(sessionStorage.getItem('musicTime')) || 0;
-      const savedVolume = parseFloat(sessionStorage.getItem('musicVolume'));
-      const wasPlaying = sessionStorage.getItem('musicPlaying') !== 'false';
-
-      backgroundMusic.volume = !isNaN(savedVolume) ? savedVolume : 0.3;
-
-      // Set time position once audio is loaded
-      backgroundMusic.addEventListener('loadedmetadata', () => {
-        if (savedTime > 0 && savedTime < backgroundMusic.duration) {
-          backgroundMusic.currentTime = savedTime;
-        }
-      }, { once: true });
-
-      // Handle autoplay restrictions
-      if (wasPlaying) {
-        backgroundMusic.play().catch(() => {
-          // Autoplay blocked - user will need to interact first
-        });
-      }
-    }
-
-    // Save music state before page unload (for persistence across navigation)
-    window.addEventListener('pagehide', () => {
-      if (backgroundMusic) {
-        sessionStorage.setItem('musicPlaying', !backgroundMusic.paused);
-        sessionStorage.setItem('musicTime', backgroundMusic.currentTime);
-        sessionStorage.setItem('musicVolume', backgroundMusic.volume);
-      }
-    });
-
-    // Initialize music on page load
-    initBackgroundMusic();
-  </script>
-
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-info">
@@ -1502,217 +453,7 @@
       </div>
     </div>
   </footer>
-\n
-  <script>
-    // ENHANCED MUSIC CONTROL SYSTEM
-    let musicControlPanel = null;
 
-    function createMusicControl() {
-      musicControlPanel = document.createElement('div');
-      musicControlPanel.id = 'musicControlPanel';
-      musicControlPanel.innerHTML = `
-        <div class="music-control-header">
-          <span class="music-icon">🎵</span>
-          <span class="music-title">Background Music</span>
-          <button id="musicCloseBtn" class="music-close-btn">×</button>
-        </div>
-        <div class="music-control-content">
-          <button id="musicToggleBtn" class="music-toggle-btn">
-            <span id="musicToggleIcon">▶️</span>
-            <span id="musicToggleText">Play</span>
-          </button>
-          <div class="music-volume-container">
-            <span class="music-volume-label">Volume</span>
-            <input type="range" id="musicVolumeSlider" min="0" max="100" value="30" class="music-volume-slider">
-            <span id="musicVolumeValue">30</span>
-          </div>
-          <div class="music-status" id="musicStatus">Ready to play</div>
-        </div>
-      `;
-      
-      musicControlPanel.style.cssText = `
-        position: fixed; bottom: 20px; right: 20px; width: 250px; background: rgba(13, 13, 13, 0.95);
-        border: 2px solid var(--re-blood); border-radius: 15px; box-shadow: 0 8px 30px rgba(139, 0, 0, 0.4);
-        backdrop-filter: blur(20px); z-index: 1000; opacity: 0; transform: translateY(20px);
-        transition: all 0.3s ease; font-family: 'Barlow', sans-serif;
-      `;
-
-      const style = document.createElement('style');
-      style.textContent = `
-        .music-control-header { background: var(--re-blood); color: white; padding: 12px 15px;
-          border-radius: 13px 13px 0 0; display: flex; align-items: center; justify-content: space-between;
-          font-weight: 700; font-size: 14px; }
-        .music-icon { font-size: 16px; }
-        .music-close-btn { background: none; border: none; color: white; font-size: 20px;
-          cursor: pointer; padding: 0; width: 25px; height: 25px; border-radius: 50%;
-          display: flex; align-items: center; justify-content: center; transition: background 0.2s ease; }
-        .music-close-btn:hover { background: rgba(255, 255, 255, 0.2); }
-        .music-control-content { padding: 15px; }
-        .music-toggle-btn { width: 100%; background: rgba(139, 0, 0, 0.2); border: 2px solid var(--re-blood);
-          color: white; padding: 12px 15px; border-radius: 25px; cursor: pointer; display: flex;
-          align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 14px;
-          margin-bottom: 15px; transition: all 0.3s ease; }
-        .music-toggle-btn:hover { background: var(--re-blood); transform: translateY(-2px);
-          box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4); }
-        .music-volume-container { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
-        .music-volume-label { color: var(--re-gray); font-size: 12px; font-weight: 600; min-width: 50px; }
-        .music-volume-slider { flex: 1; height: 6px; background: rgba(139, 0, 0, 0.3);
-          border-radius: 3px; outline: none; cursor: pointer; }
-        .music-volume-slider::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px;
-          background: var(--re-blood); border-radius: 50%; cursor: pointer; box-shadow: 0 0 8px rgba(139, 0, 0, 0.6); }
-        .music-volume-slider::-moz-range-thumb { width: 18px; height: 18px; background: var(--re-blood);
-          border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 0 8px rgba(139, 0, 0, 0.6); }
-        #musicVolumeValue { color: var(--re-white); font-weight: 600; font-size: 12px; min-width: 30px; text-align: right; }
-        .music-status { color: var(--re-gray); font-size: 11px; font-weight: 500; text-align: center;
-          padding: 5px; background: rgba(139, 0, 0, 0.1); border-radius: 8px; margin-top: 10px; }
-      `;
-      document.head.appendChild(style);
-      document.body.appendChild(musicControlPanel);
-      
-      setTimeout(() => { musicControlPanel.style.opacity = '1'; musicControlPanel.style.transform = 'translateY(0)'; }, 100);
-
-      setupMusicControlEvents();
-    }
-
-    function setupMusicControlEvents() {
-      document.getElementById('musicToggleBtn').addEventListener('click', toggleMusic);
-      document.getElementById('musicVolumeSlider').addEventListener('input', updateVolume);
-      document.getElementById('musicCloseBtn').addEventListener('click', hideMusicControl);
-      document.getElementById('musicVolumeValue').textContent = document.getElementById('musicVolumeSlider').value;
-      updateVolume();
-    }
-
-    function toggleMusic() {
-      const toggleIcon = document.getElementById('musicToggleIcon');
-      const toggleText = document.getElementById('musicToggleText');
-      const status = document.getElementById('musicStatus');
-      if (!backgroundMusic) { startBackgroundMusic(); toggleIcon.textContent = '⏸️'; toggleText.textContent = 'Pause';
-        status.textContent = 'Playing Resident Evil Theme'; status.style.color = 'var(--re-green)'; }
-      else if (backgroundMusic.paused) { backgroundMusic.play(); toggleIcon.textContent = '⏸️'; toggleText.textContent = 'Pause';
-        status.textContent = 'Playing Resident Evil Theme'; status.style.color = 'var(--re-green)'; }
-      else { backgroundMusic.pause(); toggleIcon.textContent = '▶️'; toggleText.textContent = 'Play';
-        status.textContent = 'Music paused'; status.style.color = 'var(--re-gray)'; }
-    }
-
-    function updateVolume() {
-      const volumeSlider = document.getElementById('musicVolumeSlider');
-      const volumeValue = document.getElementById('musicVolumeValue');
-      const volume = parseInt(volumeSlider.value) / 100;
-      volumeValue.textContent = volumeSlider.value;
-      if (backgroundMusic) backgroundMusic.volume = volume;
-      localStorage.setItem('musicVolume', volumeSlider.value);
-    }
-
-    function startBackgroundMusic() {
-      if (backgroundMusic) return;
-      backgroundMusic = new Audio();
-      backgroundMusic.src = musicFiles[0];
-      backgroundMusic.loop = true;
-
-      // Restore saved state from session storage (persists across page navigation)
-      const savedTime = parseFloat(sessionStorage.getItem('musicTime')) || 0;
-      const wasPlaying = sessionStorage.getItem('musicPlaying') !== 'false';
-
-      const savedVolume = localStorage.getItem('musicVolume') || '30';
-      backgroundMusic.volume = parseInt(savedVolume) / 100;
-      document.getElementById('musicVolumeSlider').value = savedVolume;
-      document.getElementById('musicVolumeValue').textContent = savedVolume;
-
-      // Set time position once audio is loaded
-      backgroundMusic.addEventListener('loadedmetadata', () => {
-        if (savedTime > 0 && savedTime < backgroundMusic.duration) {
-          backgroundMusic.currentTime = savedTime;
-        }
-      }, { once: true });
-
-      if (wasPlaying) {
-        backgroundMusic.play().then(() => {
-          document.getElementById('musicStatus').textContent = 'Playing Resident Evil Theme';
-          document.getElementById('musicStatus').style.color = 'var(--re-green)';
-          document.getElementById('musicToggleIcon').textContent = '⏸️';
-          document.getElementById('musicToggleText').textContent = 'Pause';
-        }).catch(() => {
-          document.getElementById('musicStatus').textContent = 'Click play to start music';
-          document.getElementById('musicStatus').style.color = 'var(--re-gray)';
-        });
-      } else {
-        document.getElementById('musicStatus').textContent = 'Music paused';
-        document.getElementById('musicStatus').style.color = 'var(--re-gray)';
-      }
-      backgroundMusic.addEventListener('ended', () => { backgroundMusic.currentTime = 0; backgroundMusic.play(); });
-      backgroundMusic.addEventListener('error', (e) => {
-        document.getElementById('musicStatus').textContent = 'Music file not found';
-        document.getElementById('musicStatus').style.color = 'var(--re-blood)';
-      });
-    }
-
-    function hideMusicControl() {
-      if (musicControlPanel) {
-        musicControlPanel.style.opacity = '0'; musicControlPanel.style.transform = 'translateY(20px)';
-        setTimeout(() => { if (musicControlPanel && musicControlPanel.parentNode) musicControlPanel.parentNode.removeChild(musicControlPanel); musicControlPanel = null; }, 300);
-      }
-    }
-
-    function showMusicControlButton() {
-      const musicButton = document.createElement('div');
-      musicButton.id = 'musicControlButton';
-      musicButton.innerHTML = '🎵 Music';
-      musicButton.style.cssText = `position: fixed; bottom: 20px; right: 20px; background: rgba(139, 0, 0, 0.8);
-        color: var(--re-white); padding: 12px 18px; border-radius: 25px; cursor: pointer; font-size: 14px; font-weight: 600;
-        z-index: 1000; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3); border: 2px solid rgba(139, 0, 0, 0.3);`;
-      
-      musicButton.addEventListener('mouseenter', () => { musicButton.style.background = 'var(--re-blood)'; musicButton.style.transform = 'scale(1.05)'; musicButton.style.boxShadow = '0 6px 20px rgba(139, 0, 0, 0.5)'; });
-      musicButton.addEventListener('mouseleave', () => { musicButton.style.background = 'rgba(139, 0, 0, 0.8)'; musicButton.style.transform = 'scale(1)'; musicButton.style.boxShadow = '0 4px 15px rgba(139, 0, 0, 0.3)'; });
-      musicButton.addEventListener('click', () => { createMusicControl(); musicButton.remove(); });
-      document.body.appendChild(musicButton);
-    }
-
-    function initBackgroundMusic() {
-      const musicInteracted = localStorage.getItem('musicInteracted') === 'true';
-      if (!musicInteracted) {
-        document.addEventListener('click', () => {
-          localStorage.setItem('musicInteracted', 'true');
-          document.getElementById('musicControlButton')?.remove();
-          showMusicControlButton();
-        }, { once: true });
-      } else {
-        showMusicControlButton();
-      }
-    }
-
-    initBackgroundMusic();
-
-    // Save music state before page unload (for persistence across navigation)
-    window.addEventListener('pagehide', () => {
-      if (backgroundMusic) {
-        sessionStorage.setItem('musicPlaying', !backgroundMusic.paused);
-        sessionStorage.setItem('musicTime', backgroundMusic.currentTime);
-        sessionStorage.setItem('musicVolume', backgroundMusic.volume);
-      }
-    });
-
-    // MOBILE DROPDOWN NAVIGATION FIX
-    (function() {
-      const dropdown = document.querySelector('.dropdown');
-      const dropdownToggle = document.querySelector('.dropdown-toggle');
-      const dropdownMenu = document.querySelector('.dropdown-menu');
-      if (!dropdown || !dropdownToggle || !dropdownMenu) return;
-      function isMobile() { return window.innerWidth <= 768; }
-      dropdownToggle.addEventListener('click', function(e) {
-        if (isMobile()) { e.preventDefault(); e.stopPropagation(); dropdown.classList.toggle('open'); }
-      });
-      document.addEventListener('click', function(e) {
-        if (isMobile() && !dropdown.contains(e.target)) dropdown.classList.remove('open');
-      });
-      dropdownMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function() { if (isMobile()) dropdown.classList.remove('open'); });
-      });
-      let wasMobile = isMobile();
-      window.addEventListener('resize', function() {
-        const nowMobile = isMobile();
-        if (wasMobile !== nowMobile) dropdown.classList.remove('open');
-        wasMobile = nowMobile;
-      });
-    })();
-  </script>\n</body>
+  <script src="common.js"></script>
+</body>
 </html>
