@@ -1,6 +1,186 @@
 /* Common JavaScript for REmake Speedrun Guide */
 
 // ============================================
+// SERVICE WORKER REGISTRATION (Offline Support)
+// ============================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('Service Worker registered:', registration.scope);
+      })
+      .catch((error) => {
+        console.log('Service Worker registration failed:', error);
+      });
+  });
+}
+
+// ============================================
+// SKIP NAVIGATION LINK (Accessibility)
+// ============================================
+(function initSkipNav() {
+  // Create skip navigation link
+  const skipLink = document.createElement('a');
+  skipLink.href = '#main-content';
+  skipLink.className = 'skip-nav';
+  skipLink.textContent = 'Skip to main content';
+  document.body.insertBefore(skipLink, document.body.firstChild);
+
+  // Add id to main element if not present
+  const main = document.querySelector('main');
+  if (main && !main.id) {
+    main.id = 'main-content';
+  }
+})();
+
+// ============================================
+// SEARCH FUNCTIONALITY
+// ============================================
+const searchData = [
+  { title: 'Home', section: 'Main Page', url: 'index.html', keywords: 'home start begin introduction welcome' },
+  { title: 'Setup Guide', section: 'Section 1', url: 'remake_guide_page_1.html', keywords: 'setup settings configuration game options difficulty' },
+  { title: 'Mansion 1 - Opening', section: 'Section 1', url: 'remake_guide_page_2.html', keywords: 'mansion opening start beginning first zombie' },
+  { title: 'Armour Key & Grenade Launcher', section: 'Section 2', url: 'remake_guide_page_3.html', keywords: 'armour armor key grenade launcher weapon' },
+  { title: 'Death Masks 2-4 & Yawn 1', section: 'Section 3', url: 'remake_guide_page_4.html', keywords: 'death mask yawn snake boss richard timer serum' },
+  { title: 'Gallery & Death Masks 3-4', section: 'Section 4', url: 'remake_guide_page_5.html', keywords: 'gallery painting puzzle statue death mask' },
+  { title: 'Elder Crimson Boss Fight', section: 'Section 5', url: 'remake_guide_page_6.html', keywords: 'elder crimson boss fight crypt coffin' },
+  { title: 'Courtyard & Lisa\'s Hut', section: 'Section 6', url: 'remake_guide_page_7.html', keywords: 'courtyard lisa trevor hut cabin crank' },
+  { title: 'Residence - Early', section: 'Section 7', url: 'remake_guide_page_8.html', keywords: 'residence dormitory guard house early' },
+  { title: 'Neptune & Aqua Ring', section: 'Section 8', url: 'remake_guide_page_9.html', keywords: 'neptune shark aqua ring drain water' },
+  { title: 'Plant 42 Boss', section: 'Section 9', url: 'remake_guide_page_10.html', keywords: 'plant 42 boss v-jolt residence' },
+  { title: 'Mansion 2 - Hunter Navigation', section: 'Section 10', url: 'remake_guide_page_11.html', keywords: 'mansion hunter navigation second visit' },
+  { title: 'Yawn 2 & Gem Collection', section: 'Section 11', url: 'remake_guide_page_12.html', keywords: 'yawn snake gem collection second' },
+  { title: 'Underground Facility', section: 'Section 12', url: 'remake_guide_page_13.html', keywords: 'underground facility tunnels boulder' },
+  { title: 'Lisa Trevor Underground', section: 'Section 13', url: 'remake_guide_page_14.html', keywords: 'lisa trevor underground boss fight altar' },
+  { title: 'Laboratory', section: 'Section 14', url: 'remake_guide_page_15.html', keywords: 'laboratory lab umbrella research' },
+  { title: 'Tyrant & Helipad', section: 'Section 15', url: 'remake_guide_page_16.html', keywords: 'tyrant helipad final boss ending rocket launcher' },
+  { title: 'Resources', section: 'Reference', url: 'resources-page.html', keywords: 'resources links videos tutorials leaderboard' },
+  { title: 'Quick Reference', section: 'Reference', url: 'quick-reference-guide.html', keywords: 'quick reference cheat sheet summary' },
+  { title: 'StruggleR', section: 'Event', url: 'struggler_info_page.html', keywords: 'struggler race competition event wheel of struggle' }
+];
+
+function initSearch() {
+  // Create search overlay HTML
+  const searchOverlay = document.createElement('div');
+  searchOverlay.className = 'search-overlay';
+  searchOverlay.id = 'searchOverlay';
+  searchOverlay.innerHTML = `
+    <div class="search-container">
+      <div class="search-header">
+        <h3>Search Guide</h3>
+        <button class="search-close" id="searchClose">&times;</button>
+      </div>
+      <div class="search-input-wrapper">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search pages, bosses, items..." autocomplete="off">
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-hint">Start typing to search...</div>
+      </div>
+      <div class="search-hint">Press <kbd>Esc</kbd> to close or <kbd>/</kbd> to open</div>
+    </div>
+  `;
+  document.body.appendChild(searchOverlay);
+
+  // Create search button in nav
+  const nav = document.querySelector('.nav');
+  if (nav) {
+    const searchBtn = document.createElement('button');
+    searchBtn.className = 'search-btn';
+    searchBtn.id = 'searchBtn';
+    searchBtn.innerHTML = '🔍 Search';
+    searchBtn.setAttribute('aria-label', 'Search');
+    nav.appendChild(searchBtn);
+  }
+
+  // Event listeners
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+  const searchClose = document.getElementById('searchClose');
+  const searchBtn = document.getElementById('searchBtn');
+
+  if (searchBtn) {
+    searchBtn.addEventListener('click', openSearch);
+  }
+
+  if (searchClose) {
+    searchClose.addEventListener('click', closeSearch);
+  }
+
+  if (searchOverlay) {
+    searchOverlay.addEventListener('click', (e) => {
+      if (e.target === searchOverlay) closeSearch();
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', performSearch);
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    // Open search with /
+    if (e.key === '/' && !searchOverlay.classList.contains('active')) {
+      e.preventDefault();
+      openSearch();
+    }
+    // Close search with Escape
+    if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+      closeSearch();
+    }
+  });
+}
+
+function openSearch() {
+  const searchOverlay = document.getElementById('searchOverlay');
+  const searchInput = document.getElementById('searchInput');
+  if (searchOverlay) {
+    searchOverlay.classList.add('active');
+    if (searchInput) {
+      searchInput.focus();
+      searchInput.value = '';
+    }
+    document.getElementById('searchResults').innerHTML = '<div class="search-hint">Start typing to search...</div>';
+  }
+}
+
+function closeSearch() {
+  const searchOverlay = document.getElementById('searchOverlay');
+  if (searchOverlay) {
+    searchOverlay.classList.remove('active');
+  }
+}
+
+function performSearch() {
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+  const query = searchInput.value.toLowerCase().trim();
+
+  if (!query) {
+    searchResults.innerHTML = '<div class="search-hint">Start typing to search...</div>';
+    return;
+  }
+
+  const results = searchData.filter(item => {
+    const searchText = (item.title + ' ' + item.section + ' ' + item.keywords).toLowerCase();
+    return searchText.includes(query);
+  });
+
+  if (results.length === 0) {
+    searchResults.innerHTML = '<div class="search-no-results">No results found for "' + query + '"</div>';
+    return;
+  }
+
+  searchResults.innerHTML = results.map(item => `
+    <a href="${item.url}" class="search-result-item">
+      <div class="search-result-title">${item.title}</div>
+      <div class="search-result-section">${item.section}</div>
+    </a>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', initSearch);
+
+// ============================================
 // BLOOD DRIP ANIMATION
 // ============================================
 (function initBloodDrips() {
