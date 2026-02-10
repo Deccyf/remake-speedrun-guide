@@ -3,213 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Complete speedrun guide for Resident Evil REmake (2002). Learn optimal routing, boss strategies, and techniques for Jill Valentine Any% Normal category.">
+<meta name="keywords" content="Resident Evil, REmake, speedrun, guide, Jill Valentine, Any%, walkthrough">
+<meta name="author" content="Deccyf">
+<meta name="robots" content="index, follow">
+<!-- Open Graph -->
+<meta property="og:title" content="Resident Evil REmake - Professional Speedrun Guide">
+<meta property="og:description" content="Complete speedrun guide for Resident Evil REmake. Master optimal routing, boss strategies, and techniques.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="Logos/hqdefault.jpg">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Resident Evil REmake - Professional Speedrun Guide">
+<meta name="twitter:description" content="Complete speedrun guide for Resident Evil REmake. Master optimal routing, boss strategies, and techniques.">
 <title>Resident Evil REmake - Professional Speedrun Guide</title>
+<link rel="stylesheet" href="common.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
-  
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --re-black: #0D0D0D;
-    --re-dark: #1A1A1A;
-    --re-blood: #8B0000;
-    --re-crimson: #DC143C;
-    --re-green: #7CFC00;
-    --re-gold: #D4AF37;
-    --re-white: #F5F5F5;
-    --re-gray: #808080;
-  }
-
+  /* Page-specific: Custom background for index page */
   body {
-    font-family: 'Barlow', sans-serif;
-    background: 
+    background:
       linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.75)),
       url('Logos/hqdefault.jpg') center center fixed;
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    color: var(--re-white);
-    line-height: 1.6;
-    overflow-x: hidden;
-    min-height: 100vh;
-    word-wrap: break-word;
-    word-break: break-word;
   }
 
-  .fog-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-  }
-
-  .fog {
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: 
-      radial-gradient(ellipse at 30% 40%, rgba(139, 0, 0, 0.25) 0%, transparent 50%),
-      radial-gradient(ellipse at 70% 60%, rgba(220, 20, 60, 0.15) 0%, transparent 45%),
-      radial-gradient(ellipse at 50% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-      radial-gradient(ellipse at 20% 80%, rgba(0, 0, 0, 0.3) 0%, transparent 60%);
-    animation: fogMove 30s ease-in-out infinite;
-  }
-
-  @keyframes fogMove {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(-5%, 5%); }
-    50% { transform: translate(5%, -5%); }
-    75% { transform: translate(-3%, 3%); }
-  }
-
-  .blood-drips {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .blood-drip {
-    position: absolute;
-    width: 2px;
-    height: 0;
-    background: linear-gradient(180deg, transparent, var(--re-blood));
-    animation: drip 3s ease-in infinite;
-  }
-
-  @keyframes drip {
-    0% { height: 0; opacity: 0; }
-    10% { opacity: 1; }
-    100% { height: 100vh; opacity: 0; }
-  }
-
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background: rgba(13, 13, 13, 0.8);
-    backdrop-filter: blur(15px) saturate(1.5);
-    border-bottom: 1px solid rgba(139, 0, 0, 0.4);
-    transition: all 0.3s;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  .header.scrolled {
-    background: rgba(13, 13, 13, 0.9);
-    box-shadow: 0 4px 30px rgba(139, 0, 0, 0.4);
-    backdrop-filter: blur(20px) saturate(1.8);
-  }
-
-  .header-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1.2rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .logo {
-    font-family: 'Cinzel', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--re-white);
-    text-decoration: none;
-    letter-spacing: 3px;
-    position: relative;
-    transition: all 0.4s;
-  }
-
-  .logo::before, .logo::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 20px;
-    height: 2px;
-    background: var(--re-blood);
-    transform: translateY(-50%);
-  }
-
-  .logo::before { left: -30px; }
-  .logo::after { right: -30px; }
-  .logo span { color: var(--re-blood); }
-
-  .nav {
-    display: flex;
-    gap: 3rem;
-    align-items: center;
-  }
-
-  .nav a {
-    color: var(--re-gray);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: all 0.3s;
-    position: relative;
-  }
-
-  .nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--re-blood);
-    transition: width 0.3s;
-  }
-
-  .nav a:hover { color: var(--re-white); }
-  .nav a:hover::after { width: 100%; }
-
-  /* Nav hover dropdown */
-  .dropdown { position: relative; }
-  .dropdown-toggle { display: inline-block; }
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 320px;
-    background: rgba(26, 26, 26, 0.98);
-    border: 1px solid rgba(139, 0, 0, 0.4);
-    border-radius: 8px;
-    padding: 0.5rem 0;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    z-index: 1001;
-  }
-  /* Only enable hover on devices with precise pointers (mouse) */
-  @media (hover: hover) and (pointer: fine) {
-    .dropdown:hover .dropdown-menu { display: block; }
-  }
-  .dropdown-menu a {
-    display: block;
-    padding: 0.6rem 1rem;
-    color: var(--re-gray);
-    text-decoration: none;
-    font-weight: 600;
-    letter-spacing: 1px;
-    white-space: nowrap;
-  }
-  .dropdown-menu a:hover { background: rgba(139,0,0,0.2); color: var(--re-white); }
-
-  main { 
-    padding-top: 80px; 
-    overflow-x: hidden;
-    width: 100%;
-  }
-
+  /* Hero Section */
   .hero {
     position: relative;
     min-height: 90vh;
@@ -225,7 +45,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
+    background:
       radial-gradient(ellipse at center, rgba(139, 0, 0, 0.2) 0%, transparent 70%),
       linear-gradient(180deg, var(--re-black) 0%, var(--re-dark) 100%);
   }
@@ -272,7 +92,7 @@
     margin-bottom: 1rem;
     line-height: 1.1;
     letter-spacing: 5px;
-    text-shadow: 
+    text-shadow:
       0 0 20px rgba(139, 0, 0, 0.5),
       0 0 40px rgba(139, 0, 0, 0.3);
     animation: titleGlow 3s ease-in-out infinite;
@@ -292,6 +112,7 @@
     margin-bottom: 3rem;
   }
 
+  /* Stats Section */
   .stats-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -348,6 +169,7 @@
     letter-spacing: 2px;
   }
 
+  /* Content Sections */
   .section {
     max-width: 1400px;
     margin: 6rem auto;
@@ -387,6 +209,7 @@
     margin-top: 2rem;
   }
 
+  /* Guide Grid */
   .guide-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -395,7 +218,6 @@
     margin: 0 auto;
   }
 
-  /* Special positioning for Tyrant finale card */
   .guide-card:nth-child(16) {
     grid-column: 2;
     justify-self: center;
@@ -474,6 +296,7 @@
     font-weight: 600;
   }
 
+  /* CTA Section */
   .cta-section {
     max-width: 1000px;
     margin: 8rem auto;
@@ -522,529 +345,85 @@
     margin-bottom: 3rem;
   }
 
-  .btn {
-    display: inline-block;
-    padding: 1.3rem 3.5rem;
-    background: var(--re-blood);
-    color: var(--re-white);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1.1rem;
-    border-radius: 50px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    transition: all 0.4s;
-    border: 2px solid var(--re-blood);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-  }
-
-  .btn:hover::before {
-    width: 300px;
-    height: 300px;
-  }
-
-  .btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 40px rgba(139, 0, 0, 0.6);
-  }
-
-  .footer {
-    background: rgba(13, 13, 13, 0.95);
-    border-top: 1px solid rgba(139, 0, 0, 0.3);
-    padding: 3rem 2rem;
-    text-align: center;
-    margin-top: 8rem;
-  }
-
-  .footer p {
-    color: var(--re-gray);
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .footer-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .footer-info {
-    text-align: left;
-  }
-
-  .footer-buttons {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .footer-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .discord-btn {
-    background: rgba(88, 101, 242, 0.2);
-    color: #5865f2;
-    border: 1px solid rgba(88, 101, 242, 0.3);
-  }
-
-  .discord-btn:hover {
-    background: #5865f2;
-    color: var(--re-white);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
-  }
-
-  .website-btn {
-    background: rgba(139, 0, 0, 0.2);
-    color: var(--re-blood);
-    border: 1px solid rgba(139, 0, 0, 0.3);
-  }
-
-  .website-btn:hover {
-    background: var(--re-blood);
-    color: var(--re-white);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
-  }
-
-  .footer-icon {
-    font-size: 1.1rem;
-  }
-
-  .discord-logo {
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-    margin-right: 0.5rem;
-  }
-
-  .website-logo {
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-    margin-right: 0.5rem;
-    filter: brightness(1.2);
-  }
-
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s;
-  }
-
-  .reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ==================================================
-     MOBILE RESPONSIVE DESIGN - INDUSTRY STANDARDS
-     ================================================== */
-  
-  /* Mobile First Approach - Base styles for mobile */
-  
-  /* Small screens (mobile landscape) */
+  /* Mobile Responsive */
   @media (max-width: 768px) {
-    /* Reset and base mobile styles */
-    * {
-      box-sizing: border-box;
-    }
-    
-    body {
-      background-attachment: scroll !important;
-      overflow-x: hidden;
-    }
-    
-    /* Header mobile optimization */
-    .header-content {
-      padding: 1rem;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 100%;
-    }
-    
-    .logo {
-      font-size: 1.4rem;
-      letter-spacing: 2px;
-      text-align: center;
-    }
-    
-    /* Navigation - Industry standard mobile nav */
-    .nav {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-      width: 100%;
-      max-width: 100%;
-    }
-    
-    .nav a {
-      padding: 0.75rem 0.5rem;
-      font-size: 0.8rem;
-      text-align: center;
-      border: 1px solid rgba(139, 0, 0, 0.3);
-      border-radius: 8px;
-      background: rgba(139, 0, 0, 0.1);
-      min-height: 44px; /* Touch target minimum */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    /* CRITICAL FIX: Dropdown navigation for mobile */
-    .dropdown {
-      grid-column: 1 / -1; /* Full width in grid */
-      display: block;
-    }
-    
-    .dropdown-toggle {
-      width: 100%;
-      padding: 0.75rem 0.5rem;
-      font-size: 0.8rem;
-      text-align: center;
-      border: 1px solid rgba(139, 0, 0, 0.3);
-      border-radius: 8px;
-      background: rgba(139, 0, 0, 0.1);
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      position: relative;
-    }
-    
-    /* Add indicator for dropdown on mobile */
-    .dropdown-toggle::after {
-      content: ' ▼';
-      font-size: 0.7rem;
-      margin-left: 0.5rem;
-      transition: transform 0.3s;
-    }
-    
-    .dropdown.open .dropdown-toggle::after {
-      transform: rotate(180deg);
-    }
-    
-    /* FORCE HIDE dropdown menu on mobile by default */
-    .dropdown-menu {
-      display: none !important;
-      position: static !important;
-      width: 100%;
-      margin-top: 0.5rem;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-      background: rgba(13, 13, 13, 0.95);
-      border-radius: 8px;
-      padding: 0;
-    }
-    
-    /* Show dropdown when toggled open on mobile */
-    .dropdown.open .dropdown-menu {
-      display: block !important;
-      max-height: 800px;
-      padding: 0.5rem 0;
-      overflow-y: auto;
-    }
-    
-    .dropdown-menu a {
-      font-size: 0.75rem;
-      padding: 0.7rem 1rem;
-      border-bottom: 1px solid rgba(139, 0, 0, 0.2);
-      white-space: normal;
-      line-height: 1.4;
-    }
-    
-    .dropdown-menu a:last-child {
-      border-bottom: none;
-    }
-    
-    /* Main content area */
-    main {
-      padding-top: 120px;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-    
-    /* Hero section */
+    body { background-attachment: scroll !important; }
+
     .hero {
       padding: 2rem 0;
       text-align: center;
       min-height: auto;
     }
-    
+
     .hero-title {
       font-size: 2.5rem;
       line-height: 1.1;
       margin-bottom: 1rem;
-      word-wrap: break-word;
     }
-    
+
     .hero-subtitle {
       font-size: 1rem;
       margin-bottom: 2rem;
     }
-    
-    /* Stats container */
+
     .stats-container {
       grid-template-columns: 1fr;
       gap: 1rem;
       margin: 2rem auto 0;
-      max-width: 100%;
     }
-    
-    .stat-box {
-      padding: 1.5rem;
-    }
-    
-    .stat-value {
-      font-size: 2.5rem;
-    }
-    
-    /* Section styling */
+
+    .stat-box { padding: 1.5rem; }
+    .stat-value { font-size: 2.5rem; }
+
     .section {
       padding: 2rem 1.5rem;
       max-width: 100%;
     }
-    
+
     .section-title {
       font-size: 1.8rem;
       margin-bottom: 2rem;
-      text-align: center;
-      word-wrap: break-word;
     }
-    
-    /* Guide grid - Industry standard single column */
+
     .guide-grid {
       grid-template-columns: 1fr !important;
       gap: 1rem;
-      max-width: 100%;
-      padding: 0;
     }
-    
-    /* Reset special positioning on mobile */
+
     .guide-card:nth-child(16) {
       grid-column: auto !important;
       justify-self: stretch;
     }
-    
+
     .guide-card {
       padding: 1.5rem;
       margin-bottom: 1rem;
-      width: 100%;
-      box-sizing: border-box;
     }
-    
-    .guide-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
-      line-height: 1.3;
-      word-wrap: break-word;
-    }
-    
-    .guide-card p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    
-    .guide-meta {
-      font-size: 0.8rem;
-      padding-top: 1rem;
-    }
-    
-    /* CTA section */
+
+    .guide-card h3 { font-size: 1.2rem; }
+    .guide-card p { font-size: 0.9rem; }
+
     .cta-section {
       padding: 2rem 1rem;
       margin: 3rem auto;
     }
-    
-    .cta-title {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    
-    .cta-text {
-      font-size: 1rem;
-      margin-bottom: 2rem;
-    }
-    
-    .btn {
-      padding: 1rem 2rem;
-      font-size: 0.9rem;
-      min-width: 200px;
-      width: 100%;
-      max-width: 300px;
-    }
-    
-    /* Footer */
-    .footer-content {
-      flex-direction: column;
-      gap: 1.5rem;
-      text-align: center;
-      padding: 0 1rem;
-    }
-    
-    .footer-buttons {
-      flex-direction: column;
-      gap: 0.8rem;
-      align-items: center;
-    }
+
+    .cta-title { font-size: 2rem; }
+    .cta-text { font-size: 1rem; }
   }
 
-  /* Very small screens (mobile portrait) */
   @media (max-width: 480px) {
-    /* Even more compact for small phones */
-    .header-content {
-      padding: 0.8rem;
-    }
-    
-    .logo {
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-    }
-    
-    .nav {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-    }
-    
-    .nav a {
-      padding: 0.8rem 0.5rem;
-      font-size: 0.8rem;
-      min-height: 48px;
-    }
-    
-    main {
-      padding-top: 140px;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-    }
-    
-    .hero {
-      padding: 1.5rem 0;
-    }
-    
-    .hero-title {
-      font-size: 2rem;
-      line-height: 1.2;
-    }
-    
-    .hero-subtitle {
-      font-size: 0.9rem;
-    }
-    
-    .stats-container {
-      gap: 0.8rem;
-    }
-    
-    .stat-box {
-      padding: 1rem;
-    }
-    
-    .stat-value {
-      font-size: 2rem;
-    }
-    
-    .stat-label {
-      font-size: 0.8rem;
-    }
-    
-    .section {
-      padding: 1.5rem 1.5rem;
-    }
-    
-    .section-title {
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-    
-    .guide-grid {
-      gap: 0.8rem;
-      grid-template-columns: 1fr !important;
-    }
-    
-    /* Reset special positioning on small mobile */
-    .guide-card:nth-child(16) {
-      grid-column: auto !important;
-    }
-    
-    .guide-card {
-      padding: 1rem;
-    }
-    
-    .guide-card h3 {
-      font-size: 1.1rem;
-    }
-    
-    .guide-card p {
-      font-size: 0.85rem;
-    }
-    
-    .guide-meta {
-      font-size: 0.75rem;
-    }
-    
-    .cta-section {
-      padding: 1.5rem 0.5rem;
-      margin: 2rem auto;
-    }
-    
-    .cta-title {
-      font-size: 1.6rem;
-    }
-    
-    .cta-text {
-      font-size: 0.9rem;
-    }
-    
-    .btn {
-      padding: 0.8rem 1.5rem;
-      font-size: 0.85rem;
-      min-width: 180px;
-    }
+    .hero-title { font-size: 2rem; }
+    .stat-value { font-size: 2rem; }
+    .section-title { font-size: 1.5rem; }
+    .guide-card h3 { font-size: 1.1rem; }
+    .cta-title { font-size: 1.6rem; }
   }
 
-  /* Touch device improvements */
   @media (hover: none) and (pointer: coarse) {
-    .btn:hover,
     .guide-card:hover,
-    .nav a:hover {
+    .stat-box:hover {
       transform: none;
-    }
-    
-    .btn:active {
-      transform: scale(0.98);
     }
   }
 </style>
@@ -1053,9 +432,9 @@
   <div class="fog-container">
     <div class="fog"></div>
   </div>
-  
+
   <div class="blood-drips" id="bloodDrips"></div>
-  
+
   <header class="header" id="header">
     <div class="header-content">
       <a href="index.html" class="logo">RESIDENT <span>EVIL</span></a>
@@ -1096,7 +475,7 @@
         <div class="hero-badge">Speedrun Guide</div>
         <h1 class="hero-title">REMAKE</h1>
         <p class="hero-subtitle">Jill Valentine • Any% • Normal</p>
-        
+
         <div class="stats-container">
           <div class="stat-box">
             <span class="stat-value">15</span>
@@ -1119,7 +498,7 @@
         <h2 class="section-title">Complete Walkthrough</h2>
         <p class="section-subtitle">From mansion entrance to helipad escape</p>
       </div>
-      
+
       <div class="guide-grid">
         <a href="remake_guide_page_1.html" class="guide-card reveal">
           <span class="guide-number">SETUP</span>
@@ -1283,485 +662,18 @@
         <p>© 2025 Wheel of Struggle Community Speedrun Guide • All Rights Reserved</p>
       </div>
       <div class="footer-buttons">
-        <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
-          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="footer-icon discord-logo">
+        <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank" rel="noopener noreferrer">
+          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="footer-icon discord-logo" loading="lazy">
           Discord
         </a>
-        <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank">
-          <img src="Logos/WoS_Discord_Colour_V2.png" alt="Wheel of Struggle" class="footer-icon website-logo">
+        <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank" rel="noopener noreferrer">
+          <img src="Logos/WoS_Discord_Colour_V2.png" alt="Wheel of Struggle" class="footer-icon website-logo" loading="lazy">
           Website
         </a>
       </div>
     </div>
   </footer>
 
-  <script>
-    // Walkthrough jump-to navigation
-    (function(){
-      const sel = document.getElementById('jumpSelect-hero');
-      if (sel) {
-        sel.addEventListener('change', function(){
-          if (this.value) window.location.href = this.value;
-        });
-      }
-    })();
-    // Blood drip animation
-    const bloodDripsContainer = document.getElementById('bloodDrips');
-    for (let i = 0; i < 5; i++) {
-      const drip = document.createElement('div');
-      drip.className = 'blood-drip';
-      drip.style.left = Math.random() * 100 + '%';
-      drip.style.animationDelay = Math.random() * 3 + 's';
-      drip.style.animationDuration = (Math.random() * 2 + 2) + 's';
-      bloodDripsContainer.appendChild(drip);
-    }
-
-    // Header scroll effect
-    window.addEventListener('scroll', () => {
-      const header = document.getElementById('header');
-      if (window.scrollY > 100) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
-
-    // Scroll reveal animation
-    const reveals = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    reveals.forEach(reveal => {
-      revealObserver.observe(reveal);
-    });
-
-    // Background music functionality
-    let backgroundMusic = null;
-    const musicFiles = [
-      '01 R.E. 1 Save Room- Safe Haven.mp3',
-      // Add your preferred Resident Evil themed music files here
-    ];
-
-    function initBackgroundMusic() {
-      // Check if user has previously allowed autoplay
-      const musicAllowed = localStorage.getItem('musicAllowed') === 'true';
-      
-      if (musicAllowed) {
-        startBackgroundMusic();
-      } else {
-        // Show music control button after user interaction
-        document.addEventListener('click', () => {
-          document.getElementById('musicControlButton')?.remove();
-          showMusicControllButton();
-        }, { once: true });
-      }
-    }
-
-    function showMusicControllButton() {
-      const musicButton = document.createElement('div');
-      musicButton.id = 'musicControlButton';
-      musicButton.innerHTML = '🎵 Enable Background Music';
-      musicButton.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: rgba(139, 0, 0, 0.8);
-        color: var(--re-white);
-        padding: 10px 15px;
-        border-radius: 25px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 600;
-        z-index: 1000;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
-      `;
-      
-      musicButton.addEventListener('mouseenter', () => {
-        musicButton.style.background = 'var(--re-blood)';
-        musicButton.style.transform = 'scale(1.05)';
-      });
-      
-      musicButton.addEventListener('mouseleave', () => {
-        musicButton.style.background = 'rgba(139, 0, 0, 0.8)';
-        musicButton.style.transform = 'scale(1)';
-      });
-
-      musicButton.addEventListener('click', () => {
-        localStorage.setItem('musicAllowed', 'true');
-        musicButton.remove();
-        startBackgroundMusic();
-      });
-
-      document.body.appendChild(musicButton);
-    }
-
-    function startBackgroundMusic() {
-      if (backgroundMusic) return;
-      
-      backgroundMusic = new Audio();
-      // Use your preferred music file URL here
-      backgroundMusic.src = musicFiles[0];
-      backgroundMusic.loop = true;
-      backgroundMusic.volume = 0.3; // Lower volume for background music
-      
-      // Handle autoplay restrictions
-      backgroundMusic.play().then(() => {
-        console.log('Background music started');
-      }).catch(() => {
-        console.log('Autoplay blocked, user will need to interact first');
-      });
-    }
-
-    // Initialize music on page load
-    initBackgroundMusic();
-
-    // ENHANCED MUSIC CONTROL SYSTEM
-    let musicControlPanel = null;
-
-    function createMusicControl() {
-      musicControlPanel = document.createElement('div');
-      musicControlPanel.id = 'musicControlPanel';
-      musicControlPanel.innerHTML = `
-        <div class="music-control-header">
-          <span class="music-icon">🎵</span>
-          <span class="music-title">Background Music</span>
-          <button id="musicCloseBtn" class="music-close-btn">×</button>
-        </div>
-        <div class="music-control-content">
-          <button id="musicToggleBtn" class="music-toggle-btn">
-            <span id="musicToggleIcon">▶️</span>
-            <span id="musicToggleText">Play</span>
-          </button>
-          <div class="music-volume-container">
-            <span class="music-volume-label">Volume</span>
-            <input type="range" id="musicVolumeSlider" min="0" max="100" value="30" class="music-volume-slider">
-            <span id="musicVolumeValue">30</span>
-          </div>
-          <div class="music-status" id="musicStatus">Ready to play</div>
-        </div>
-      `;
-      
-      // Add CSS styling
-      musicControlPanel.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 250px;
-        background: rgba(13, 13, 13, 0.95);
-        border: 2px solid var(--re-blood);
-        border-radius: 15px;
-        box-shadow: 0 8px 30px rgba(139, 0, 0, 0.4);
-        backdrop-filter: blur(20px);
-        z-index: 1000;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.3s ease;
-        font-family: 'Barlow', sans-serif;
-      `;
-
-      // Style the inner elements
-      const style = document.createElement('style');
-      style.textContent = `
-        .music-control-header {
-          background: var(--re-blood);
-          color: white;
-          padding: 12px 15px;
-          border-radius: 13px 13px 0 0;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          font-weight: 700;
-          font-size: 14px;
-        }
-        .music-icon { font-size: 16px; }
-        .music-close-btn {
-          background: none;
-          border: none;
-          color: white;
-          font-size: 20px;
-          cursor: pointer;
-          padding: 0;
-          width: 25px;
-          height: 25px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: background 0.2s ease;
-        }
-        .music-close-btn:hover {
-          background: rgba(255, 255, 255, 0.2);
-        }
-        .music-control-content {
-          padding: 15px;
-        }
-        .music-toggle-btn {
-          width: 100%;
-          background: rgba(139, 0, 0, 0.2);
-          border: 2px solid var(--re-blood);
-          color: white;
-          padding: 12px 15px;
-          border-radius: 25px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          font-weight: 600;
-          font-size: 14px;
-          margin-bottom: 15px;
-          transition: all 0.3s ease;
-        }
-        .music-toggle-btn:hover {
-          background: var(--re-blood);
-          transform: translateY(-2px);
-          box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
-        }
-        .music-volume-container {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-bottom: 15px;
-        }
-        .music-volume-label {
-          color: var(--re-gray);
-          font-size: 12px;
-          font-weight: 600;
-          min-width: 50px;
-        }
-        .music-volume-slider {
-          flex: 1;
-          height: 6px;
-          background: rgba(139, 0, 0, 0.3);
-          border-radius: 3px;
-          outline: none;
-          cursor: pointer;
-        }
-        .music-volume-slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 18px;
-          height: 18px;
-          background: var(--re-blood);
-          border-radius: 50%;
-          cursor: pointer;
-          box-shadow: 0 0 8px rgba(139, 0, 0, 0.6);
-        }
-        .music-volume-slider::-moz-range-thumb {
-          width: 18px;
-          height: 18px;
-          background: var(--re-blood);
-          border-radius: 50%;
-          cursor: pointer;
-          border: none;
-          box-shadow: 0 0 8px rgba(139, 0, 0, 0.6);
-        }
-        #musicVolumeValue {
-          color: var(--re-white);
-          font-weight: 600;
-          font-size: 12px;
-          min-width: 30px;
-          text-align: right;
-        }
-        .music-status {
-          color: var(--re-gray);
-          font-size: 11px;
-          font-weight: 500;
-          text-align: center;
-          padding: 5px;
-          background: rgba(139, 0, 0, 0.1);
-          border-radius: 8px;
-          margin-top: 10px;
-        }
-      `;
-      document.head.appendChild(style);
-
-      document.body.appendChild(musicControlPanel);
-      
-      // Show with animation
-      setTimeout(() => {
-        musicControlPanel.style.opacity = '1';
-        musicControlPanel.style.transform = 'translateY(0)';
-      }, 100);
-
-      // Add event listeners
-      setupMusicControlEvents();
-    }
-
-    function setupMusicControlEvents() {
-      const toggleBtn = document.getElementById('musicToggleBtn');
-      const volumeSlider = document.getElementById('musicVolumeSlider');
-      const volumeValue = document.getElementById('musicVolumeValue');
-      const closeBtn = document.getElementById('musicCloseBtn');
-      const status = document.getElementById('musicStatus');
-
-      toggleBtn.addEventListener('click', toggleMusicEnhanced);
-      volumeSlider.addEventListener('input', updateVolume);
-      closeBtn.addEventListener('click', hideMusicControl);
-
-      // Initialize volume display
-      volumeValue.textContent = volumeSlider.value;
-      updateVolume();
-    }
-
-    function toggleMusicEnhanced() {
-      const toggleIcon = document.getElementById('musicToggleIcon');
-      const toggleText = document.getElementById('musicToggleText');
-      const status = document.getElementById('musicStatus');
-
-      if (!backgroundMusic) {
-        startBackgroundMusic();
-        toggleIcon.textContent = '⏸️';
-        toggleText.textContent = 'Pause';
-        status.textContent = 'Playing Resident Evil Theme';
-        status.style.color = 'var(--re-green)';
-      } else if (backgroundMusic.paused) {
-        backgroundMusic.play();
-        toggleIcon.textContent = '⏸️';
-        toggleText.textContent = 'Pause';
-        status.textContent = 'Playing Resident Evil Theme';
-        status.style.color = 'var(--re-green)';
-      } else {
-        backgroundMusic.pause();
-        toggleIcon.textContent = '▶️';
-        toggleText.textContent = 'Play';
-        status.textContent = 'Music paused';
-        status.style.color = 'var(--re-gray)';
-      }
-    }
-
-    function updateVolume() {
-      const volumeSlider = document.getElementById('musicVolumeSlider');
-      const volumeValue = document.getElementById('musicVolumeValue');
-      const volume = parseInt(volumeSlider.value) / 100;
-      
-      volumeValue.textContent = volumeSlider.value;
-      
-      if (backgroundMusic) {
-        backgroundMusic.volume = volume;
-      }
-      
-      // Save volume preference
-      localStorage.setItem('musicVolume', volumeSlider.value);
-    }
-
-    function hideMusicControl() {
-      if (musicControlPanel) {
-        musicControlPanel.style.opacity = '0';
-        musicControlPanel.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-          if (musicControlPanel && musicControlPanel.parentNode) {
-            musicControlPanel.parentNode.removeChild(musicControlPanel);
-          }
-          musicControlPanel = null;
-        }, 300);
-      }
-    }
-
-    function showMusicControlButtonEnhanced() {
-      const musicButton = document.createElement('div');
-      musicButton.id = 'musicControlButton';
-      musicButton.innerHTML = '🎵 Music';
-      musicButton.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: rgba(139, 0, 0, 0.8);
-        color: var(--re-white);
-        padding: 12px 18px;
-        border-radius: 25px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 600;
-        z-index: 1000;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
-        border: 2px solid rgba(139, 0, 0, 0.3);
-      `;
-      
-      musicButton.addEventListener('mouseenter', () => {
-        musicButton.style.background = 'var(--re-blood)';
-        musicButton.style.transform = 'scale(1.05)';
-        musicButton.style.boxShadow = '0 6px 20px rgba(139, 0, 0, 0.5)';
-      });
-      
-      musicButton.addEventListener('mouseleave', () => {
-        musicButton.style.background = 'rgba(139, 0, 0, 0.8)';
-        musicButton.style.transform = 'scale(1)';
-        musicButton.style.boxShadow = '0 4px 15px rgba(139, 0, 0, 0.3)';
-      });
-
-      musicButton.addEventListener('click', () => {
-        createMusicControl();
-        musicButton.remove();
-      });
-
-      document.body.appendChild(musicButton);
-    }
-
-    // Override the existing music control button function
-    function showMusicControllButton() {
-      showMusicControlButtonEnhanced();
-    }
-
-    // ============================================
-    // MOBILE DROPDOWN NAVIGATION FIX
-    // ============================================
-    (function() {
-      const dropdown = document.querySelector('.dropdown');
-      const dropdownToggle = document.querySelector('.dropdown-toggle');
-      const dropdownMenu = document.querySelector('.dropdown-menu');
-      
-      if (!dropdown || !dropdownToggle || !dropdownMenu) return;
-      
-      // Function to check if we're on mobile
-      function isMobile() {
-        return window.innerWidth <= 768;
-      }
-      
-      // Toggle dropdown on mobile click/tap
-      dropdownToggle.addEventListener('click', function(e) {
-        // Only prevent default and toggle on mobile
-        if (isMobile()) {
-          e.preventDefault();
-          e.stopPropagation();
-          dropdown.classList.toggle('open');
-        }
-        // On desktop, let the link work normally
-      });
-      
-      // Close dropdown when clicking outside on mobile
-      document.addEventListener('click', function(e) {
-        if (isMobile() && !dropdown.contains(e.target)) {
-          dropdown.classList.remove('open');
-        }
-      });
-      
-      // Close dropdown when clicking a link inside it on mobile
-      const dropdownLinks = dropdownMenu.querySelectorAll('a');
-      dropdownLinks.forEach(link => {
-        link.addEventListener('click', function() {
-          if (isMobile()) {
-            dropdown.classList.remove('open');
-          }
-        });
-      });
-      
-      // Handle window resize - close dropdown when switching between mobile/desktop
-      let wasMobile = isMobile();
-      window.addEventListener('resize', function() {
-        const nowMobile = isMobile();
-        if (wasMobile !== nowMobile) {
-          dropdown.classList.remove('open');
-        }
-        wasMobile = nowMobile;
-      });
-    })();
-  </script>
+  <script src="common.js"></script>
 </body>
 </html>
