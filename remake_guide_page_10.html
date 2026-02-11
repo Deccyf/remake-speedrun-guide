@@ -975,6 +975,33 @@
     border-bottom: none;
   }
   
+  /* Mobile: dropdown-toggle matches nav links */
+  .dropdown-toggle {
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1.1rem;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+    border-radius: 0;
+    background: transparent;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    color: var(--re-white);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    width: 100%;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+  }
+  
+  .dropdown:last-child {
+    border-bottom: none;
+  }
+  
   .dropdown-toggle {
     cursor: pointer;
     justify-content: space-between;
