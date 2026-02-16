@@ -1853,61 +1853,6 @@
       showMusicControlButtonEnhanced();
     }
 
-    // ============================================
-    // MOBILE DROPDOWN NAVIGATION FIX
-    // ============================================
-    (function() {
-      const dropdown = document.querySelector('.dropdown');
-      const dropdownToggle = document.querySelector('.dropdown-toggle');
-      const dropdownMenu = document.querySelector('.dropdown-menu');
-      
-      if (!dropdown || !dropdownToggle || !dropdownMenu) return;
-      
-      // Function to check if we're on mobile
-      function isMobile() {
-        return window.innerWidth <= 768;
-      }
-      
-      // Toggle dropdown on mobile click/tap
-      dropdownToggle.addEventListener('click', function(e) {
-        // Only prevent default and toggle on mobile
-        if (isMobile()) {
-          e.preventDefault();
-          e.stopPropagation();
-          dropdown.classList.toggle('open');
-        }
-        // On desktop, let the link work normally
-      });
-      
-      // Close dropdown when clicking outside on mobile
-      document.addEventListener('click', function(e) {
-        if (isMobile() && !dropdown.contains(e.target)) {
-          dropdown.classList.remove('open');
-        }
-      });
-      
-      // Close dropdown when clicking a link inside it on mobile
-      const dropdownLinks = dropdownMenu.querySelectorAll('a');
-      dropdownLinks.forEach(link => {
-        link.addEventListener('click', function() {
-          if (isMobile()) {
-            dropdown.classList.remove('open');
-          }
-        });
-      });
-      
-      // Handle window resize - close dropdown when switching between mobile/desktop
-      let wasMobile = isMobile();
-      window.addEventListener('resize', function() {
-        const nowMobile = isMobile();
-        if (wasMobile !== nowMobile) {
-          dropdown.classList.remove('open');
-        }
-        wasMobile = nowMobile;
-      });
-    })();
-  
-
 // Hamburger menu toggle
 (function() {
   const hamburger = document.getElementById('hamburger');
@@ -1922,12 +1867,16 @@
       hamburger.setAttribute('aria-expanded', nav.classList.contains('active'));
     });
     
-    // Close menu when clicking nav links
+    // Close menu when clicking nav links (not dropdown toggles)
     nav.querySelectorAll('a:not(.dropdown-toggle)').forEach(function(link) {
       link.addEventListener('click', function() {
         hamburger.classList.remove('active');
         nav.classList.remove('active');
         hamburger.setAttribute('aria-expanded', 'false');
+        // Also close any open dropdowns
+        nav.querySelectorAll('.dropdown.open').forEach(function(d) {
+          d.classList.remove('open');
+        });
       });
     });
     
@@ -1940,12 +1889,39 @@
       });
     });
     
+    // Close dropdown when clicking dropdown menu links
+    nav.querySelectorAll('.dropdown-menu a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Close the dropdown
+        this.closest('.dropdown').classList.remove('open');
+        // Close the nav menu on mobile
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+    
+    // Close menu and dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        nav.querySelectorAll('.dropdown.open').forEach(function(d) {
+          d.classList.remove('open');
+        });
+      }
+    });
+    
     // Keyboard support (Escape to close)
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && nav.classList.contains('active')) {
         hamburger.classList.remove('active');
         nav.classList.remove('active');
         hamburger.setAttribute('aria-expanded', 'false');
+        nav.querySelectorAll('.dropdown.open').forEach(function(d) {
+          d.classList.remove('open');
+        });
       }
     });
   }
