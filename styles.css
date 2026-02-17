@@ -1502,6 +1502,12 @@
       text-align: center;
     }
     
+    .section-meta {
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    
     .content-section {
       margin-bottom: 2.5rem;
     }
