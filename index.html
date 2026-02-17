@@ -657,18 +657,10 @@
   }
 
 
+  /* Reveal animation disabled for reliability */
   .reveal {
-    transition: opacity 0.8s, transform 0.8s;
-  }
-  
-  .reveal.hidden {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  .reveal.active {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   /* ==================================================
