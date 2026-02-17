@@ -658,9 +658,12 @@
 
 
   .reveal {
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  
+  .reveal.hidden {
     opacity: 0;
     transform: translateY(30px);
-    transition: all 0.8s;
   }
 
   .reveal.active {
@@ -1518,11 +1521,14 @@
       }
     });
 
-    // Scroll reveal animation
+    // Scroll reveal animation - hide initially, reveal on scroll
     const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(reveal => reveal.classList.add('hidden'));
+    
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          entry.target.classList.remove('hidden');
           entry.target.classList.add('active');
         }
       });
