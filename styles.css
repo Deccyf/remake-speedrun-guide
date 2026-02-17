@@ -1485,9 +1485,65 @@
     
     .sidebar {
       position: static;
-      order: 2;
+      order: -1;
       width: 100%;
-      padding: 1rem;
+      padding: 0 1rem;
+    }
+    
+    /* TOC Accordion on Mobile */
+    .toc {
+      padding: 0;
+      background: rgba(26, 26, 26, 0.8);
+    }
+    
+    .toc h3 {
+      cursor: pointer;
+      padding: 1rem 1.5rem;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(139, 0, 0, 0.2);
+      border: 1px solid rgba(139, 0, 0, 0.3);
+      border-radius: 10px;
+      transition: all 0.3s;
+    }
+    
+    .toc h3::after {
+      content: '▼';
+      font-size: 0.8rem;
+      transition: transform 0.3s;
+    }
+    
+    .toc.open h3 {
+      border-radius: 10px 10px 0 0;
+      background: rgba(139, 0, 0, 0.3);
+    }
+    
+    .toc.open h3::after {
+      transform: rotate(180deg);
+    }
+    
+    .toc ul,
+    .toc .section-nav {
+      display: none;
+      padding: 1rem 1.5rem;
+      border: 1px solid rgba(139, 0, 0, 0.3);
+      border-top: none;
+    }
+    
+    .toc.open ul,
+    .toc.open .section-nav {
+      display: block;
+    }
+    
+    .toc .section-nav {
+      border-radius: 0 0 10px 10px;
+    }
+    
+    .toc:not(.open) .section-nav,
+    .toc.open ul + .section-nav {
+      border-radius: 0 0 10px 10px;
     }
     
     .main-content {
