@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://remake.wheelofstruggle.com/remake_guide_page_3.html">
 <meta name="twitter:card" content="summary_large_image">
 <title>Section 3: Armour Key & Grenade Launcher - REmake Speedrun Guide</title>
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
   <div class="fog-container">
@@ -309,6 +309,11 @@
       });
     });
   
+
+// Reset any horizontal scroll on page load (fixes iOS navigation issue)
+window.scrollTo(0, 0);
+document.documentElement.scrollLeft = 0;
+document.body.scrollLeft = 0;
 
 // Hamburger menu toggle
 (function() {
