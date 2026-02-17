@@ -946,12 +946,24 @@
     letter-spacing: 2px;
     font-weight: 600;
   }
+  .nav-disabled::after {
+    content: attr(data-tooltip);
+    position: static;
+    display: inline-block;
+    margin-left: auto;
+    background: rgba(139, 0, 0, 0.3);
+    color: var(--re-gray);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(139, 0, 0, 0.4);
+  }
+  
   .nav-disabled:hover::after {
-    bottom: auto;
-    top: 50%;
-    left: auto;
-    right: -80px;
-    transform: translateY(-50%);
+    background: rgba(139, 0, 0, 0.3);
+    color: var(--re-gray);
   }
 }
 
