@@ -1680,6 +1680,67 @@
       align-items: center;
     }
 
+    /* Resources page mobile */
+    .resource-grid,
+    .video-grid,
+    .community-links {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .resource-card,
+    .video-card,
+    .community-card {
+      padding: 1.25rem;
+    }
+    
+    .resource-card h3,
+    .video-info h4 {
+      font-size: 1.1rem;
+    }
+    
+    .resource-card p,
+    .video-info p,
+    .community-card p {
+      font-size: 0.85rem;
+    }
+    
+    .video-info {
+      padding: 1rem;
+    }
+    
+    .video-meta {
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Leaderboard table mobile */
+    .leaderboard {
+      padding: 1rem;
+      overflow-x: auto;
+    }
+    
+    .leaderboard h3 {
+      font-size: 1.2rem;
+    }
+    
+    .leaderboard-table {
+      font-size: 0.8rem;
+      min-width: 500px;
+    }
+    
+    .leaderboard-table th,
+    .leaderboard-table td {
+      padding: 0.5rem 0.4rem;
+    }
+    
+    .community-icon {
+      width: 50px;
+      height: 50px;
+    }
+
     /* Music control for mobile */
     .music-control-panel {
       width: 90vw !important;
@@ -1871,6 +1932,46 @@
     .critical-sequence h3,
     .urgent-warning h3 {
       font-size: 1.1rem;
+    }
+    
+    /* Resources page mobile portrait */
+    .resource-card,
+    .video-card,
+    .community-card {
+      padding: 1rem;
+    }
+    
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1rem;
+    }
+    
+    .resource-icon img {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .resource-card h3 {
+      font-size: 1rem;
+    }
+    
+    .leaderboard {
+      padding: 0.75rem;
+    }
+    
+    .leaderboard h3 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .leaderboard-table {
+      font-size: 0.7rem;
+    }
+    
+    .leaderboard-table th,
+    .leaderboard-table td {
+      padding: 0.4rem 0.3rem;
       margin-bottom: 0.8rem;
     }
   }
