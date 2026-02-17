@@ -94,36 +94,30 @@
     text-decoration: none;
     letter-spacing: 3px;
     position: relative;
-    transition: all 0.4s;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
   }
 
-  .logo-img {
-    height: 50px;
-    width: auto;
-    filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.6));
-    transition: all 0.3s ease;
-  }
-
-  .logo-img:hover {
-    transform: rotate(360deg);
-    filter: drop-shadow(0 0 12px rgba(139, 0, 0, 0.8));
-  }
-
-  .logo::before, .logo::after {
+  .logo::before {
     content: '';
     position: absolute;
     top: 50%;
+    left: -30px;
     width: 20px;
     height: 2px;
     background: var(--re-blood);
     transform: translateY(-50%);
   }
 
-  .logo::before { left: -30px; }
-  .logo::after { right: -30px; }
+  .logo::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -30px;
+    width: 20px;
+    height: 2px;
+    background: var(--re-blood);
+    transform: translateY(-50%);
+  }
+
   .logo span { color: var(--re-blood); }
 
   .nav {
