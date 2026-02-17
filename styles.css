@@ -1472,7 +1472,7 @@
     }
     
     main {
-      padding-top: 120px;
+      padding-top: 75px;
       padding-left: 0;
       padding-right: 0;
     }
@@ -1723,7 +1723,7 @@
     }
     
     main {
-      padding-top: 140px;
+      padding-top: 70px;
       padding-left: 0;
       padding-right: 0;
     }
@@ -2601,6 +2601,24 @@
 .community-icon img {
   width: 30px;
   height: 30px;
+  object-fit: contain;
+}
+
+/* Video embed responsive wrapper */
+.video-embed {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  background: var(--re-black);
+}
+
+.video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 .community-card h4 {
