@@ -2737,3 +2737,48 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Disabled nav item */
+.nav-disabled {
+  color: #666 !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  display: block;
+}
+
+.nav-disabled:hover {
+  color: #666 !important;
+  background: transparent !important;
+}
+
+.nav-disabled:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a1a;
+  color: #999;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 100;
+  border: 1px solid #333;
+}
+
+@media (max-width: 768px) {
+  .nav-disabled {
+    padding: 12px 20px;
+  }
+  .nav-disabled:hover::after {
+    bottom: auto;
+    top: 50%;
+    left: auto;
+    right: -80px;
+    transform: translateY(-50%);
+  }
+}
