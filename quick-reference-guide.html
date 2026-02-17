@@ -899,18 +899,21 @@
   }
 
 /* Disabled nav item */
+/* Disabled nav item - matches .nav a styling */
 .nav-disabled {
-  color: #666 !important;
+  color: var(--re-gray);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
   position: relative;
-  padding: 0.75rem 1.25rem;
   text-decoration: none;
-  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .nav-disabled:hover {
-  color: #666 !important;
+  color: var(--re-gray) !important;
   background: transparent !important;
 }
 
@@ -932,7 +935,16 @@
 
 @media (max-width: 768px) {
   .nav-disabled {
-    padding: 12px 20px;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: normal;
   }
   .nav-disabled:hover::after {
     bottom: auto;
@@ -1852,11 +1864,11 @@
       </div>
       <div class="footer-buttons">
         <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
-          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.png" alt="Discord" class="footer-icon discord-logo">
+          <img src="Logos/e5d0b9e74328b8ce389bd8dd7f4e56b0.webp" alt="Discord" class="footer-icon discord-logo">
           Discord
         </a>
         <a href="https://wheelofstruggle.com" class="footer-btn website-btn" target="_blank">
-          <img src="Logos/WoS_Discord_Colour_V2.png" alt="Community Website" class="footer-icon website-logo">
+          <img src="Logos/WoS_Discord_Colour_V2.webp" alt="Community Website" class="footer-icon website-logo">
           Website
         </a>
       </div>
