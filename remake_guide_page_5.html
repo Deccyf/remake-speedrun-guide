@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Section 4: Gallery navigation and Death Masks 3-4 collection. Crow corridor, armor room, and mask acquisition strategies.">
 <title>Section 4: Gallery & Death Masks 3-4 - REmake Speedrun Guide</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
@@ -12,6 +13,8 @@
     padding: 0;
     box-sizing: border-box;
   }
+
+  html { overflow-x: hidden; }
 
   :root {
     --re-black: #0D0D0D;
@@ -1988,7 +1991,6 @@
       document.getElementById('musicVolumeValue').textContent = savedVolume;
 
       backgroundMusic.play().then(() => {
-        console.log('Background music started');
         document.getElementById('musicStatus').textContent = 'Playing Resident Evil Theme';
         document.getElementById('musicStatus').style.color = 'var(--re-green)';
         
@@ -1997,7 +1999,6 @@
         toggleIcon.textContent = '⏸️';
         toggleText.textContent = 'Pause';
       }).catch((error) => {
-        console.log('Autoplay blocked:', error);
         document.getElementById('musicStatus').textContent = 'Click play to start music';
         document.getElementById('musicStatus').style.color = 'var(--re-gray)';
       });
