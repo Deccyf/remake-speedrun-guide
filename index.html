@@ -1237,6 +1237,27 @@
     border-bottom: none;
   }
   
+  .dropdown-menu {
+    position: static;
+    display: none;
+    background: rgba(26, 26, 26, 0.95);
+    padding: 0;
+    margin: 0;
+  }
+  
+  .dropdown.open .dropdown-menu {
+    display: block;
+  }
+  
+  .dropdown-menu a {
+    padding: 0.8rem 1rem 0.8rem 2rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.15);
+  }
+  
+  .dropdown-menu a:last-child {
+    border-bottom: none;
+  }
 }
 
 </style>
