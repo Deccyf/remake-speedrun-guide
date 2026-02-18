@@ -1878,8 +1878,8 @@
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-info">
-        <p>Original Guide by Deccyf</p>
-        <p>© 2025 Wheel of Struggle Community Speedrun Guide • All Rights Reserved</p>
+        <p>Guide by Deccyf</p>
+        <p>© <span class="year"></span> Wheel of Struggle Community Speedrun Guide • All Rights Reserved</p>
       </div>
       <div class="footer-buttons">
         <a href="https://discord.com/invite/8RVRE33WfN" class="footer-btn discord-btn" target="_blank">
@@ -1896,5 +1896,6 @@
 
   
 <script src="toc-accordion.js"></script>
+<script>document.querySelector(".year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
