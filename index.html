@@ -731,26 +731,21 @@
       transform: rotate(180deg);
     }
     
-    /* FORCE HIDE dropdown menu on mobile by default */
+    /* Mobile dropdown menu */
     .dropdown-menu {
-      display: none !important;
-      position: static !important;
+      display: none;
+      position: static;
       width: 100%;
-      margin-top: 0.5rem;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-      background: rgba(13, 13, 13, 0.95);
-      border-radius: 8px;
+      margin-top: 0;
+      background: rgba(26, 26, 26, 0.95);
+      border-radius: 0;
       padding: 0;
     }
     
-    /* Show dropdown when toggled open on mobile */
+    /* Show dropdown when toggled open */
     .dropdown.open .dropdown-menu {
-      display: block !important;
-      max-height: 800px;
-      padding: 0.5rem 0;
-      overflow-y: auto;
+      display: block;
+      padding: 0;
     }
     
     .dropdown-menu a {

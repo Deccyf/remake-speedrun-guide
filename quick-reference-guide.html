@@ -610,9 +610,8 @@
     .dropdown-toggle { width: 100%; padding: 0.75rem 0.5rem; font-size: 0.8rem; text-align: center; border: 1px solid rgba(139, 0, 0, 0.3); border-radius: 8px; background: rgba(139, 0, 0, 0.1); min-height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
     .dropdown-toggle::after { content: ' ▼'; font-size: 0.7rem; margin-left: 0.5rem; transition: transform 0.3s; }
     .dropdown.open .dropdown-toggle::after { transform: rotate(180deg); }
-    .dropdown-menu { display: none !important; position: static !important; width: 100%; margin-top: 0.5rem; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: rgba(13, 13, 13, 0.95); border-radius: 8px; padding: 0; }
-    .dropdown.open .dropdown-menu { display: block !important; max-height: 800px; padding: 0.5rem 0; overflow-y: auto; }
-    .dropdown:hover .dropdown-menu { display: none !important; }
+    .dropdown-menu { display: none; position: static; width: 100%; margin-top: 0; background: rgba(26, 26, 26, 0.95); border-radius: 0; padding: 0; }
+    .dropdown.open .dropdown-menu { display: block; padding: 0; }
     .dropdown-menu a { font-size: 0.75rem; padding: 0.7rem 1rem; border-bottom: 1px solid rgba(139, 0, 0, 0.2); white-space: normal; line-height: 1.4; }
     .dropdown-menu a:last-child { border-bottom: none; }
     
